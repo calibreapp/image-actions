@@ -1,0 +1,7 @@
+brew "bats"
+brew "shellcheck"
+brew "guetzli"
+tap "nektos/tap"
+brew "nektos/tap/act"
+brew "bash"
+brew "pngquant"
