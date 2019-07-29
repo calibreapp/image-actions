@@ -74,9 +74,9 @@ LABEL homepage="http://github.com/calibreapp/image-actions"
 LABEL maintainer="Calibre <hello@calibreapp.com>"
 
 LABEL "com.github.actions.name"="image-actions"
-LABEL "com.github.actions.description"="Actions to automagically compress images in your repository"
-LABEL "com.github.actions.icon"="bar-chart-2"
-LABEL "com.github.actions.color"="blue"
+LABEL "com.github.actions.description"="Automagically compress images in your repository"
+LABEL "com.github.actions.icon"="image"
+LABEL "com.github.actions.color"="green"
 
 RUN mkdir -p /usr/local/src/image-actions
 WORKDIR /usr/local/src/image-actions
