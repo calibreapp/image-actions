@@ -18,7 +18,7 @@ const getConfig = async () => {
   const defaultConfig = {
     jpeg: { quality: 80 },
     png: { quality: 80 },
-    ignorePaths: []
+    ignorePaths: ["node_modules/**"]
   };
 
   const ymlConfig = await getYamlConfig();
