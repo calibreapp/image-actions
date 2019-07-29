@@ -29,5 +29,5 @@ This action requires a `GITHUB_TOKEN` so that it has access to commit the optimi
 
 ## Links and resources
 
-- [View calibre/image-actions on the Github Marketplace](https://github.com/marketplace/actions/calibreapp-image-actions)
+- [View calibre/image-actions on the Github Marketplace](https://github.com/marketplace/actions/image-actions)
 - [Mozjpeg](https://github.com/mozilla/mozjpeg)
