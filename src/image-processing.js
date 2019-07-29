@@ -38,7 +38,7 @@ const processImages = async () => {
     const percentChange = (afterStats / beforeStats) * 100 - 100;
 
     // Add a flag to tell if the optimisation was worthwhile
-    const compressionWasSignificant = percentChange < 0;
+    const compressionWasSignificant = percentChange < -1;
 
     imageStats.push({
       name,
