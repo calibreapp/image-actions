@@ -3,14 +3,14 @@
 const {
   REPO_DIRECTORY,
   GITHUB_TOKEN,
-  GITHUB_EVENT_NAME,
-  COMMITTER
+  GITHUB_EVENT_NAME
 } = require("./src/constants");
 
 const githubEvent = require("./src/github-event");
 const generateMarkdownReport = require("./src/github-markdown");
 const processImages = require("./src/image-processing");
 const createComment = require("./src/github-pr-comment");
+const createCommit = require("./src/github-commit");
 
 if (!GITHUB_TOKEN) {
   console.log("You must enable the GITHUB_TOKEN secret");
@@ -57,6 +57,10 @@ const main = async () => {
 
   console.log("->> Generating markdown…");
   const markdown = await generateMarkdownReport(results);
+
+  console.log("->> Committing files…");
+  const optimisedImages = results.filter(img => img.compressionWasSignificant);
+  await createCommit(optimisedImages);
 
   console.log("->> Leaving comment on PR…");
   await createComment(markdown);
