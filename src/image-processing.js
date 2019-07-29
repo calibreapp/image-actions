@@ -33,7 +33,8 @@ const processImages = async () => {
 
     await fs.writeFile(imgPath, processedImageBuffer);
 
-    const name = imgPath.replace(REPO_DIRECTORY, "");
+    // Remove the /github/home/ path (including the slash)
+    const name = imgPath.replace(REPO_DIRECTORY, "").replace(/\//, "");
     const afterStats = (await fs.stat(imgPath)).size;
     const percentChange = (afterStats / beforeStats) * 100 - 100;
 
