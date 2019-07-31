@@ -42,7 +42,7 @@ ${items}
 
 const generateMarkdownReport = processedImages => {
   return `
-Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://) ✨
+Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
 
 | Filename | Before | After | Improvement |
 | --- | --- | --- | --- |
