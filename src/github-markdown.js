@@ -33,22 +33,24 @@ const unoptimisedImages = processedImages => {
 <summary>Some images were already optimised</summary>
 
 ${items}
-</details>
-    `;
+</details>`;
   } else {
     return "";
   }
 };
 
-const generateMarkdownReport = processedImages => {
+const generateMarkdownReport = payload => {
   return `
 Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
 
+Compression reduced images by ${-payload.metrics.percentChange.toFixed(
+    1
+  )}%, saving ${filesize(payload.metrics.bytesSaved)}
+
 | Filename | Before | After | Improvement |
 | --- | --- | --- | --- |
-${optimisedImages(processedImages)}
-${unoptimisedImages(processedImages)}
-  `;
+${optimisedImages(payload.images)}
+${unoptimisedImages(payload.images)}`;
 };
 
 module.exports = generateMarkdownReport;

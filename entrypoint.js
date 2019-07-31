@@ -59,7 +59,9 @@ const main = async () => {
   const markdown = await generateMarkdownReport(results);
 
   console.log("->> Committing files…");
-  const optimisedImages = results.filter(img => img.compressionWasSignificant);
+  const optimisedImages = results.images.filter(
+    img => img.compressionWasSignificant
+  );
   await createCommit(optimisedImages);
 
   console.log("->> Leaving comment on PR…");

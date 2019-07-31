@@ -18,7 +18,7 @@ const processImages = async () => {
     nodir: true
   });
 
-  const imageStats = [];
+  const images = [];
 
   for await (const imgPath of imagePaths) {
     const extension = path.extname(imgPath);
@@ -41,7 +41,7 @@ const processImages = async () => {
     // Add a flag to tell if the optimisation was worthwhile
     const compressionWasSignificant = percentChange < -1;
 
-    imageStats.push({
+    images.push({
       name,
       path: imgPath,
       beforeStats,
@@ -51,7 +51,33 @@ const processImages = async () => {
     });
   }
 
-  return imageStats;
+  const metrics = await calculateOverallMetrics(images);
+
+  return {
+    images,
+    metrics
+  };
+};
+
+const calculateOverallMetrics = async images => {
+  let bytesBeforeCompression = 0;
+  let bytesAfterCompression = 0;
+
+  for await (const image of images) {
+    if (image.compressionWasSignificant) {
+      bytesBeforeCompression += image.beforeStats;
+      bytesAfterCompression += image.afterStats;
+    }
+  }
+
+  const bytesSaved = bytesBeforeCompression - bytesAfterCompression;
+  const percentChange =
+    (bytesAfterCompression / bytesBeforeCompression) * 100 - 100;
+
+  return {
+    bytesSaved,
+    percentChange
+  };
 };
 
 module.exports = processImages;
