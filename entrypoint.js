@@ -45,7 +45,7 @@ const main = async () => {
 
   console.log(JSON.stringify(results, null, 2));
 
-  const imagesWereOptimised = results.some(
+  const imagesWereOptimised = results.images.some(
     result => result.compressionWasSignificant
   );
 
