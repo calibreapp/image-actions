@@ -1,7 +1,5 @@
 # Image actions
 
-[![Build status](https://badge.buildkite.com/2e05c99f1b21a027cd79868bbbd26fd2debfb1f959c8bb7d65.svg)](https://buildkite.com/calibre/image-actions)
-
 Image actions will automatically compress jpeg and png images in GitHub Pull Requests.
 
 - **Compression is fast, efficient and lossless**
