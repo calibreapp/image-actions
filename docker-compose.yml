@@ -2,3 +2,5 @@ version: "3"
 services:
   app:
     build: .
+    env:
+      GITHUB_WORKSPACE: __tests__/test-images
