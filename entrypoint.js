@@ -7,10 +7,7 @@ const {
 } = require("./src/constants");
 
 const githubEvent = require("./src/github-event");
-const generateMarkdownReport = require("./src/github-markdown");
-const processImages = require("./src/image-processing");
-const createComment = require("./src/github-pr-comment");
-const createCommit = require("./src/github-commit");
+const run = require("src/index.js");
 
 if (!GITHUB_TOKEN) {
   console.log("You must enable the GITHUB_TOKEN secret");
@@ -40,32 +37,7 @@ const main = async () => {
     process.exit(78);
   }
 
-  console.log("->> Locating images…");
-  const results = await processImages();
-
-  console.log(JSON.stringify(results, null, 2));
-
-  const imagesWereOptimised = results.images.some(
-    result => result.compressionWasSignificant
-  );
-
-  // If nothing was optimised, bail out.
-  if (!imagesWereOptimised) {
-    console.log("Nothing left to optimise. Stopping…");
-    return;
-  }
-
-  console.log("->> Generating markdown…");
-  const markdown = await generateMarkdownReport(results);
-
-  console.log("->> Committing files…");
-  const optimisedImages = results.images.filter(
-    img => img.compressionWasSignificant
-  );
-  await createCommit(optimisedImages);
-
-  console.log("->> Leaving comment on PR…");
-  await createComment(markdown);
+  await run();
 };
 
 main();
