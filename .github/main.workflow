@@ -1,17 +1,17 @@
-workflow "Run Tests" {
+workflow "Test" {
   on = "push"
   resolves = ["npm test"]
 }
 
 action "npm ci" {
-  uses = "docker://node:alpine"
+  uses = "./"
   runs = "npm"
   args = "ci"
 }
 
 action "npm test" {
   needs = "npm ci"
-  uses = "docker://node:alpine"
+  uses = "./"
   runs = "npm"
   args = "test"
 }

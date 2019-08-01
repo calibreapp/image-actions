@@ -87,5 +87,6 @@ RUN npm ci
 # copy in src
 COPY LICENSE README.md entrypoint.js /usr/local/src/image-actions/
 COPY src/ /usr/local/src/image-actions/src/
+COPY __tests__/ /usr/local/src/image-actions/__tests__/
 
 ENTRYPOINT ["/usr/local/src/image-actions/entrypoint.js"]

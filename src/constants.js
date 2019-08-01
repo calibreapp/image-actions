@@ -14,6 +14,11 @@ const COMMITTER = {
   email: "hello@calibreapp.com"
 };
 
+if (!REPO_DIRECTORY) {
+  console.log("There is no GITHUB_WORKSPACE environment variable");
+  process.exit(1);
+}
+
 const CONFIG_PATH = path.join(
   REPO_DIRECTORY,
   ".github/calibre/image-actions.yml"
