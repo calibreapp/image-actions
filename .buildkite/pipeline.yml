@@ -1,0 +1,6 @@
+steps:
+  - name: ':jest:'
+    command: 'npm test'
+    plugins:
+      docker-compose#v2.2.1:
+        run: app
