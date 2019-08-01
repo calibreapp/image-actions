@@ -17,11 +17,6 @@ if (!GITHUB_TOKEN) {
   process.exit(1);
 }
 
-if (!REPO_DIRECTORY) {
-  console.log("There is no REPO_DIRECTORY set");
-  process.exit(1);
-}
-
 const main = async () => {
   // Bail out if the event that executed the action wasn’t a pull_request
   if (GITHUB_EVENT_NAME !== "pull_request") {
@@ -59,7 +54,9 @@ const main = async () => {
   const markdown = await generateMarkdownReport(results);
 
   console.log("->> Committing files…");
-  const optimisedImages = results.filter(img => img.compressionWasSignificant);
+  const optimisedImages = results.images.filter(
+    img => img.compressionWasSignificant
+  );
   await createCommit(optimisedImages);
 
   console.log("->> Leaving comment on PR…");
