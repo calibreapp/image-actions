@@ -57,12 +57,12 @@ test("returns images with stats", async () => {
       percentChange: 0
     },
     {
-      afterStats: 485742,
+      afterStats: 485759,
       beforeStats: 468895,
       compressionWasSignificant: false,
       name: "roo.jpg",
       path: "__tests__/test-images/roo.jpg",
-      percentChange: 3.592915258213452
+      percentChange: 3.596540803378147
     }
   ]);
 });
