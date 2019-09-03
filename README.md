@@ -10,19 +10,22 @@ Image actions will automatically compress jpeg and png images in GitHub Pull Req
 
 ## How to add this to your repository:
 
-- Add the following steps to a workflow file found at: `.github/main.workflow` (If you don’t have one, create it.)
+- Add the following steps to a workflow file found at: `.github/workflows/pull-request.yml` (If you don’t have one, create it.)
 - Paste in the following:
 
-```workflow
-workflow "Compress images" {
-  resolves = ["calibreapp/image-actions"]
-  on = "pull_request"
-}
-
-action "calibreapp/image-actions" {
-  uses = "calibreapp/image-actions@master"
-  secrets = ["GITHUB_TOKEN"]
-}
+```yml
+name: Compress images
+on: pull_request
+jobs:
+  build:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: calibreapp/image-actions
+        uses: calibreapp/image-actions@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 This action requires a `GITHUB_TOKEN` so that it has access to commit the optimised images to your repository.
