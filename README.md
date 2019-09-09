@@ -4,7 +4,7 @@ Image actions will automatically compress jpeg and png images in GitHub Pull Req
 
 - **Compression is fast, efficient and lossless**
 - Uses mozjpeg + libvips, the best image compression available
-- Runs in GitHub Actions **for free**
+- Runs in GitHub Actions, so it's visible to everyone
 
 ![Preview of image-actions pull request comment](https://user-images.githubusercontent.com/924/62024579-e1470d00-b218-11e9-8655-693ea42ba0f7.png)
 
