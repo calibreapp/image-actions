@@ -68,16 +68,6 @@ RUN cd /usr/local/src/vips-${VIPS_VERSION} \
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt-get install -y nodejs
 
-LABEL version="1.0.0"
-LABEL repository="http://github.com/calibreapp/image-actions"
-LABEL homepage="http://github.com/calibreapp/image-actions"
-LABEL maintainer="Calibre <hello@calibreapp.com>"
-
-LABEL "com.github.actions.name"="image-actions"
-LABEL "com.github.actions.description"="Automagically compress images in your repository"
-LABEL "com.github.actions.icon"="image"
-LABEL "com.github.actions.color"="green"
-
 RUN mkdir -p /usr/local/src/image-actions
 WORKDIR /usr/local/src/image-actions
 
