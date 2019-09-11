@@ -5,7 +5,6 @@ on:
       - master
 jobs:
   build:
-    needs: npmCi # found in test.yml
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
