@@ -1,9 +1,9 @@
 name: Test, Build and Publish Docker image
 on: [push]
-branches:
-  - master
 jobs:
   build:
+    branches:
+      - master
     needs: npmCi # found in test.yml
     runs-on: ubuntu-latest
     steps:
