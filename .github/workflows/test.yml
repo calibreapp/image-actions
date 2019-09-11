@@ -1,0 +1,18 @@
+name: Test
+on: [push]
+jobs:
+  npmCi:
+    name: npm ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: npm ci
+        uses: ./
+        with:
+          entrypoint: npm
+          args: ci
+      - name: npm test
+        uses: ./
+        with:
+          entrypoint: npm
+          args: test
