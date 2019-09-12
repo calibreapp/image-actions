@@ -1,0 +1,9 @@
+name: "image-actions"
+description: Image actions will automatically compress jpeg and png images in GitHub Pull Requests.
+author: calibreapp
+runs:
+  using: "docker"
+  image: "calibreapp/image-actions"
+branding:
+  color: green
+  icon: image
