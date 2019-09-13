@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-This action requires a `GITHUB_TOKEN` secret so that it has access to commit the optimised images to your repository.
+The `GITHUB_TOKEN` secret is [automatically managed by GitHub](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret). You do not have to manually create this secret. This automatic token is [scoped only to the repository that is currently running the action.](https://help.github.com/en/articles/virtual-environments-for-github-actions#token-permissions).
 
 ## Links and resources
 
