@@ -30,6 +30,25 @@ jobs:
 
 The `GITHUB_TOKEN` secret is [automatically managed by GitHub](https://help.github.com/en/articles/virtual-environments-for-github-actions#github_token-secret). You do not have to manually create this secret. This automatic token is [scoped only to the repository that is currently running the action.](https://help.github.com/en/articles/virtual-environments-for-github-actions#token-permissions)
 
+## Configuration
+
+By default, you probably don’t need to configure image-actions. However, if you’d like to ignore certain file paths, or change image compression options, read on.
+
+Configuration can be set by adding a `.github/calibre/image-actions.yml` file:
+
+```yml
+jpeg:
+  quality: 80
+png:
+  quality: 80
+ignorePaths:
+  - "node_modules/**"
+```
+
+- The above configuation is what image-actions uses by default
+- The `jpeg` and `png` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png))
+- `ignorePaths` allows for path globbing. [See the glob package for more details.](https://www.npmjs.com/package/glob)
+
 ## Links and resources
 
 - **[Announcement blog post](https://calibreapp.com/blog/compress-images-in-prs/)**
