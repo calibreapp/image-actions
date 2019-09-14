@@ -27,11 +27,16 @@ const processImages = async () => {
     const beforeStats = (await fs.stat(imgPath)).size;
     console.log("    - Processing:", imgPath);
 
-    const processedImageBuffer = await sharp(imgPath)
-      .toFormat(sharpFormat, options)
-      .toBuffer();
+    try {
+      const processedImageBuffer = await sharp(imgPath)
+        .toFormat(sharpFormat, options)
+        .toBuffer();
 
-    await fs.writeFile(imgPath, processedImageBuffer);
+      await fs.writeFile(imgPath, processedImageBuffer);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
 
     // Remove the /github/home/ path (including the slash)
     const name = imgPath.replace(REPO_DIRECTORY, "").replace(/\//, "");
