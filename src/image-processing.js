@@ -35,7 +35,7 @@ const processImages = async () => {
       await fs.writeFile(imgPath, processedImageBuffer);
     } catch (e) {
       console.error(e);
-      return;
+      break;
     }
 
     // Remove the /github/home/ path (including the slash)
