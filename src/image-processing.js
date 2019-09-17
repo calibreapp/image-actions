@@ -13,7 +13,7 @@ const {
 
 const processImages = async () => {
   const config = await getConfig();
-  const imagePaths = await glob(`${REPO_DIRECTORY}/**/*.{jpg,png}`, {
+  const imagePaths = await glob(`${REPO_DIRECTORY}/**/*.{jpg,png,webp}`, {
     ignore: config.ignorePaths.map(p => path.resolve(REPO_DIRECTORY, p)),
     nodir: true
   });
