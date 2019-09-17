@@ -27,7 +27,8 @@ const CONFIG_PATH = path.join(
 const EXTENSION_TO_SHARP_FORMAT_MAPPING = {
   ".png": "png",
   ".jpeg": "jpeg",
-  ".jpg": "jpeg"
+  ".jpg": "jpeg",
+  ".webp": "webp"
 };
 
 module.exports = {
