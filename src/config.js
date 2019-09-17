@@ -18,6 +18,7 @@ const getConfig = async () => {
   const defaultConfig = {
     jpeg: { quality: 80 },
     png: { quality: 80 },
+    webp: { quality: 80 },
     ignorePaths: ["node_modules/**"]
   };
 
