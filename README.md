@@ -1,10 +1,11 @@
 # Image actions
 
-Image actions will automatically compress jpeg and png images in GitHub Pull Requests.
+Image actions will automatically compress jpeg, png and webp images in GitHub Pull Requests.
 
-- **Compression is fast, efficient and lossless**
+- **Compression is fast, efficient and near-lossless**
 - Uses mozjpeg + libvips, the best image compression available
 - Runs in GitHub Actions, so it's visible to everyone
+- Configurable: Use the great defaults or change to suit your needs
 
 ![Preview of image-actions pull request comment](https://user-images.githubusercontent.com/924/62024579-e1470d00-b218-11e9-8655-693ea42ba0f7.png)
 
@@ -41,12 +42,14 @@ jpeg:
   quality: 80
 png:
   quality: 80
+webp:
+  quality: 80
 ignorePaths:
   - "node_modules/**"
 ```
 
 - The above configuation is what image-actions uses by default
-- The `jpeg` and `png` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png))
+- The `jpeg`, `png` and `webp` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
 - `ignorePaths` allows for path globbing. [See the glob package for more details.](https://www.npmjs.com/package/glob)
 
 ## Links and resources
