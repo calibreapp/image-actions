@@ -15,7 +15,7 @@ Image actions will automatically compress jpeg, png and webp images in GitHub Pu
 - Paste in the following:
 
 ```yml
-name: Compress images
+name: 'Compress images'
 on: pull_request
 jobs:
   build:
