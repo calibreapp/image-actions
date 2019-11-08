@@ -16,7 +16,16 @@ Image actions will automatically compress jpeg, png and webp images in GitHub Pu
 
 ```yml
 name: Compress images
-on: pull_request
+on:
+  pull_request: {}
+  push:
+    branches:
+    - master
+    paths:
+    - '**.jpg'
+    - '**.jpeg'
+    - '**.png'
+    - '**.webp'
 jobs:
   build:
     name: calibreapp/image-actions
