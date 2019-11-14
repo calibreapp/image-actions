@@ -51,7 +51,8 @@ RUN apt-get install -y \
   libgif-dev \
   libexif-dev \
   liblcms2-dev \
-  liborc-dev
+  liborc-dev \
+  libimagequant
 
 RUN cd /usr/local/src \
   && wget ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.gz \
