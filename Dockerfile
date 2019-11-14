@@ -52,7 +52,7 @@ RUN apt-get install -y \
   libexif-dev \
   liblcms2-dev \
   liborc-dev \
-  libimagequant
+  libimagequant-dev
 
 RUN cd /usr/local/src \
   && wget ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.gz \
