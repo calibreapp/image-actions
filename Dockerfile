@@ -1,7 +1,7 @@
-FROM ubuntu:cosmic
+FROM ubuntu:eoan
 
 ARG MOZJPEG_VERSION=3.3.1
-ARG VIPS_VERSION=8.7.2
+ARG VIPS_VERSION=8.8.3
 
 ARG MOZJPEG_URL=https://github.com/mozilla/mozjpeg/archive
 ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
@@ -52,7 +52,8 @@ RUN apt-get install -y \
   libexif-dev \
   liblcms2-dev \
   liborc-dev \
-  libimagequant-dev
+  libimagequant-dev \
+  libwebp-dev
 
 RUN cd /usr/local/src \
   && wget ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.gz \
