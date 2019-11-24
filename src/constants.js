@@ -1,5 +1,3 @@
-const path = require("path");
-
 const GITHUB_TOKEN = process.env["INPUT_GITHUB_TOKEN"];
 const GITHUB_EVENT_NAME = process.env["GITHUB_EVENT_NAME"];
 const GITHUB_EVENT_PATH = process.env["GITHUB_EVENT_PATH"];
@@ -23,11 +21,6 @@ if (!REPO_DIRECTORY) {
   console.log("::error::There is no GITHUB_WORKSPACE environment variable");
   process.exit(1);
 }
-
-const CONFIG_PATH = path.join(
-  REPO_DIRECTORY,
-  ".github/calibre/image-actions.yml"
-);
 
 const EXTENSION_TO_SHARP_FORMAT_MAPPING = {
   ".png": "png",

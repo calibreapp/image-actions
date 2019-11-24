@@ -25,7 +25,7 @@ inputs:
   ignorePaths:
     description: "Paths to ignore during search"
     required: false
-    default: '["node_modules/**"]'
+    default: [ "node_modules/**" ]
     
 runs:
   using: 'docker'
