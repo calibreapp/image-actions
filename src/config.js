@@ -30,7 +30,7 @@ const getConfig = async () => {
   console.log(
     "->> Checking for config at",
     CONFIG_PATH,
-    !ymlConfig ? "Not found" : "Found!"
+    !ymlConfig ? "::warning::Not found" : "Found!"
   );
 
   console.log("->> Using config:", JSON.stringify(config));

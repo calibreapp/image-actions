@@ -15,7 +15,7 @@ const COMMITTER = {
 };
 
 if (!REPO_DIRECTORY) {
-  console.log("There is no GITHUB_WORKSPACE environment variable");
+  console.log("::error::There is no GITHUB_WORKSPACE environment variable");
   process.exit(1);
 }
 
