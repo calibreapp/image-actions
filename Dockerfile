@@ -26,7 +26,7 @@ RUN apt-get update \
   wget \
   git \
   pkg-config \
-  curlb \
+  curl \
   libjpeg8 \
   libglib2.0-dev \
   libexpat-dev \
