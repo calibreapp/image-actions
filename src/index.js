@@ -21,11 +21,11 @@ const run = async () => {
   console.log("->> Generating markdown…");
   const markdown = await generateMarkdownReport(results);
 
-  console.log("->> Committing files…");
-  await createCommit(optimisedImages);
+//  console.log("->> Committing files…");
+//  await createCommit(optimisedImages);
 
-  console.log("->> Leaving comment on PR…");
-  await createComment(markdown);
+//  console.log("->> Leaving comment on PR…");
+//  await createComment(markdown);
 
   return results;
 };
