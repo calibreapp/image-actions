@@ -18,15 +18,15 @@ const main = async () => {
   }
 
   // Bail out if the pull_request event wasn't synchronize or opened
-//  const event = await githubEvent();
-//  if (event.action !== "synchronize" && event.action !== "opened") {
-//    console.log(
-//      "Check run has action",
-//      event.action,
-//      ". Want: synchronize or opened"
-//    );
-//    process.exit(78);
-//  }
+  const event = await githubEvent();
+  if (GITHUB_EVENT_NAME == "pull_request" && event.action !== "synchronize" && event.action !== "opened") {
+    console.log(
+      "::error::Check run has action",
+      event.action,
+      ". Want: synchronize or opened"
+    );
+    process.exit(78);
+  }
 
   await run();
 };

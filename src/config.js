@@ -2,7 +2,12 @@ const fs = require("fs").promises;
 
 const yaml = require("js-yaml");
 
-const { CONFIG_PATH } = require("./constants");
+const { CONFIG_PATH, 
+  JPEG_QUALITY, 
+  PNG_QUALITY, 
+  WEBP_QUALITY, 
+  IGNORE_PATHS 
+} = require("./constants");
 
 const getYamlConfig = async () => {
   try {
@@ -16,10 +21,10 @@ const getYamlConfig = async () => {
 
 const getConfig = async () => {
   const defaultConfig = {
-    jpeg: { quality: 80 },
-    png: { quality: 80 },
-    webp: { quality: 80 },
-    ignorePaths: ["node_modules/**"]
+    jpeg: { quality: JPEG_QUALITY },
+    png: { quality: PNG_QUALITY },
+    webp: { quality: WEBP_QUALITY },
+    ignorePaths: IGNORE_PATHS
   };
 
   const ymlConfig = await getYamlConfig();

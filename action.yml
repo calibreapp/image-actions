@@ -3,6 +3,10 @@ author: 'chabad360'
 description: "compress images"
 
 inputs:
+  githubToken:
+    description: "GitHub Token (required for PR testing)"
+    required: false
+
   jpegQuality:
     description: "JPEG quality level"
     required: false
@@ -21,7 +25,7 @@ inputs:
   ignorePaths:
     description: "Paths to ignore during search"
     required: false
-    default: "node_modules/**"
+    default: '["node_modules/**"]'
     
 runs:
   using: 'docker'
