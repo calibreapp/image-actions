@@ -1,32 +1,32 @@
-name: 'images action'
+name: 'Image Compressor'
 author: 'chabad360'
-description: "compress images"
+description: 'Compress Images'
 
 inputs:
   githubToken:
-    description: "GitHub Token (required for PR testing)"
+    description: 'GitHub Token (required for PR testing)'
     required: false
 
   jpegQuality:
-    description: "JPEG quality level"
+    description: 'JPEG quality level'
     required: false
     default: 80
 
   pngQuality:
-    description: "PNG quality level"
+    description: 'PNG quality level'
     required: false
     default: 80
 
   webpQuality:
-    description: "WEBP quality level"
+    description: 'WEBP quality level'
     required: false
     default: 80
 
   ignorePaths:
-    description: "Paths to ignore during search"
+    description: 'Paths to ignore during search'
     required: false
-    default: '[{"node_modules/**"}]'
-    
+    default: "nodemodules/**"
+
 runs:
   using: 'docker'
   image: 'Dockerfile'

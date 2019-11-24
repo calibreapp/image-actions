@@ -10,7 +10,7 @@ const REPO_DIRECTORY = process.env["GITHUB_WORKSPACE"];
 const JPEG_QUALITY = process.env["INPUT_JPEGQUALITY"];
 const PNG_QUALITY = process.env["INPUT_PNGQUALITY"];
 const WEBP_QUALITY = process.env["INPUT_WEBPQUALITY"];
-const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"];
+const IGNORE_PATHS = process.env.INPUT_IGNOREPATHS.split(",");
 
 const COMMITTER = {
   name: "Calibre",
