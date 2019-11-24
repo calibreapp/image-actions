@@ -12,7 +12,7 @@ if (!GITHUB_TOKEN && GITHUB_EVENT_NAME == "pull_request" ) {
 
 const main = async () => {
   // Bail out if the event that executed the action wasn’t a pull_request or a push
-  if (GITHUB_EVENT_NAME !== "pull_request" || GITHUB_EVENT_NAME != "push") {
+  if (GITHUB_EVENT_NAME !== "pull_request" && GITHUB_EVENT_NAME != "push") {
     console.log("::error::This action only runs for pushes or PRs");
     process.exit(78);
   }
