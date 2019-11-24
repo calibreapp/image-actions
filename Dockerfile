@@ -17,56 +17,28 @@ ENV LD_LIBRARY_PATH /usr/local/lib
 # basic build tools
 RUN apt-get update \
   && apt-get install -y \
-    build-essential \
-    autoconf \
-    automake \
-    libtool \
-    nasm \
-    unzip \
-    wget \
-    git \
-    pkg-config \
-    curl
-
-RUN cd /usr/local/src \
-  && wget ${MOZJPEG_URL}/v${MOZJPEG_VERSION}.tar.gz \
-  && tar xzf v${MOZJPEG_VERSION}.tar.gz 
-
-RUN cd /usr/local/src/mozjpeg-${MOZJPEG_VERSION} \
-  && aclocal \
-  && autoconf \
-  && autoheader \
-  && libtoolize \
-  && automake --add-missing \
-  && ./configure \
-  && make \
-  && make install
-
-# we must not use any packages which depend directly or indirectly on libjpeg,
-# since we want to use our own mozjpeg build 
-RUN apt-get install -y \
+  build-essential \
+  autoconf \
+  automake \
+  libtool \
+  nasm \
+  unzip \
+  wget \
+  git \
+  pkg-config \
+  curlb \
+  libjpeg8 \
   libglib2.0-dev \
   libexpat-dev \
   libpng-dev \
   libgif-dev \
   libexif-dev \
   liblcms2-dev \
-  liborc-dev
-
-RUN cd /usr/local/src \
-  && wget ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.gz \
-  && tar xzf vips-${VIPS_VERSION}.tar.gz
-
-# libvips is marked up for auto-vectorisation ... -O3 is the optimisation
-# level that enables this for gcc
-RUN cd /usr/local/src/vips-${VIPS_VERSION} \
-  && CFLAGS=-O3 CXXFLAGS=-O3 ./configure \
-  && make \
-  && make install
-
-# nodejs
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
-RUN apt-get install -y nodejs
+  liborc-dev \
+  libvips \
+  && curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+  && apt-get install -y nodejs \
+  && apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 RUN mkdir -p /usr/local/src/image-actions
 WORKDIR /usr/local/src/image-actions

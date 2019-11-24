@@ -30,3 +30,4 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+#  image: 'docker://calibreapp/image-action' 
