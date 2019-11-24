@@ -5,10 +5,10 @@ const { GITHUB_TOKEN, GITHUB_EVENT_NAME } = require("./src/constants");
 const githubEvent = require("./src/github-event");
 const run = require("./src/index.js");
 
-if (!GITHUB_TOKEN) {
-  console.log("You must enable the GITHUB_TOKEN secret");
-  process.exit(1);
-}
+//if (!GITHUB_TOKEN) {
+//  console.log("You must enable the GITHUB_TOKEN secret");
+//  process.exit(1);/
+//}
 
 const main = async () => {
   // Bail out if the event that executed the action wasn’t a pull_request

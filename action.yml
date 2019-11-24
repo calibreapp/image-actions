@@ -1,0 +1,7 @@
+name: 'images action'
+author: 'chabad360'
+description: "compress images"
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
