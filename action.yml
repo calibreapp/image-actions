@@ -1,6 +1,6 @@
-name: 'Image Compressor'
+name: 'Image Actions'
 author: 'Calibre'
-description: 'Compress Images'
+description: 'Compresses Images for the Web'
 
 inputs:
   githubToken:
@@ -32,5 +32,5 @@ runs:
   image: 'docker://calibreapp/github-image-actions' 
 
 branding:
-  icon: crop
+  icon: image
   color: green
