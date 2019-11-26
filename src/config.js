@@ -14,7 +14,7 @@ const getYamlConfig = async () => {
     const text = await fs.readFile(CONFIG_PATH);
     return yaml.safeLoad(text);
   } catch (err) {
-    console.error(CONFIG_PATH, "not found", err);
+    console.error("::warning::", CONFIG_PATH, "not found", err);
     return undefined;
   }
 };
