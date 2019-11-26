@@ -1,6 +1,6 @@
 const path = require("path");
 
-const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
+const GITHUB_TOKEN = process.env["INPUT_GITHUBTOKEN"] ? process.env["INPUT_GITHUBTOKEN"] : process.env["GITHUB_TOKEN"];
 const GITHUB_EVENT_NAME = process.env["GITHUB_EVENT_NAME"];
 const GITHUB_EVENT_PATH = process.env["GITHUB_EVENT_PATH"];
 const GITHUB_SHA = process.env["GITHUB_SHA"];
@@ -9,15 +9,20 @@ const GITHUB_REPOSITORY = process.env["GITHUB_REPOSITORY"];
 
 const REPO_DIRECTORY = process.env["GITHUB_WORKSPACE"];
 
+const JPEG_QUALITY = process.env["INPUT_JPEGQUALITY"] ? process.env["INPUT_JPEGQUALITY"] : 80;
+const PNG_QUALITY = process.env["INPUT_PNGQUALITY"] ? process.env["INPUT_PNGQUALITY"] : 80;
+const WEBP_QUALITY = process.env["INPUT_WEBPQUALITY"] ? process.env["INPUT_WEBPQUALITY"] : 80;
+const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"] ? process.env["INPUT_IGNOREPATHS"].split(",") : ["nodemodules/**"];
+
 const COMMITTER = {
   name: "Calibre",
   email: "hello@calibreapp.com"
 };
 
 if (!REPO_DIRECTORY) {
-  console.log("There is no GITHUB_WORKSPACE environment variable");
+  console.log("::error::There is no GITHUB_WORKSPACE environment variable");
   process.exit(1);
-}
+};
 
 const CONFIG_PATH = path.join(
   REPO_DIRECTORY,
@@ -41,5 +46,9 @@ module.exports = {
   REPO_DIRECTORY,
   CONFIG_PATH,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
-  COMMITTER
+  COMMITTER,
+  JPEG_QUALITY,
+  PNG_QUALITY,
+  WEBP_QUALITY,
+  IGNORE_PATHS
 };
