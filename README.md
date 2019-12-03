@@ -41,17 +41,19 @@ By default, you probably don’t need to configure `image-actions`. However, if 
 Change the configuration options by adding arguments to the action:
 
 ```yml
-with:
-  githubToken: ${{ secrets.GITHUB_TOKEN }}
-  jpegQuality: 80
-  pngQuality: 80
-  webpQuality: 80
-  ignorePaths: "node_modules/**,build"
-  # No spaces allowed
+- name: Compress Images
+  uses: calibreapp/image-actions@master
+  with:
+    githubToken: ${{ secrets.GITHUB_TOKEN }}
+    jpegQuality: 80
+    pngQuality: 80
+    webpQuality: 80
+    ignorePaths: "node_modules/**,build"
+    # No spaces allowed
 ```
 
 - The above configuation is what `image-actions` uses by default
-- The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered (basicly) directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
+- The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
 - `ignorePaths` allows for path globbing [see the glob package for more details](https://www.npmjs.com/package/glob)
 
 ## Links and Resources
