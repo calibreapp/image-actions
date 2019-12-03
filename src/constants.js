@@ -9,10 +9,10 @@ const GITHUB_REPOSITORY = process.env["GITHUB_REPOSITORY"];
 
 const REPO_DIRECTORY = process.env["GITHUB_WORKSPACE"];
 
-const JPEG_QUALITY = process.env["INPUT_JPEGQUALITY"] ? process.env["INPUT_JPEGQUALITY"] : 80;
-const PNG_QUALITY = process.env["INPUT_PNGQUALITY"] ? process.env["INPUT_PNGQUALITY"] : 80;
-const WEBP_QUALITY = process.env["INPUT_WEBPQUALITY"] ? process.env["INPUT_WEBPQUALITY"] : 80;
-const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"] ? process.env["INPUT_IGNOREPATHS"].split(",") : ["nodemodules/**"];
+const JPEG_QUALITY = process.env["INPUT_JPEGQUALITY"] || 80;
+const PNG_QUALITY = process.env["INPUT_PNGQUALITY"] || 80;
+const WEBP_QUALITY = process.env["INPUT_WEBPQUALITY"] || 80;
+const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"].split(",") || ["node_modules/**"];
 
 const COMMITTER = {
   name: "Calibre",
