@@ -1,6 +1,6 @@
 const path = require("path");
 
-const GITHUB_TOKEN = process.env["INPUT_GITHUBTOKEN"] ? process.env["INPUT_GITHUBTOKEN"] : process.env["GITHUB_TOKEN"];
+const GITHUB_TOKEN = process.env["INPUT_GITHUBTOKEN"] || process.env["GITHUB_TOKEN"];
 const GITHUB_EVENT_NAME = process.env["GITHUB_EVENT_NAME"];
 const GITHUB_EVENT_PATH = process.env["GITHUB_EVENT_PATH"];
 const GITHUB_SHA = process.env["GITHUB_SHA"];
