@@ -50,11 +50,29 @@ Change the configuration options by adding arguments to the action:
     webpQuality: 80
     ignorePaths: "node_modules/**,build"
     # No spaces allowed
+    configPath: ".github/config/image-actions.yml"
 ```
 
-- The above configuation is what `image-actions` uses by default
+Or you can use a `YAML` file for configuration:
+
+```yml
+jpeg:
+  quality: 80
+png:
+  quality: 80
+webp:
+  quality: 80
+ignorePaths:
+  - "node_modules/**"
+```
+
+> Note: This file by default is looked for in `.github/calibre/image-actions.yml`, but this can be changed by specifing the `configPath` key.
+> Also, if you are using a `YAML` file and have specified conflicting options in the `workflow.yml` , the options in the `YAML` file take precedence.
+
+- The above configuration is what `image-actions` uses by default
 - The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
 - `ignorePaths` allows for path globbing [see the glob package for more details](https://www.npmjs.com/package/glob)
+- `configPath` allows you to specify a path for the configuration to be read from.
 
 ## Links and Resources
 
