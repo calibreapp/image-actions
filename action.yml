@@ -25,7 +25,12 @@ inputs:
   ignorePaths:
     description: 'Paths to ignore during search'
     required: false
-    default: "nodemodules/**"
+    default: "node_modules/**"
+
+  configPath:
+    description: 'Path to YAML config file'
+    required: false
+    default: ".github/calibre/image-actions.yml"
 
 runs:
   using: 'docker'
