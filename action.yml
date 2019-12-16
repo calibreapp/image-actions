@@ -10,17 +10,17 @@ inputs:
   jpegQuality:
     description: 'JPEG quality level'
     required: false
-    default: 80
+    default: '80'
 
   pngQuality:
     description: 'PNG quality level'
     required: false
-    default: 80
+    default: '80'
 
   webpQuality:
     description: 'WEBP quality level'
     required: false
-    default: 80
+    default: '80'
 
   ignorePaths:
     description: 'Paths to ignore during search'
