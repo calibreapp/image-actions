@@ -19,7 +19,8 @@ const getConfig = async () => {
     jpeg: { quality: 80 },
     png: { quality: 80 },
     webp: { quality: 80 },
-    ignorePaths: ["node_modules/**"]
+    ignorePaths: ["node_modules/**"],
+    significantCompressionPercent: 1
   };
 
   const ymlConfig = await getYamlConfig();

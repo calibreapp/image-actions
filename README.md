@@ -47,11 +47,13 @@ webp:
   quality: 80
 ignorePaths:
   - "node_modules/**"
+significantCompressionPercent: 1
 ```
 
 - The above configuation is what `image-actions` uses by default
 - The `jpeg`, `png` and `webp` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
 - `ignorePaths` allows for path globbing [see the glob package for more details](https://www.npmjs.com/package/glob)
+- Images with a compression yield less than `significantCompressionPercent` will not be committed
 
 ## Links and Resources
 
