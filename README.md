@@ -61,9 +61,9 @@ image-actions is designed to run for each pull request. On some repositories, im
 name: Compress images
 on: pull_request
   paths:
-    - **.jpg
-    - **.png
-    - **.webp
+    - '**.jpg'
+    - '**.png'
+    - '**.webp'
 ```
 
 The above workflow will only run image-actions when `jpg`, `png` or `webp` files are changed.
