@@ -55,7 +55,7 @@ ignorePaths:
 
 ## Running the action only when images are changed
 
-`image-actions` is designed to run for each Pull Request. In some repositories, images are seldom updated. To run the action only when images have changed, use GitHub Action’s `[on.push.paths](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths)` workflow configuration:
+`image-actions` is designed to run for each Pull Request. In some repositories, images are seldom updated. To run the action only when images have changed, use GitHub Action’s [`on.push.paths`](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths) workflow configuration:
 
 ```yml
 name: Compress images
