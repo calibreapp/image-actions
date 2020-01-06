@@ -53,9 +53,9 @@ ignorePaths:
 - The `jpeg`, `png` and `webp` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
 - `ignorePaths` allows for path globbing [see the glob package for more details](https://www.npmjs.com/package/glob)
 
-## Running image-actions ONLY when images are changed
+## Running the action only when images are changed
 
-image-actions is designed to run for each pull request. On some repositories, images are seldom updated. To run image-actions only when images have been changed, use GitHub action's `[on.push.paths](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths)` workflow configuration:
+`image-actions` is designed to run for each Pull Request. In some repositories, images are seldom updated. To run the action only when images have changed, use GitHub Action’s `[on.push.paths](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths)` workflow configuration:
 
 ```yml
 name: Compress images
@@ -66,7 +66,7 @@ on: pull_request
     - '**.webp'
 ```
 
-The above workflow will only run image-actions when `jpg`, `png` or `webp` files are changed.
+The above workflow will only run when `jpg`, `png` or `webp` files are changed.
 
 ## Links and Resources
 
