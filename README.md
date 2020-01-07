@@ -59,11 +59,12 @@ ignorePaths:
 
 ```yml
 name: Compress images
-on: pull_request
-  paths:
-    - '**.jpg'
-    - '**.png'
-    - '**.webp'
+on: 
+  pull_request:
+    paths:
+      - '**.jpg'
+      - '**.png'
+      - '**.webp'
 ```
 
 The above workflow will only run when `jpg`, `png` or `webp` files are changed.
