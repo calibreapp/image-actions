@@ -11,8 +11,8 @@ const {
   EXTENSION_TO_SHARP_FORMAT_MAPPING
 } = require("./constants");
 
-const processImages = async () => {
-  const config = await getConfig();
+const processImages = async (configOverride = {}) => {
+  const config = { ...(await getConfig()), ...configOverride };
   const imagePaths = await glob(`${REPO_DIRECTORY}/**/*.{jpg,png,webp}`, {
     ignore: config.ignorePaths.map(p => path.resolve(REPO_DIRECTORY, p)),
     nodir: true
@@ -44,7 +44,7 @@ const processImages = async () => {
     const percentChange = (afterStats / beforeStats) * 100 - 100;
 
     // Add a flag to tell if the optimisation was worthwhile
-    const compressionWasSignificant = percentChange < -1;
+    const compressionWasSignificant = percentChange < (config.significantCompressionPercent * -1);
 
     images.push({
       name,

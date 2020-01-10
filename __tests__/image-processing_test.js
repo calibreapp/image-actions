@@ -66,3 +66,36 @@ test("returns images with stats", async () => {
     }
   ]);
 });
+
+test("obeys significantCompressionPercent config", async () => {
+  const results = await imageProcessing({
+    significantCompressionPercent: 63
+  });
+
+  expect(results.images).toEqual([
+    {
+      afterStats: 3361,
+      beforeStats: 8914,
+      compressionWasSignificant: false,
+      name: "icon.png",
+      path: "__tests__/test-images/icon.png",
+      percentChange: -62.29526587390622
+    },
+    {
+      afterStats: 3361,
+      beforeStats: 3361,
+      compressionWasSignificant: false,
+      name: "optimised-image.png",
+      path: "__tests__/test-images/optimised-image.png",
+      percentChange: 0
+    },
+    {
+      afterStats: 485759,
+      beforeStats: 468895,
+      compressionWasSignificant: false,
+      name: "roo.jpg",
+      path: "__tests__/test-images/roo.jpg",
+      percentChange: 3.596540803378147
+    }
+  ]);
+});
