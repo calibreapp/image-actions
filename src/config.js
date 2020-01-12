@@ -14,7 +14,6 @@ const getYamlConfig = async () => {
     const text = await fs.readFile(CONFIG_PATH);
     return yaml.safeLoad(text);
   } catch (err) {
-    console.error("::warning::", CONFIG_PATH, "not found", err);
     return undefined;
   }
 };
@@ -32,11 +31,19 @@ const getConfig = async () => {
     ? Object.assign(defaultConfig, ymlConfig)
     : defaultConfig;
 
+  if (ymlConfig) {
+    console.error("::warning:: using image-actions.yml for configuration is deprecated. See https://github.com/calibreapp/image-actions for the latest configuration options.");
+  }
+
   console.log(
     "->> Checking for config at",
     CONFIG_PATH,
     !ymlConfig ? "Not found" : "Found!"
   );
+
+  if (ymlConfig) {
+    console.error("::warning:: Using image-actions.yml for configuration is deprecated. See https://github.com/calibreapp/image-actions for the latest configuration options.");
+  }
 
   console.log("->> Using config:", JSON.stringify(config));
 

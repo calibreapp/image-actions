@@ -1,41 +1,36 @@
-name: 'Image Actions'
-author: 'Calibre'
-description: 'Compresses Images for the Web'
+name: "Image Actions"
+author: "Calibre"
+description: "Compresses Images for the Web"
 
 inputs:
   githubToken:
-    description: 'GitHub Token'
+    description: "GitHub Token"
     required: true
 
   jpegQuality:
-    description: 'JPEG quality level'
+    description: "JPEG quality level"
     required: false
-    default: '80'
+    default: "80"
 
   pngQuality:
-    description: 'PNG quality level'
+    description: "PNG quality level"
     required: false
-    default: '80'
+    default: "80"
 
   webpQuality:
-    description: 'WEBP quality level'
+    description: "WEBP quality level"
     required: false
-    default: '80'
+    default: "80"
 
   ignorePaths:
-    description: 'Paths to ignore during search'
+    description: "Paths to ignore during search"
     required: false
     default: "node_modules/**"
 
-  configPath:
-    description: 'Path to YAML config file'
-    required: false
-    default: ".github/calibre/image-actions.yml"
-
 runs:
-  using: 'docker'
-  image: 'docker://calibreapp/github-image-actions' 
+  using: "docker"
+  image: "docker://calibreapp/github-image-actions" 
 
 branding:
-  icon: image
-  color: green
+  icon: "image"
+  color: "green"

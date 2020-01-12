@@ -26,7 +26,7 @@ if (!REPO_DIRECTORY) {
 
 const CONFIG_PATH = path.join(
   REPO_DIRECTORY,
-  process.env["INPUT_CONFIPATH"] || ".github/calibre/image-actions.yml"
+  ".github/calibre/image-actions.yml"
 );
 
 const EXTENSION_TO_SHARP_FORMAT_MAPPING = {
