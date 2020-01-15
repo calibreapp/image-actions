@@ -34,7 +34,7 @@ const processImages = async () => {
 
       await fs.writeFile(imgPath, processedImageBuffer);
     } catch (e) {
-      console.error(e);
+      console.error("::error:: ", e);
       continue;
     }
 

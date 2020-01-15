@@ -2,24 +2,28 @@ const fs = require("fs").promises;
 
 const yaml = require("js-yaml");
 
-const { CONFIG_PATH } = require("./constants");
+const { CONFIG_PATH,
+  JPEG_QUALITY,
+  PNG_QUALITY,
+  WEBP_QUALITY,
+  IGNORE_PATHS
+} = require("./constants");
 
 const getYamlConfig = async () => {
   try {
     const text = await fs.readFile(CONFIG_PATH);
     return yaml.safeLoad(text);
   } catch (err) {
-    console.error(CONFIG_PATH, "not found", err);
     return undefined;
   }
 };
 
 const getConfig = async () => {
   const defaultConfig = {
-    jpeg: { quality: 80 },
-    png: { quality: 80 },
-    webp: { quality: 80 },
-    ignorePaths: ["node_modules/**"]
+    jpeg: { quality: JPEG_QUALITY },
+    png: { quality: PNG_QUALITY },
+    webp: { quality: WEBP_QUALITY },
+    ignorePaths: IGNORE_PATHS
   };
 
   const ymlConfig = await getYamlConfig();
@@ -32,6 +36,10 @@ const getConfig = async () => {
     CONFIG_PATH,
     !ymlConfig ? "Not found" : "Found!"
   );
+
+  if (ymlConfig) {
+    console.error("::warning:: Using image-actions.yml for configuration is deprecated. See https://github.com/calibreapp/image-actions for the latest configuration options.");
+  }
 
   console.log("->> Using config:", JSON.stringify(config));
 
