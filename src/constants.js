@@ -12,7 +12,7 @@ const REPO_DIRECTORY = process.env["GITHUB_WORKSPACE"];
 const JPEG_QUALITY = parseInt(process.env["INPUT_JPEGQUALITY"]) || 80;
 const PNG_QUALITY = parseInt(process.env["INPUT_PNGQUALITY"]) || 80;
 const WEBP_QUALITY = parseInt(process.env["INPUT_WEBPQUALITY"]) || 80;
-const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"].split(",") || ["node_modules/**"];
+const IGNORE_PATHS = JSON.parse(process.env["INPUT_IGNOREPATHS"] || '["node_modules/**"]');
 
 const COMMITTER = {
   name: "Calibre",

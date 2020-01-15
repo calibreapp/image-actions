@@ -46,11 +46,10 @@ Change the configuration options by adding arguments to the action:
   uses: calibreapp/image-actions@master
   with:
     githubToken: ${{ secrets.GITHUB_TOKEN }}
-    jpegQuality: "80"
-    pngQuality: "80"
-    webpQuality: "80"
-    ignorePaths: "node_modules/**,build"
-    # No spaces allowed
+    jpegQuality: '80'
+    pngQuality: '80'
+    webpQuality: '80'
+    ignorePaths: '["node_modules/**", "build"]'
 ```
 
 Previous versions of image-actions used .github/config/image-actions.yml for configuration. 
