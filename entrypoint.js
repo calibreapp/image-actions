@@ -5,14 +5,14 @@ const { GITHUB_TOKEN, GITHUB_EVENT_NAME } = require("./src/constants");
 const githubEvent = require("./src/github-event");
 const run = require("./src/index.js");
 
-if (!GITHUB_TOKEN && GITHUB_EVENT_NAME == "pull_request" ) {
+if (!GITHUB_TOKEN && GITHUB_EVENT_NAME == "pull_request") {
   console.log("::error:: You must provide the GITHUB_TOKEN secret");
   process.exit(1);
 }
 
 const main = async () => {
   // Bail out if the event that executed the action wasn’t a pull_request or a push
-  if (GITHUB_EVENT_NAME !== "pull_request" && GITHUB_EVENT_NAME != "push") {
+  if (GITHUB_EVENT_NAME !== "pull_request" && GITHUB_EVENT_NAME !== "push") {
     console.log("::error:: This action only runs for pushes or PRs");
     process.exit(78);
   }

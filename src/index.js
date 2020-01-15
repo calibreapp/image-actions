@@ -20,7 +20,7 @@ const run = async () => {
     return;
   }
 
-  if (GITHUB_EVENT_NAME == "pull_request" ) {
+  if (GITHUB_EVENT_NAME == "pull_request") {
     console.log("->> Generating markdown…");
     const markdown = await generateMarkdownReport(results);
 
