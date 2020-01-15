@@ -31,10 +31,6 @@ const getConfig = async () => {
     ? Object.assign(defaultConfig, ymlConfig)
     : defaultConfig;
 
-  if (ymlConfig) {
-    console.error("::warning:: using image-actions.yml for configuration is deprecated. See https://github.com/calibreapp/image-actions for the latest configuration options.");
-  }
-
   console.log(
     "->> Checking for config at",
     CONFIG_PATH,

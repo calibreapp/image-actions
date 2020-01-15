@@ -14,7 +14,7 @@ const run = async () => {
 
   // If nothing was optimised, bail out.
   if (!optimisedImages.length) {
-    console.log("Nothing left to optimise. Stopping…");
+    console.log("::warning:: Nothing left to optimise. Stopping…");
     return;
   }
 

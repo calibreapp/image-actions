@@ -9,9 +9,9 @@ const GITHUB_REPOSITORY = process.env["GITHUB_REPOSITORY"];
 
 const REPO_DIRECTORY = process.env["GITHUB_WORKSPACE"];
 
-const JPEG_QUALITY = process.env["INPUT_JPEGQUALITY"] || 80;
-const PNG_QUALITY = process.env["INPUT_PNGQUALITY"] || 80;
-const WEBP_QUALITY = process.env["INPUT_WEBPQUALITY"] || 80;
+const JPEG_QUALITY = parseInt(process.env["INPUT_JPEGQUALITY"]) || 80;
+const PNG_QUALITY = parseInt(process.env["INPUT_PNGQUALITY"]) || 80;
+const WEBP_QUALITY = parseInt(process.env["INPUT_WEBPQUALITY"]) || 80;
 const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"].split(",") || ["node_modules/**"];
 
 const COMMITTER = {
@@ -20,7 +20,7 @@ const COMMITTER = {
 };
 
 if (!REPO_DIRECTORY) {
-  console.log("::error::There is no GITHUB_WORKSPACE environment variable");
+  console.log("::error:: There is no GITHUB_WORKSPACE environment variable");
   process.exit(1);
 };
 

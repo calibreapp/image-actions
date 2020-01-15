@@ -23,7 +23,7 @@ const processImages = async () => {
   for await (const imgPath of imagePaths) {
     const extension = path.extname(imgPath);
     const sharpFormat = EXTENSION_TO_SHARP_FORMAT_MAPPING[extension];
-    const options = config[sharpFormat].options;
+    const options = config[sharpFormat];
     const beforeStats = (await fs.stat(imgPath)).size;
     console.log("    - Processing:", imgPath);
 
@@ -34,7 +34,7 @@ const processImages = async () => {
 
       await fs.writeFile(imgPath, processedImageBuffer);
     } catch (e) {
-      console.error(e);
+      console.error("::error:: ", e);
       continue;
     }
 
