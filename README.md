@@ -53,7 +53,7 @@ Change the configuration options by adding arguments to the action:
     # No spaces allowed
 ```
 
-Previous versions of image-actions used .github/config/image-actions.yml for configuration. 
+Previous versions of image-actions used `.github/config/image-actions.yml` for configuration. 
 If you're still using that configuration method we suggest that you update it.
 
 - The above configuration is what `image-actions` uses by default
