@@ -3,6 +3,7 @@ const fs = require("fs").promises;
 const yaml = require("js-yaml");
 
 const { CONFIG_PATH,
+  CONFIG_FILE,
   JPEG_QUALITY,
   PNG_QUALITY,
   WEBP_QUALITY,
@@ -18,6 +19,15 @@ const getYamlConfig = async () => {
   }
 };
 
+const getJsonConfig = async () => {
+  try {
+    const text = await fs.readFile(CONFIG_FILE);
+    return JSON.parse(text);
+  } catch (err) {
+    return undefined;
+  }
+};
+
 const getConfig = async () => {
   const defaultConfig = {
     jpeg: { quality: JPEG_QUALITY },
@@ -27,14 +37,17 @@ const getConfig = async () => {
   };
 
   const ymlConfig = await getYamlConfig();
-  const config = ymlConfig
+  const jsonConfig = await getJsonConfig();
+  const config = jsonConfig
+    ? Object.assign(defaultConfig, jsonConfig)
+    : ymlConfig
     ? Object.assign(defaultConfig, ymlConfig)
     : defaultConfig;
 
   console.log(
     "->> Checking for config at",
     CONFIG_PATH,
-    !ymlConfig ? "Not found" : "Found!"
+    !jsonConfig ? !ymlConfig ? "Not found" : "Found!" : "Found!"
   );
 
   if (ymlConfig) {

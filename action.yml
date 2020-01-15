@@ -27,6 +27,10 @@ inputs:
     required: false
     default: '["node_modules/**"]'
 
+  configFile:
+    description: 'JSON file containing advanced configuration'
+    required: false
+
 runs:
   using: 'docker'
   image: 'docker://calibreapp/github-image-actions' 

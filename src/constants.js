@@ -30,6 +30,11 @@ const CONFIG_PATH = path.join(
   ".github/calibre/image-actions.yml"
 );
 
+const CONFIG_FILE = path.join(
+  REPO_DIRECTORY,
+  process.env["INPUT_CONFIGFILE"]
+);
+
 const EXTENSION_TO_SHARP_FORMAT_MAPPING = {
   ".png": "png",
   ".jpeg": "jpeg",
