@@ -50,14 +50,29 @@ Change the configuration options by adding arguments to the action:
     pngQuality: '80'
     webpQuality: '80'
     ignorePaths: '["node_modules/**", "build"]'
+    configFile: '.github/workflow/image-config.json'
 ```
 
 Previous versions of image-actions used `.github/config/image-actions.yml` for configuration. 
 If you're still using that configuration method we suggest that you update it.
 
 - The above configuration is what `image-actions` uses by default
-- The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
+- The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`.
 - `ignorePaths` allows for path globbing [see the glob package for more details](https://www.npmjs.com/package/glob)
+- `configFile` allows you to specify a JSON file containing more advanced options that will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat`. ([JPEG options](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg), [PNG options](http://sharp.pixelplumbing.com/en/stable/api-output/#png), [Webp options](http://sharp.pixelplumbing.com/en/stable/api-output/#webp))
+
+  ```JSON
+  {
+    "jpeg": {
+      "quality": 90,
+      "progressive": true
+    },
+    "png": {
+      "quality": 80
+    }
+  }
+  ```
+
 
 ## Running the action only when images are changed
 
