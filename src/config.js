@@ -46,7 +46,7 @@ const getConfig = async () => {
 
   console.log(
     "->> Checking for config at",
-    CONFIG_PATH,
+    process.env["INPUT_CONFIGFILE"] ? CONFIG_FILE : CONFIG_PATH,
     !jsonConfig ? !ymlConfig ? "Not found" : "Found!" : "Found!"
   );
 
