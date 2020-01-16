@@ -56,7 +56,7 @@ If you would like to modify the defaults, update the `.github/workflows/calibrea
 - [jpegQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Number, integer 1-100, default 80 stroed in a string
 - [pngQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#png): Number, integer 1-100, default 80 stored in a string
 - [webpQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#webp): Number, integer 1-100, default 80 stored in a string
-- ignorePaths: a comma seperated string with [globbing](https://www.npmjs.com/package/glob) support of paths to ignore when looking for images to compress
+- `ignorePaths`: a comma separated string with [globbing](https://www.npmjs.com/package/glob) support of paths to ignore when looking for images to compress
 
 _The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat` method._
 
