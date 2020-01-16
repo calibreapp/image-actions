@@ -13,7 +13,7 @@ _image actions in action_
 
 ## Installation
 
-1. Create the `.github/workflows/calibreapp-image-actions.yml` file with the following configuration
+Create the `.github/workflows/calibreapp-image-actions.yml` file with the following configuration
 
 ```yml
 name: Compress images
