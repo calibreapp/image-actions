@@ -80,7 +80,7 @@ The above workflow will only run on a pull request when `jpg`, `png` or `webp` f
 
 ## Migrate legacy configuration
 
-1. uses: docker://calibreapp/github-image-actions
+- uses: docker://calibreapp/github-image-actions
 
     If your calibreapp-image-actions.yml file has a reference to `docker://` or `GITHUB_TOKEN` like below
 
@@ -100,11 +100,11 @@ The above workflow will only run on a pull request when `jpg`, `png` or `webp` f
         githubToken: ${{ secrets.GITHUB_TOKEN }}
     ```
 
-1. `.github/calibre/image-actions.yml`
+- `.github/calibre/image-actions.yml`
 
-    If you have an `image-actions.yml` migrate the configuration options from `.github/calibre/image-actions.yml` into `.github/workflows/calibreapp-image-actions.yml`. The settings should be placed in the Compress images name in the with section. Then delete the `image-actions.yml` file.
+    If your repository uses `.github/calibre/image-actions.yml` for configuration, it should be moved into  `.github/workflows/calibreapp-image-actions.yml`. Then delete the `image-actions.yml` file.
 
-    `ignorePaths` is no longer an array and is now a comma separated list
+    `ignorePaths` is no longer an array and is now a comma separated list. eg: `ignorePaths: "node_modules/**,bin"`
 
 ## Links and Resources
 
