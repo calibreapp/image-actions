@@ -60,7 +60,7 @@ If you would like to modify the defaults, update the `.github/workflows/calibrea
 
 _The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered directly into [sharp’s](http://sharp.pixelplumbing.com) `toFormat` method._
 
-Previous versions of image-actions used `.github/calibre/image-actions.yml` for configuration. We suggest that you migrate to the newest configuration format by reading the [migration steps](#migration-steps) below.
+Previous versions of image-actions used `.github/calibre/image-actions.yml` for configuration. We suggest that you migrate to the newest configuration format by reading the [migration steps](#migration-legacy-configuration) below.
 
 ### Running the action only when images are changed
 
@@ -78,31 +78,33 @@ on:
 
 The above workflow will only run on a pull request when `jpg`, `png` or `webp` files are changed.
 
-## Migration Steps
+## Migrate legacy configurtion
 
-### .github/workflows/calibreapp-image-actions.yml
+1. uses: docker://calibreapp/github-image-actions
 
-```yml
-- name: calibreapp/image-actions
-   uses: docker://calibreapp/github-image-actions
-   env:
-     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
+    If your calibreapp-image-actions.yml file has a reference to `docker://` or `GITHUB_TOKEN` like below
 
-is now
+    ```yml
+    - name: calibreapp/image-actions
+       uses: docker://calibreapp/github-image-actions
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    ```
 
-```yml
-- name: Compress images
-  uses: calibreapp/image-actions@master
-  with:
-    githubToken: ${{ secrets.GITHUB_TOKEN }}
-```
+    Update your configuration to match the following
 
-### .github/calibre/image-actions.yml
+    ```yml
+    - name: Compress images
+      uses: calibreapp/image-actions@master
+      with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+    ```
 
-Migrate the configuration options from `.github/calibre/image-actions.yml` into `.github/workflows/calibreapp-image-actions.yml`. Then delete the `image-actions.yml` file.
+1. `.github/calibre/image-actions.yml`
 
-`ignorePaths` is no longer an array and is now a comma separated list
+    If you have an `image-actions.yml` migrate the configuration options from `.github/calibre/image-actions.yml` into `.github/workflows/calibreapp-image-actions.yml`. The settings should be placed in the Compress images name in the with section. Then delete the `image-actions.yml` file.
+
+    `ignorePaths` is no longer an array and is now a comma separated list
 
 ## Links and Resources
 
