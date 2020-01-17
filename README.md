@@ -2,13 +2,13 @@
 
 Image Actions automatically compress JPEG, PNG and WebP images in GitHub Pull Requests.
 
-- It is **fast and efficient with near-lossless compression**
-- It uses the best image compression algorithms available from [mozjpeg](https://github.com/mozilla/mozjpeg) and [libvips](https://github.com/libvips/libvips)
-- It is configurable and extensible with sensible default settings that can be adapted to your needs
-- It runs in [GitHub Actions](https://github.com/features/actions)
-- It is built by web performance experts at [Calibre](https://calibreapp.com/); a performance monitoring platform
+- **Fast, efficient and near-lossless compression**
+- Uses the best image compression algorithms available: [mozjpeg](https://github.com/mozilla/mozjpeg) and [libvips](https://github.com/libvips/libvips)
+- Configurable and extensible: use default settings or adapt to your needs
+- Runs in [GitHub Actions](https://github.com/features/actions)
+- Built by web performance experts at [Calibre](https://calibreapp.com/); a  performance monitoring platform
 
-_image actions in action_  
+_image actions in action_
 ![Preview of image-actions Pull Request comment](https://user-images.githubusercontent.com/924/62024579-e1470d00-b218-11e9-8655-693ea42ba0f7.png)
 
 ## Installation
@@ -68,7 +68,7 @@ image-actions is designed to run for each Pull Request. In some repositories, im
 
 ```yml
 name: Compress images
-on: 
+on:
   pull_request:
     paths:
       - '**.jpg'
@@ -84,12 +84,12 @@ The above workflow will only run on a pull request when `jpg`, `png` or `webp` f
 
 ```yml
 - name: calibreapp/image-actions
-   uses: docker://calibreapp/github-image-actions	
+   uses: docker://calibreapp/github-image-actions
    env:
      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-is now 
+is now
 
 ```yml
 - name: Compress images
