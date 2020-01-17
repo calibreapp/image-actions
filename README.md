@@ -78,7 +78,7 @@ on:
 
 The above workflow will only run on a pull request when `jpg`, `png` or `webp` files are changed.
 
-## Migrate legacy configurtion
+## Migrate legacy configuration
 
 1. uses: docker://calibreapp/github-image-actions
 
