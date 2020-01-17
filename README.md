@@ -62,7 +62,7 @@ _The `jpegQuality`, `pngQuality` and `webpQuality` config keys will be delivered
 
 Previous versions of image-actions used `.github/calibre/image-actions.yml` for configuration. We suggest that you migrate to the newest configuration format by reading the [migration steps](#migration-steps) below.
 
-### Action Triggers
+### Running the action only when images are changed
 
 image-actions is designed to run for each Pull Request. In some repositories, images are seldom updated. To run the action only when images have changed, use GitHub Action’s [`on.push.paths`](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths) workflow configuration:
 
