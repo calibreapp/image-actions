@@ -4,7 +4,12 @@ const fs = require("fs").promises;
 const EXAMPLE_IMAGES_DIR = `${process.cwd()}/__tests__/example-images`;
 const TMP_TEST_IMAGES_DIR = `${process.cwd()}/__tests__/test-images`;
 
-const EXAMPLE_IMAGES = ["roo.jpg", "icon.png", "optimised-image.png"];
+const EXAMPLE_IMAGES = [
+  "roo.webp",
+  "roo.jpg",
+  "icon.png",
+  "optimised-image.png"
+];
 
 beforeEach(async () => {
   await fs.mkdir(TMP_TEST_IMAGES_DIR);
@@ -63,6 +68,14 @@ test("returns images with stats", async () => {
       name: "roo.jpg",
       path: "__tests__/test-images/roo.jpg",
       percentChange: 3.596540803378147
+    },
+    {
+      afterStats: 216704,
+      beforeStats: 248598,
+      compressionWasSignificant: true,
+      name: "roo.webp",
+      path: "__tests__/test-images/roo.webp",
+      percentChange: -12.829548105777207
     }
   ]);
 });
