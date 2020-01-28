@@ -8,12 +8,17 @@ const getConfig = require("./config");
 
 const {
   REPO_DIRECTORY,
-  EXTENSION_TO_SHARP_FORMAT_MAPPING
+  EXTENSION_TO_SHARP_FORMAT_MAPPING,
+  FILE_EXTENSIONS_TO_PROCESS
 } = require("./constants");
 
 const processImages = async () => {
   const config = await getConfig();
-  const imagePaths = await glob(`${REPO_DIRECTORY}/**/*.{jpg,png,webp}`, {
+  const globPaths = `${REPO_DIRECTORY}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
+    ","
+  )}}`;
+
+  const imagePaths = await glob(globPaths, {
     ignore: config.ignorePaths.map(p => path.resolve(REPO_DIRECTORY, p)),
     nodir: true
   });
