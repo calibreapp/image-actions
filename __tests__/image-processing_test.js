@@ -12,7 +12,11 @@ const EXAMPLE_IMAGES = [
 ];
 
 beforeEach(async () => {
-  await fs.mkdir(TMP_TEST_IMAGES_DIR);
+  try {
+    await fs.mkdir(TMP_TEST_IMAGES_DIR);
+  } catch (e) {
+    console.log(TMP_TEST_IMAGES_DIR, "already exists");
+  }
 
   // Copy in reference images for stats
   for await (const image of EXAMPLE_IMAGES) {
