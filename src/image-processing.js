@@ -12,7 +12,16 @@ const {
   FILE_EXTENSIONS_TO_PROCESS
 } = require("./constants");
 
+const printSharpInfo = () => {
+  console.log("=== Sharp library info ===");
+  console.log(sharp.versions);
+  console.log(sharp.format);
+  console.log("=== Sharp library info ===");
+};
+
 const processImages = async () => {
+  printSharpInfo();
+
   const config = await getConfig();
   const globPaths = `${REPO_DIRECTORY}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
     ","
