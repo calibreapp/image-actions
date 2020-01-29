@@ -30,7 +30,10 @@ RUN apt-get update \
     wget \
     git \
     pkg-config \
-    curl
+    curl \
+    gtk-doc-tools \
+    swig \
+    gobject-introspection
 
 RUN cd /usr/local/src \
   && wget ${MOZJPEG_URL}/v${MOZJPEG_VERSION}.tar.gz \
@@ -49,13 +52,22 @@ RUN cd /usr/local/src/mozjpeg-${MOZJPEG_VERSION} \
 # we must not use any packages which depend directly or indirectly on libjpeg,
 # since we want to use our own mozjpeg build 
 RUN apt-get install -y \
+  libxml2-dev \
+  libfftw3-dev \
+  libmagickwand-dev \
+  libopenexr-dev \
+  libgsf-1-dev \
+  liborc-0.4-0 \
+  liborc-dev \
   libglib2.0-dev \
   libexpat-dev \
   libpng-dev \
   libgif-dev \
+  libwebp-dev \
+  libheif-dev \
   libexif-dev \
   liblcms2-dev \
-  liborc-dev
+  libimagequant-dev
 
 RUN cd /usr/local/src \
   && wget ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.gz \
