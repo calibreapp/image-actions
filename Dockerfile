@@ -73,10 +73,8 @@ RUN cd /usr/local/src \
   && wget ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.gz \
   && tar xzf vips-${VIPS_VERSION}.tar.gz
 
-# libvips is marked up for auto-vectorisation ... -O3 is the optimisation
-# level that enables this for gcc
 RUN cd /usr/local/src/vips-${VIPS_VERSION} \
-  && CFLAGS=-O3 CXXFLAGS=-O3 ./configure \
+  && ./autogen.sh \
   && make \
   && make install
 
