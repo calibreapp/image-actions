@@ -8,11 +8,15 @@ ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
 
 # mozjpeg installs to /opt/mozjpeg ... we need that on PKG_CONFIG_PATH so
 # that libvips configure can find it
-ENV PKG_CONFIG_PATH /opt/mozjpeg/lib64/pkgconfig
+ENV PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/mozjpeg/lib64/pkgconfig
 
 # libvips installs to /usr/local by default .. /usr/local/bin is on the
 # default path in ubuntu, but /usr/local/lib is not
-ENV LD_LIBRARY_PATH /usr/local/lib
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
+# expand
+ENV PATH=$PATH:/usr/local/bin
+ENV MANPATH=$MANPATH:/usr/local/man
 
 # basic build tools
 RUN apt-get update \
