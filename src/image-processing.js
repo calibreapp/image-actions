@@ -48,8 +48,8 @@ const processImages = async () => {
       console.log(
         "    - Processing:",
         imgPath,
-        JSON.stringify(options),
-        JSON.stringify(info)
+        `config=${JSON.stringify(options)}`,
+        `output=${JSON.stringify(info)}`
       );
 
       await fs.writeFile(imgPath, data);
