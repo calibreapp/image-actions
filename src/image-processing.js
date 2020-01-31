@@ -56,7 +56,7 @@ const processImages = async () => {
 
       // Remove the /github/home/ path (including the slash)
       const name = imgPath.replace(REPO_DIRECTORY, "").replace(/\//, "");
-      const afterStats = (await fs.stat(imgPath)).size;
+      const afterStats = info.size;
       const percentChange = (afterStats / beforeStats) * 100 - 100;
 
       // Add a flag to tell if the optimisation was worthwhile
