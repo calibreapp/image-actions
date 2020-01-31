@@ -8,7 +8,6 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
 - Runs in [GitHub Actions](https://github.com/features/actions)
 - Built by web performance experts at [Calibre](https://calibreapp.com/); a performance monitoring platform
 
-_image actions in action_
 ![Preview of image-actions Pull Request comment](https://user-images.githubusercontent.com/924/62024579-e1470d00-b218-11e9-8655-693ea42ba0f7.png)
 
 ### Table of Contents
