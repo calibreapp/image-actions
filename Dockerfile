@@ -1,4 +1,4 @@
-FROM ubuntu:cosmic
+FROM ubuntu:xenial
 
 ARG MOZJPEG_VERSION=3.3.1
 ARG VIPS_VERSION=8.7.2
