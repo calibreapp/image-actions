@@ -30,9 +30,9 @@ const main = async () => {
       );
       process.exit(78);
     }
+  }
 
-    await run();
-  };
+  await run();
 };
 
 main();
