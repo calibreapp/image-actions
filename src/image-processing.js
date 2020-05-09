@@ -4,15 +4,12 @@ const path = require("path");
 const glob = util.promisify(require("glob"));
 const sharp = require("sharp");
 
-const getConfig = require("./config");
-
 const {
   REPO_DIRECTORY,
   EXTENSION_TO_SHARP_FORMAT_MAPPING
 } = require("./constants");
 
-const processImages = async () => {
-  const config = await getConfig();
+const processImages = async config => {
   const imagePaths = await glob(`${REPO_DIRECTORY}/**/*.{jpg,png,webp}`, {
     ignore: config.ignorePaths.map(p => path.resolve(REPO_DIRECTORY, p)),
     nodir: true
