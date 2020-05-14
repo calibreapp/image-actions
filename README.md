@@ -17,17 +17,24 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Image quality settings](#image-quality-settings)
-  - [Run only when images files are added or changed](#run-only-when-images-files-are-added-or-changed)
   - [Migrate legacy configuration](#migrate-legacy-configuration)
   - [Links and Resources](#links-and-resources)
 
 ## Installation
 
-Create the `.github/workflows/calibreapp-image-actions.yml` file with the following configuration
+Create the `.github/workflows/calibreapp-image-actions.yml` file with the following configuration:
 
 ```yml
 name: Compress images
-on: pull_request
+on:
+  pull_request:
+    # Run image-actions when these types of files are updated
+    # See https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths
+    paths:
+      - "**.jpg"
+      - "**.jpeg"
+      - "**.png"
+      - "**.webp"
 jobs:
   build:
     name: calibreapp/image-actions
@@ -52,9 +59,7 @@ Previous versions of image-actions used `.github/calibre/image-actions.yml` for 
 
 ## Image quality settings
 
-However, if you’d like to ignore specific file paths, or change image compression options, read on.
-
-Change the configuration options by adding arguments to the action workflow definition:
+Set custom configuration by adding arguments to the action workflow definition:
 
 ```yml
 ...
@@ -69,40 +74,13 @@ Change the configuration options by adding arguments to the action workflow defi
     # No spaces allowed
 ```
 
-If you would like to modify the defaults, update the `.github/workflows/calibreapp-image-actions.yml` file by adding arguments to the action:
+Options:
 
 - [jpegQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Number, integer 1-100, default 80 stored in a string
 - [pngQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#png): Number, integer 1-100, default 80 stored in a string
 - [webpQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#webp): Number, integer 1-100, default 80 stored in a string
 - `ignorePaths`: a comma separated string with [globbing](https://www.npmjs.com/package/glob) support of paths to ignore when looking for images to compress
 
-## Run only when images files are added or changed
-
-image-actions is designed to run for each Pull Request. In some repositories, images are seldom updated. To run the action only when images have changed, use GitHub Action’s [`on.push.paths`](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths) workflow configuration:
-
-```yml
-name: Compress images
-on:
-  pull_request:
-    paths:
-      - "**.jpg"
-      - "**.png"
-      - "**.webp"
-jobs:
-  build:
-    name: calibreapp/image-actions
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-
-      - name: Compress Images
-        uses: calibreapp/image-actions@master
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-```
-
-The above workflow will only run on a pull request when `jpg`, `png` or `webp` files are changed.
 
 ## Migrate legacy configuration
 
