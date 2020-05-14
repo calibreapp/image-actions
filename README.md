@@ -28,7 +28,7 @@ Create the `.github/workflows/calibreapp-image-actions.yml` file with the follow
 name: Compress images
 on:
   pull_request:
-    # Run image-actions when these types of files are updated
+    # Run image-actions when jpg, jpeg, png or webp files are added or changed
     # See https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths
     paths:
       - "**.jpg"
