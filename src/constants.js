@@ -17,6 +17,8 @@ const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"]
   ? process.env["INPUT_IGNOREPATHS"].split(",")
   : ["node_modules/**"];
 
+const JPEG_PROGRESSIVE = process.env["INPUT_JPEGPROGRESSIVE"] === "true";
+
 const COMMITTER = {
   name: "Calibre",
   email: "hello@calibreapp.com"
