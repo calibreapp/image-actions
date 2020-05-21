@@ -13,7 +13,7 @@ inputs:
     default: "80"
 
   jpegProgressive:
-    description: "use progressive (interlaced) scan for JPEG"
+    description: "Use progressive (interlaced) scan for JPEG"
     required: false
     default: "false"
 
