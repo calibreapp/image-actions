@@ -30,7 +30,7 @@ inputs:
   compressOnly:
     description: "Only runs the compression, without adding to Pull Request"
     required: false
-    default: false
+    default: "false"
 
 outputs:
   markdown:

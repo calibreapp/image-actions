@@ -16,7 +16,7 @@ const WEBP_QUALITY = parseInt(process.env["INPUT_WEBPQUALITY"]) || 80;
 const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"]
   ? process.env["INPUT_IGNOREPATHS"].split(",")
   : ["node_modules/**"];
-const COMPRESS_ONLY = process.env["INPUT_COMPRESSONLY"] || false;
+const COMPRESS_ONLY = process.env["INPUT_COMPRESSONLY"] === "true";
 
 const COMMITTER = {
   name: "Calibre",
