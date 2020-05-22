@@ -4,6 +4,7 @@ const yaml = require("js-yaml");
 
 const { CONFIG_PATH,
   JPEG_QUALITY,
+  JPEG_PROGRESSIVE,
   PNG_QUALITY,
   WEBP_QUALITY,
   IGNORE_PATHS,
@@ -21,7 +22,7 @@ const getYamlConfig = async () => {
 
 const getConfig = async () => {
   const defaultConfig = {
-    jpeg: { quality: JPEG_QUALITY },
+    jpeg: { quality: JPEG_QUALITY, progressive: JPEG_PROGRESSIVE },
     png: { quality: PNG_QUALITY },
     webp: { quality: WEBP_QUALITY },
     ignorePaths: IGNORE_PATHS,
