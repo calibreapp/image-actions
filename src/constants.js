@@ -34,6 +34,7 @@ const CONFIG_PATH = path.join(
   ".github/calibre/image-actions.yml"
 );
 
+const FILE_EXTENSIONS_TO_PROCESS = ["jpeg", "jpg", "png", "webp"];
 const EXTENSION_TO_SHARP_FORMAT_MAPPING = {
   ".png": "png",
   ".jpeg": "jpeg",
@@ -50,6 +51,7 @@ module.exports = {
   GITHUB_REPOSITORY,
   REPO_DIRECTORY,
   CONFIG_PATH,
+  FILE_EXTENSIONS_TO_PROCESS,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
   COMMITTER,
   JPEG_QUALITY,
