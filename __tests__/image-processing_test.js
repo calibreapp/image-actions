@@ -40,8 +40,8 @@ test("returns metrics for images", async () => {
   const results = await imageProcessing();
 
   expect(results.metrics).toEqual({
-    bytesSaved: 265529,
-    percentChange: -54.30396263150145
+    bytesSaved: 259725,
+    percentChange: -53.11697288984146
   });
 });
 
@@ -74,12 +74,12 @@ test("returns images with stats", async () => {
       percentChange: 3.596540803378147
     },
     {
-      afterStats: 220078,
+      afterStats: 225882,
       beforeStats: 480054,
       compressionWasSignificant: true,
       name: "roo.webp",
       path: "__tests__/test-images/roo.webp",
-      percentChange: -54.15557416457315
+      percentChange: -52.94654351385469
     }
   ]);
 });

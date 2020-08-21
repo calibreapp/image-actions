@@ -1,7 +1,7 @@
 FROM ubuntu:eoan
 
 ARG MOZJPEG_VERSION=3.3.1
-ARG VIPS_VERSION=8.9.0
+ARG VIPS_VERSION=8.9.2
 
 ARG MOZJPEG_URL=https://github.com/mozilla/mozjpeg/archive
 ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
@@ -26,9 +26,7 @@ RUN apt-get update \
     automake \
     libtool \
     nasm \
-    unzip \
     wget \
-    git \
     pkg-config \
     curl \
     gtk-doc-tools \
