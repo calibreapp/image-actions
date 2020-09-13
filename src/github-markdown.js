@@ -14,7 +14,7 @@ const optimisedImageLine = async ({ image, commitSha }) => {
     commitSha,
   });
 
-  return `| \`${image.name}\` | ${beforeSize} | ${afterSize} | ${formattedPercentage} | [View diff](${diffUrl}) |`;
+  return `| \`${image.name}\` | ${beforeSize} | ${afterSize} | ${formattedPercentage} | [View](${diffUrl}) |`;
 };
 
 const optimisedImages = async ({ images, commitSha }) => {
