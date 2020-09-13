@@ -6,10 +6,10 @@ const createCommit = require("./github-commit");
 const run = async () => {
   console.log("->> Locating images…");
 
-  const results = await processImages();
+  const {images, metrics} = await processImages();
 
-  const optimisedImages = results.images.filter(
-    img => img.compressionWasSignificant
+  const optimisedImages = images.filter(
+    (img) => img.compressionWasSignificant
   );
 
   // If nothing was optimised, bail out.
@@ -18,11 +18,15 @@ const run = async () => {
     return;
   }
 
-  console.log("->> Generating markdown…");
-  const markdown = await generateMarkdownReport(results);
-
   console.log("->> Committing files…");
-  await createCommit(optimisedImages);
+  const { sha } = await createCommit(optimisedImages);
+
+  console.log("->> Generating markdown…");
+  const markdown = await generateMarkdownReport({
+    images,
+    metrics, 
+    commitSha: sha
+  });
 
   console.log("->> Leaving comment on PR…");
   await createComment(markdown);
