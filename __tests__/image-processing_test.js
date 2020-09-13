@@ -4,10 +4,19 @@ const fs = require("fs").promises;
 const EXAMPLE_IMAGES_DIR = `${process.cwd()}/__tests__/example-images`;
 const TMP_TEST_IMAGES_DIR = `${process.cwd()}/__tests__/test-images`;
 
-const EXAMPLE_IMAGES = ["roo.jpg", "icon.png", "optimised-image.png"];
+const EXAMPLE_IMAGES = [
+  "roo.webp",
+  "roo.jpg",
+  "icon.png",
+  "optimised-image.png"
+];
 
 beforeEach(async () => {
-  await fs.mkdir(TMP_TEST_IMAGES_DIR);
+  try {
+    await fs.mkdir(TMP_TEST_IMAGES_DIR);
+  } catch (e) {
+    console.log(TMP_TEST_IMAGES_DIR, "already exists");
+  }
 
   // Copy in reference images for stats
   for await (const image of EXAMPLE_IMAGES) {
@@ -31,8 +40,8 @@ test("returns metrics for images", async () => {
   const results = await imageProcessing();
 
   expect(results.metrics).toEqual({
-    bytesSaved: 5553,
-    percentChange: -62.29526587390622
+    bytesSaved: 259725,
+    percentChange: -53.11697288984146
   });
 });
 
@@ -63,6 +72,14 @@ test("returns images with stats", async () => {
       name: "roo.jpg",
       path: "__tests__/test-images/roo.jpg",
       percentChange: 3.596540803378147
+    },
+    {
+      afterStats: 225882,
+      beforeStats: 480054,
+      compressionWasSignificant: true,
+      name: "roo.webp",
+      path: "__tests__/test-images/roo.webp",
+      percentChange: -52.94654351385469
     }
   ]);
 });
