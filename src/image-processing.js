@@ -18,7 +18,7 @@ const processImages = async () => {
     nodir: true
   });
 
-  const images = [];
+  let images = [];
 
   for await (const imgPath of imagePaths) {
     const extension = path.extname(imgPath);
