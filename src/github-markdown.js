@@ -59,14 +59,14 @@ ${items}
 
 /*
   Return a URL that'll link to an image diff view
-  /<org>/<repo>/pull/<pr id>/commits/<sha>?short_path=<first 7 of md5>#diff_<md5 of filepath>
+  /<org>/<repo>/pull/<pr id>/commits/<sha>?short_path=<first 7 of md5>#diff-<md5 of filepath>
 */
 const generateDiffUrl = async ({ filePath, commitSha }) => {
   const { number } = await githubEvent();
   const fileId = crypto.createHash("md5").update(filePath).digest("hex");
   const shortFileId = fileId.slice(0, 7);
 
-  const url = `/${GITHUB_REPOSITORY}/pull/${number}/${commitSha}?short_path=${shortFileId}#diff_${fileId}`;
+  const url = `/${GITHUB_REPOSITORY}/pull/${number}/${commitSha}?short_path=${shortFileId}#diff-${fileId}`;
 
   return url;
 };

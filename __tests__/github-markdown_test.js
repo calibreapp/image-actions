@@ -40,7 +40,7 @@ Compression reduced images by 62.3%, saving 5.42 KB
 
 | Filename | Before | After | Improvement | Visual comparison |
 | --- | --- | --- | --- | --- |
-| \`icon.png\` | 8.71 KB | 3.28 KB | -62.3% | [View](/calibreapp/image-actions-test-repo/pull/3/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=edafe76#diff_edafe76b3f31282efe3ceb54732aa48d) |
+| \`icon.png\` | 8.71 KB | 3.28 KB | -62.3% | [View](/calibreapp/image-actions-test-repo/pull/3/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=edafe76#diff-edafe76b3f31282efe3ceb54732aa48d) |
 
 
 <details>
