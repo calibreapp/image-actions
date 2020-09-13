@@ -91,6 +91,8 @@ const commitOptimisedImages = async optimisedImages => {
     ref: `heads/${event.pull_request.head.ref}`,
     sha: commit.data.sha
   });
+
+  return commit.data;
 };
 
 module.exports = commitOptimisedImages;
