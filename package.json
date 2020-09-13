@@ -8,7 +8,9 @@
   "scripts": {
     "test": "GITHUB_WORKSPACE=__tests__/test-images jest"
   },
-  "jest": {},
+  "jest": {
+    "setupFiles": ["<rootDir>/.jest.env.js"]
+  },
   "dependencies": {
     "@octokit/rest": "^16.17.0",
     "glob": "^7.1.3",
