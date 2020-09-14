@@ -118,7 +118,7 @@ Alternatively you can run this action only for Pull Requests for the current rep
 It is also possible to run an addition instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images commited from a forked repositary pull request. This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
 
 ```yml
-name: Compress images on Push to Master
+name: Compress Images on Push to Master
 on:
   push:
     branches:
@@ -136,7 +136,7 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
-      - name: Create New Pull Request
+      - name: Create New Pull Request If Needed
         uses: peter-evans/create-pull-request@master
         with:
           title: Compressed Images
@@ -147,7 +147,7 @@ jobs:
 
 ## Compressing images on a schedule
 
-Similar to above, it is also possible to run an addition instance of this action in `compressOnly` mode at specific times, and then raise a new pull request for any images compressed.
+Similar to above, it is also possible to run an addition instance of this action in `compressOnly` mode at specific times, and then raise a new pull request for any images compressed (again this only raises a Pull Request if any files are actually changed in previous steps).
 
 ```yml
 name: Compress images at 11pm and open a pull request
@@ -168,7 +168,7 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
-      - name: Create New Pull Request
+      - name: Create New Pull Request If Needed
         uses: peter-evans/create-pull-request@master
         with:
           title: Compressed Images Nightly
@@ -193,7 +193,7 @@ jobs:
     Update your configuration to:
 
     ```yml
-    - name: Compress images
+    - name: Compress Images
       uses: calibreapp/image-actions@master
       with:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
