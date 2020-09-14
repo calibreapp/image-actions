@@ -29,7 +29,8 @@ const processImages = async () => {
 
   const imagePaths = await glob(globPaths, {
     ignore: config.ignorePaths.map(p => path.resolve(REPO_DIRECTORY, p)),
-    nodir: true
+    nodir: true,
+    follow: false
   });
 
   const images = [];
