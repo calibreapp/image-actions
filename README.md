@@ -17,6 +17,9 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Image quality settings](#image-quality-settings)
+  - [Running just the compression](#running-just-the-compression)
+  - [Handling pull requests from forked repos](handling-pull-requests-from-forked-repos)
+  - [Compressing images on a schedule](compressing-images-on-a-schedule)
   - [Migrate legacy configuration](#migrate-legacy-configuration)
   - [Links and Resources](#links-and-resources)
 
