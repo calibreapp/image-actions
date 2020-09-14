@@ -26,8 +26,8 @@ const run = async () => {
 
   // Expose the markdown to an Action output
   // https://github.community/t/set-output-truncates-multiline-strings/16852
-  const escaped_markdown = markdown.replace(/\%/g,'%25').replace(/\n/g,'%0A').replace(/\r/g,'%0D')
-  console.log("::set-output name=markdown::" + escaped_markdown)
+  const escapedMarkdown = markdown.replace(/\%/g,'%25').replace(/\n/g,'%0A').replace(/\r/g,'%0D')
+  console.log("::set-output name=markdown::" + escapedMarkdown)
 
   // If compress only mode, then we're done
   if (config.compressOnly) {

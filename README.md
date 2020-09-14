@@ -1,12 +1,6 @@
 # Image Actions
 
-<<<<<<< HEAD
-Image Actions automatically compress JPEG, PNG and WebP images in GitHub Pull Requests within the same repository.
-
-It can also run in "Compress Only" mode to allow this to be used for non-Pull Requests, and also for Pull Requests from forks.
-=======
 Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull Requests.
->>>>>>> upstream/master
 
 - **Fast, efficient and near-lossless compression**
 - Uses the best image compression algorithms available: [mozjpeg](https://github.com/mozilla/mozjpeg) and [libvips](https://github.com/libvips/libvips)

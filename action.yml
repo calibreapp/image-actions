@@ -33,7 +33,7 @@ inputs:
     default: "node_modules/**"
 
   compressOnly:
-    description: "Only runs the compression, without adding to Pull Request"
+    description: "Images will be compressed. No commit, or comments will be added to your Pull Request"
     required: false
     default: "false"
 
