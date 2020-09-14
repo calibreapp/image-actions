@@ -115,7 +115,7 @@ Alternatively you can run this action only for Pull Requests for the current rep
     if: github.event.pull_request.head.repo.full_name == github.repository
 ```
 
-It is also possible to run an addition instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images commited from a forked repositary pull request. This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
+It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images commited from a forked repositary pull request. This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
 
 ```yml
 name: Compress Images on Push to Master
