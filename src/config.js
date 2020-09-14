@@ -8,7 +8,8 @@ const {
   JPEG_PROGRESSIVE,
   PNG_QUALITY,
   WEBP_QUALITY,
-  IGNORE_PATHS
+  IGNORE_PATHS,
+  COMPRESS_ONLY
 } = require("./constants");
 
 // Deprecated configuration method
@@ -26,7 +27,8 @@ const getConfig = async () => {
     jpeg: { quality: JPEG_QUALITY, progressive: JPEG_PROGRESSIVE },
     png: { quality: PNG_QUALITY },
     webp: { quality: WEBP_QUALITY },
-    ignorePaths: IGNORE_PATHS
+    ignorePaths: IGNORE_PATHS,
+    compressOnly: COMPRESS_ONLY
   };
 
   const ymlConfig = await getYamlConfig();

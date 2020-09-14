@@ -4,8 +4,6 @@ const path = require("path");
 const glob = util.promisify(require("glob"));
 const sharp = require("sharp");
 
-const getConfig = require("./config");
-
 const {
   REPO_DIRECTORY,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
@@ -19,10 +17,9 @@ const printSharpInfo = () => {
   console.log("=== Sharp library info ===");
 };
 
-const processImages = async () => {
+const processImages = async (config) => {
   printSharpInfo();
 
-  const config = await getConfig();
   const globPaths = `${REPO_DIRECTORY}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
     ","
   )}}`;

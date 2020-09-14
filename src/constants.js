@@ -16,6 +16,7 @@ const WEBP_QUALITY = parseInt(process.env["INPUT_WEBPQUALITY"]) || 80;
 const IGNORE_PATHS = process.env["INPUT_IGNOREPATHS"]
   ? process.env["INPUT_IGNOREPATHS"].split(",")
   : ["node_modules/**"];
+const COMPRESS_ONLY = process.env["INPUT_COMPRESSONLY"] === "true";
 
 const JPEG_PROGRESSIVE = process.env["INPUT_JPEGPROGRESSIVE"] === "true";
 
@@ -57,5 +58,6 @@ module.exports = {
   JPEG_QUALITY,
   PNG_QUALITY,
   WEBP_QUALITY,
-  IGNORE_PATHS
+  IGNORE_PATHS,
+  COMPRESS_ONLY
 };
