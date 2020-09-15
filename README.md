@@ -13,7 +13,7 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
 ### Table of Contents
 
 - [Image Actions](#image-actions)
-    - [Table of Contents](#table-of-contents)
+  - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Image quality settings](#image-quality-settings)
@@ -21,6 +21,7 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
   - [Handling pull requests from forked repos](handling-pull-requests-from-forked-repos)
   - [Compressing images on a schedule](compressing-images-on-a-schedule)
   - [Migrate legacy configuration](#migrate-legacy-configuration)
+  - [Local development](#local-development)
   - [Links and Resources](#links-and-resources)
 
 ## Installation
@@ -34,10 +35,10 @@ on:
     # Run image-actions when jpg, jpeg, png or webp files are added or changed
     # See https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths
     paths:
-      - "**.jpg"
-      - "**.jpeg"
-      - "**.png"
-      - "**.webp"
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
 jobs:
   build:
     # Only run on Pull Requests within the same repository, and not from forks
@@ -67,17 +68,15 @@ Previous versions of image-actions used `.github/calibre/image-actions.yml` for 
 Set custom configuration by adding arguments to the action workflow definition:
 
 ```yml
-...
 - name: Compress Images
   uses: calibreapp/image-actions@master
   with:
     githubToken: ${{ secrets.GITHUB_TOKEN }}
-    jpegQuality: "80"
+    jpegQuality: '80'
     jpegProgressive: false
-    pngQuality: "80"
-    webpQuality: "80"
-    ignorePaths: "node_modules/**,build"
-    # No spaces allowed
+    pngQuality: '80'
+    webpQuality: '80'
+    ignorePaths: 'node_modules/**,build'
     compressOnly: false
 ```
 
@@ -90,17 +89,16 @@ Options:
 - `ignorePaths`: a comma separated string with [globbing](https://www.npmjs.com/package/glob) support of paths to ignore when looking for images to compress
 - `compressOnly`: Boolean, true or false, default false
 
-
 ## Running just the compression
 
 By default image-actions will add updated images to the current pull request. It is also possible to set the `compressOnly` option to `true` to skip the commit, if you want to handle this separately - including for forks - see below.
 
 ```yml
-      - name: Compress Images
-        uses: calibreapp/image-actions@master
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          compressOnly: true
+- name: Compress Images
+  uses: calibreapp/image-actions@master
+  with:
+    githubToken: ${{ secrets.GITHUB_TOKEN }}
+    compressOnly: true
 ```
 
 ## Handling pull requests from forked repos
@@ -115,7 +113,7 @@ Alternatively you can run this action only for Pull Requests for the current rep
     if: github.event.pull_request.head.repo.full_name == github.repository
 ```
 
-It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images commited from a forked repositary pull request. This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
+It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images committed from a forked repository pull request. This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
 
 ```yml
 name: Compress Images on Push to Master
@@ -147,14 +145,14 @@ jobs:
 
 ## Compressing images on a schedule
 
-It is also possible to run image-actions on a reoccurring schedule. By using the `compressOnly` option,  in conjunction with [@peter-evans's](/peter-evans) [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action, a new Pull Request will be raised if there are optimised images in a repository.  
+It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [@peter-evans's](/peter-evans) [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action, a new Pull Request will be raised if there are optimised images in a repository.
 
 ```yml
 name: Compress images at 11pm and open a pull request
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '* 23 * * *'
+    - cron: '* 23 * * *'
 jobs:
   build:
     name: calibreapp/image-actions
@@ -181,29 +179,36 @@ jobs:
 
 - uses: docker://calibreapp/github-image-actions
 
-    If your calibreapp-image-actions.yml file has a reference to `docker://` or `GITHUB_TOKEN` as follows:
+  If your calibreapp-image-actions.yml file has a reference to `docker://` or `GITHUB_TOKEN` as follows:
 
-    ```yml
-    - name: calibreapp/image-actions
-       uses: docker://calibreapp/github-image-actions
-       env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    ```
+  ```yml
+  - name: calibreapp/image-actions
+     uses: docker://calibreapp/github-image-actions
+     env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  ```
 
-    Update your configuration to:
+  Update your configuration to:
 
-    ```yml
-    - name: Compress Images
-      uses: calibreapp/image-actions@master
-      with:
-        githubToken: ${{ secrets.GITHUB_TOKEN }}
-    ```
+  ```yml
+  - name: Compress Images
+    uses: calibreapp/image-actions@master
+    with:
+      githubToken: ${{ secrets.GITHUB_TOKEN }}
+  ```
 
 - `.github/calibre/image-actions.yml`
 
-    If your repository uses `.github/calibre/image-actions.yml` for configuration, it should be moved into  `.github/workflows/calibreapp-image-actions.yml`. Then delete the `image-actions.yml` file.
+  If your repository uses `.github/calibre/image-actions.yml` for configuration, it should be moved into `.github/workflows/calibreapp-image-actions.yml`. Then delete the `image-actions.yml` file.
 
-    `ignorePaths` is no longer an array and is now a comma separated list. eg: `ignorePaths: "node_modules/**,bin"`
+  `ignorePaths` is no longer an array and is now a comma separated list. eg: `ignorePaths: "node_modules/**,bin"`
+
+## Local Development
+
+- **Install dependencies**: `npm install`
+- **Build project**: `npm run build` or `npm run watch` for continuous rebuild-on-save
+- **Run tests** `npm run test`
+- **Confirm a successful Docker build**: `docker build -t calibreapp/image-actions:dev .`
 
 ## Links and Resources
 

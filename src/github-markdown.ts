@@ -1,31 +1,29 @@
-const { filesize } = require("humanize");
+import { filesize } from 'humanize'
 
-const optimisedImages = processedImages => {
+const optimisedImages = (processedImages: ProcessedImage[]): string => {
   return processedImages
     .filter(image => image.compressionWasSignificant)
     .map(image => {
-      const beforeSize = filesize(image.beforeStats);
-      const afterSize = filesize(image.afterStats);
-      const formattedPercentage = `${image.percentChange.toFixed(1)}%`;
+      const beforeSize = filesize(image.beforeStats)
+      const afterSize = filesize(image.afterStats)
+      const formattedPercentage = `${image.percentChange.toFixed(1)}%`
 
-      return `| \`${
-        image.name
-      }\` | ${beforeSize} | ${afterSize} | ${formattedPercentage} |`;
+      return `| \`${image.name}\` | ${beforeSize} | ${afterSize} | ${formattedPercentage} |`
     })
-    .join("\n");
-};
+    .join('\n')
+}
 
-const unoptimisedImages = processedImages => {
+const unoptimisedImages = (processedImages: ProcessedImage[]): string => {
   const nonOptimisable = processedImages.filter(
     image => !image.compressionWasSignificant
-  );
+  )
 
   if (nonOptimisable.length > 0) {
     const items = nonOptimisable
       .map(image => {
-        return `* \`${image.name}\``;
+        return `* \`${image.name}\``
       })
-      .join("\n");
+      .join('\n')
 
     return `
 
@@ -33,13 +31,13 @@ const unoptimisedImages = processedImages => {
 <summary>Some images were already optimised</summary>
 
 ${items}
-</details>`;
+</details>`
   } else {
-    return "";
+    return ''
   }
-};
+}
 
-const generateMarkdownReport = payload => {
+const generateMarkdownReport = (payload: ProcessedImagesResult): string => {
   return `
 Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
 
@@ -50,7 +48,7 @@ Compression reduced images by ${-payload.metrics.percentChange.toFixed(
 | Filename | Before | After | Improvement |
 | --- | --- | --- | --- |
 ${optimisedImages(payload.images)}
-${unoptimisedImages(payload.images)}`;
-};
+${unoptimisedImages(payload.images)}`
+}
 
-module.exports = generateMarkdownReport;
+export default generateMarkdownReport
