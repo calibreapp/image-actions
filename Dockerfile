@@ -84,11 +84,11 @@ RUN mkdir -p /usr/local/src/image-actions
 WORKDIR /usr/local/src/image-actions
 
 COPY package.json package-lock.json /usr/local/src/image-actions/
-RUN npm ci
+RUN npm install && npm run build
 
 # copy in src
 COPY LICENSE README.md entrypoint.js /usr/local/src/image-actions/
-COPY src/ /usr/local/src/image-actions/src/
+COPY dist/ /usr/local/src/image-actions/dist/
 COPY __tests__/ /usr/local/src/image-actions/__tests__/
 
 ENTRYPOINT ["/usr/local/src/image-actions/entrypoint.js"]
