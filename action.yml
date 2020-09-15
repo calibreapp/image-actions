@@ -32,6 +32,15 @@ inputs:
     required: false
     default: "node_modules/**"
 
+  compressOnly:
+    description: "Images will be compressed. No commit, or comments will be added to your Pull Request"
+    required: false
+    default: "false"
+
+outputs:
+  markdown:
+    description: "Output param used to store the Markdown summary for subsequent actions to use"
+
 runs:
   using: "docker"
   image: "docker://calibreapp/github-image-actions" 
