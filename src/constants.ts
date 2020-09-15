@@ -18,12 +18,12 @@ const WEBP_QUALITY = parseInt(process.env['INPUT_WEBPQUALITY']) || 80
 const IGNORE_PATHS = process.env['INPUT_IGNOREPATHS']
   ? process.env['INPUT_IGNOREPATHS'].split(',')
   : ['node_modules/**']
-
+const COMPRESS_ONLY = process.env['INPUT_COMPRESSONLY'] === 'true'
 const JPEG_PROGRESSIVE = process.env['INPUT_JPEGPROGRESSIVE'] === 'true'
 
 const COMMITTER = {
   name: 'Calibre',
-  email: 'hello@calibreapp.com',
+  email: 'hello@calibreapp.com'
 }
 
 if (!REPO_DIRECTORY) {
@@ -46,7 +46,7 @@ const EXTENSION_TO_SHARP_FORMAT_MAPPING: SharpExtensionFormat = {
   '.png': ImageKind.Png,
   '.jpeg': ImageKind.Jpeg,
   '.jpg': ImageKind.Jpeg,
-  '.webp': ImageKind.Webp,
+  '.webp': ImageKind.Webp
 }
 
 export {
@@ -62,7 +62,9 @@ export {
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
   COMMITTER,
   JPEG_QUALITY,
+  JPEG_PROGRESSIVE,
   PNG_QUALITY,
   WEBP_QUALITY,
   IGNORE_PATHS,
+  COMPRESS_ONLY
 }
