@@ -4,10 +4,10 @@ const {
   GITHUB_TOKEN,
   GITHUB_EVENT_NAME,
   COMPRESS_ONLY
-} = require('./dist/constants')
+} = require('./dist/constants').default
 
-const githubEvent = require('./dist/github-event')
-const run = require('./dist/index.js')
+const githubEvent = require('./dist/github-event').default
+const run = require('./dist/index.js').default
 
 if (!GITHUB_TOKEN) {
   console.log('::error:: You must enable the GITHUB_TOKEN secret')
