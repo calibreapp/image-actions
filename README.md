@@ -18,8 +18,8 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
   - [Configuration](#configuration)
   - [Image quality settings](#image-quality-settings)
   - [Running just the compression](#running-just-the-compression)
-  - [Handling pull requests from forked repos](handling-pull-requests-from-forked-repos)
-  - [Compressing images on a schedule](compressing-images-on-a-schedule)
+  - [Handling pull requests from forked repos](#handling-pull-requests-from-forked-repos)
+  - [Compressing images on a schedule](#compressing-images-on-a-schedule)
   - [Migrate legacy configuration](#migrate-legacy-configuration)
   - [Local development](#local-development)
   - [Links and Resources](#links-and-resources)
@@ -113,7 +113,7 @@ Alternatively you can run this action only for Pull Requests for the current rep
     if: github.event.pull_request.head.repo.full_name == github.repository
 ```
 
-It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images committed from a forked repository pull request. This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
+It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images committed without being compressed (e.g. from a forked repository pull request). This is shown in the below example which uses [@peter-evans's](@peter-evans) [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
 
 ```yml
 name: Compress Images on Push to Master
@@ -145,7 +145,7 @@ jobs:
 
 ## Compressing images on a schedule
 
-It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [@peter-evans's](/peter-evans) [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action, a new Pull Request will be raised if there are optimised images in a repository.
+It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [@peter-evans's](@peter-evans) [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action, a new Pull Request will be raised if there are optimised images in a repository.
 
 ```yml
 name: Compress images at 11pm and open a pull request
