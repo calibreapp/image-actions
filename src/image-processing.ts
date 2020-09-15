@@ -29,7 +29,8 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
     ignore: config.ignorePaths.map((p: string) =>
       path.resolve(REPO_DIRECTORY, p)
     ),
-    nodir: true
+    nodir: true,
+    follow: false
   })
 
   const images: ProcessedImage[] = []
