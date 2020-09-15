@@ -93,7 +93,7 @@ Options:
 
 ## Running just the compression
 
-By default this Action will add the updated image(s) to the current pull request. It is also possible to set the `compressOnly` option to `true` to skip the commit, if you want to handle this separately - including for forks - see below.
+By default image-actions will add updated images to the current pull request. It is also possible to set the `compressOnly` option to `true` to skip the commit, if you want to handle this separately - including for forks - see below.
 
 ```yml
       - name: Compress Images
