@@ -8,7 +8,7 @@ const EXAMPLE_IMAGES = [
   'roo.webp',
   'roo.jpg',
   'icon.png',
-  'optimised-image.png',
+  'optimised-image.png'
 ]
 
 beforeEach(async () => {
@@ -41,7 +41,7 @@ test('returns metrics for images', async () => {
 
   expect(results.metrics).toEqual({
     bytesSaved: 259725,
-    percentChange: -53.11697288984146,
+    percentChange: -53.11697288984146
   })
 })
 
@@ -55,7 +55,7 @@ test('returns images with stats', async () => {
       compressionWasSignificant: true,
       name: 'icon.png',
       path: '__tests__/test-images/icon.png',
-      percentChange: -62.29526587390622,
+      percentChange: -62.29526587390622
     },
     {
       afterStats: 3361,
@@ -63,7 +63,7 @@ test('returns images with stats', async () => {
       compressionWasSignificant: false,
       name: 'optimised-image.png',
       path: '__tests__/test-images/optimised-image.png',
-      percentChange: 0,
+      percentChange: 0
     },
     {
       afterStats: 485759,
@@ -71,7 +71,7 @@ test('returns images with stats', async () => {
       compressionWasSignificant: false,
       name: 'roo.jpg',
       path: '__tests__/test-images/roo.jpg',
-      percentChange: 3.596540803378147,
+      percentChange: 3.596540803378147
     },
     {
       afterStats: 225882,
@@ -79,7 +79,7 @@ test('returns images with stats', async () => {
       compressionWasSignificant: true,
       name: 'roo.webp',
       path: '__tests__/test-images/roo.webp',
-      percentChange: -52.94654351385469,
-    },
+      percentChange: -52.94654351385469
+    }
   ])
 })

@@ -18,7 +18,7 @@ interface ImageBlobResponse
 const convertToTreeBlobs = async ({
   owner,
   repo,
-  images,
+  images
 }: ImageBlobsParams): Promise<ImageBlobResponse[]> => {
   console.log('\t * ', 'Converting images to blobs…')
   const imageBlobs = []
@@ -30,7 +30,7 @@ const convertToTreeBlobs = async ({
       owner,
       repo,
       content: encodedImage,
-      encoding: 'base64',
+      encoding: 'base64'
     })
 
     // We use image.name rather than image.path because it is the path inside the repo
@@ -39,7 +39,7 @@ const convertToTreeBlobs = async ({
       path: image.name,
       type: 'blob',
       mode: '100644',
-      sha: blob.data.sha,
+      sha: blob.data.sha
     })
   }
 
@@ -58,7 +58,7 @@ const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
   const latestCommit = await api.git.getCommit({
     owner,
     repo,
-    commit_sha: mostRecentCommitSHA,
+    commit_sha: mostRecentCommitSHA
   })
 
   const baseTree = latestCommit.data.tree.sha
@@ -69,7 +69,7 @@ const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
   const treeBlobs = await convertToTreeBlobs({
     owner,
     repo,
-    images: optimisedImages,
+    images: optimisedImages
   })
 
   console.log('\t * ', 'Creating tree…', owner, repo, baseTree)
@@ -79,7 +79,7 @@ const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
     owner,
     repo,
     base_tree: baseTree,
-    tree: treeBlobs,
+    tree: treeBlobs
   })
 
   console.log('\t * ', 'New tree:', newTree.data.sha)
@@ -89,7 +89,7 @@ const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
     repo,
     message: 'Optimised images with calibre/image-actions',
     tree: newTree.data.sha,
-    parents: [mostRecentCommitSHA],
+    parents: [mostRecentCommitSHA]
   })
 
   console.log(
@@ -105,7 +105,7 @@ const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
     owner,
     repo,
     ref: `heads/${event.pull_request.head.ref}`,
-    sha: commit.data.sha,
+    sha: commit.data.sha
   })
 }
 

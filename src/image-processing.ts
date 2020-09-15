@@ -9,8 +9,9 @@ const glob = util.promisify(require('glob'))
 import {
   REPO_DIRECTORY,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
-  FILE_EXTENSIONS_TO_PROCESS,
+  FILE_EXTENSIONS_TO_PROCESS
 } from './constants'
+
 import getConfig from './config'
 
 const processImages = async (): Promise<ProcessedImagesResult> => {
@@ -28,7 +29,7 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
     ignore: config.ignorePaths.map((p: string) =>
       path.resolve(REPO_DIRECTORY, p)
     ),
-    onlyFiles: true,
+    onlyFiles: true
   })
 
   const images: ProcessedImage[] = []
@@ -67,7 +68,7 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
         beforeStats,
         afterStats,
         percentChange,
-        compressionWasSignificant,
+        compressionWasSignificant
       }
       images.push(processedImage)
     } catch (e) {
@@ -80,7 +81,7 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
 
   return {
     images,
-    metrics,
+    metrics
   }
 }
 
@@ -103,7 +104,7 @@ const calculateOverallMetrics = async (
 
   return {
     bytesSaved,
-    percentChange,
+    percentChange
   }
 }
 
