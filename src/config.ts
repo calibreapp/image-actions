@@ -11,9 +11,11 @@ const {
   PNG_QUALITY,
   WEBP_QUALITY,
   IGNORE_PATHS,
+  COMPRESS_ONLY
 } = require('./constants')
 
 interface Config {
+  compressOnly: boolean
   jpeg: JpegOptions
   png: PngOptions
   webp: WebpOptions
@@ -36,6 +38,7 @@ const getConfig = async () => {
     png: { quality: PNG_QUALITY },
     webp: { quality: WEBP_QUALITY },
     ignorePaths: IGNORE_PATHS,
+    compressOnly: COMPRESS_ONLY
   }
 
   const ymlConfig = await getYamlConfig()
