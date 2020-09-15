@@ -4,7 +4,7 @@ const {
   GITHUB_TOKEN,
   GITHUB_EVENT_NAME,
   COMPRESS_ONLY
-} = require('./dist/constants').default
+} = require('./dist/constants')
 
 const githubEvent = require('./dist/github-event').default
 const run = require('./dist/index.js').default
