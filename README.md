@@ -17,6 +17,9 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
   - [Installation](#installation)
   - [Configuration](#configuration)
   - [Image quality settings](#image-quality-settings)
+  - [Running just the compression](#running-just-the-compression)
+  - [Handling pull requests from forked repos](handling-pull-requests-from-forked-repos)
+  - [Compressing images on a schedule](compressing-images-on-a-schedule)
   - [Migrate legacy configuration](#migrate-legacy-configuration)
   - [Links and Resources](#links-and-resources)
 
@@ -75,7 +78,7 @@ Set custom configuration by adding arguments to the action workflow definition:
     webpQuality: "80"
     ignorePaths: "node_modules/**,build"
     # No spaces allowed
-    compressOnly: "false"
+    compressOnly: false
 ```
 
 Options:
@@ -90,14 +93,14 @@ Options:
 
 ## Running just the compression
 
-By default this Action will add the updated image to the current pull request. It is also possible to set the `compressOnly` option to `true` to skip the commit, if you want to handle this separately - including for forks - see below.
+By default image-actions will add updated images to the current pull request. It is also possible to set the `compressOnly` option to `true` to skip the commit, if you want to handle this separately - including for forks - see below.
 
 ```yml
       - name: Compress Images
         uses: calibreapp/image-actions@master
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          compressOnly: "true"
+          compressOnly: true
 ```
 
 ## Handling pull requests from forked repos
@@ -112,11 +115,10 @@ Alternatively you can run this action only for Pull Requests for the current rep
     if: github.event.pull_request.head.repo.full_name == github.repository
 ```
 
-It is also possible to run an addition instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images commited from a forked repositary pull request as shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any fules are changed).
-
+It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images commited from a forked repositary pull request. This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub Action to open this new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
 
 ```yml
-name: Compress images on Push to Master
+name: Compress Images on Push to Master
 on:
   push:
     branches:
@@ -128,18 +130,48 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
-
       - name: Compress Images
         id: calibre
         uses: calibreapp/image-actions@master
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          compressOnly: "true"
-
-      - name: Create New Pull Request
+          compressOnly: true
+      - name: Create New Pull Request If Needed
         uses: peter-evans/create-pull-request@master
         with:
           title: Compressed Images
+          branch-suffix: timestamp
+          commit-message: Compressed Images
+          body: ${{ steps.calibre.outputs.markdown }}
+```
+
+## Compressing images on a schedule
+
+It is also possible to run image-actions on a reoccurring schedule. By using the `compressOnly` option,  in conjunction with [@peter-evans's](/peter-evans) [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action, a new Pull Request will be raised if there are optimised images in a repository.  
+
+```yml
+name: Compress images at 11pm and open a pull request
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '* 23 * * *'
+jobs:
+  build:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Compress Images
+        id: calibre
+        uses: calibreapp/image-actions@master
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+      - name: Create New Pull Request If Needed
+        uses: peter-evans/create-pull-request@master
+        with:
+          title: Compressed Images Nightly
           branch-suffix: timestamp
           commit-message: Compressed Images
           body: ${{ steps.calibre.outputs.markdown }}
@@ -161,7 +193,7 @@ jobs:
     Update your configuration to:
 
     ```yml
-    - name: Compress images
+    - name: Compress Images
       uses: calibreapp/image-actions@master
       with:
         githubToken: ${{ secrets.GITHUB_TOKEN }}
