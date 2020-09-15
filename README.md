@@ -145,7 +145,7 @@ jobs:
 
 ## Compressing images on a schedule
 
-It is also possible to run image-actions on a reoccurring schedule. By using the `compressOnly` option, in conjunction with [@peter-evans's](/peter-evans) [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action, a new Pull Request will be raised if there are optimised images in a repository.
+It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [@peter-evans's](/peter-evans) [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action, a new Pull Request will be raised if there are optimised images in a repository.
 
 ```yml
 name: Compress images at 11pm and open a pull request
