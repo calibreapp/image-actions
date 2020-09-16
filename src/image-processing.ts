@@ -53,8 +53,6 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
         `output=${JSON.stringify(info)}`
       )
 
-      await writeFile(imgPath, data)
-
       // Remove the /github/home/ path (including the slash)
       const name = imgPath.replace(REPO_DIRECTORY, '').replace(/\//, '')
       const afterStats = info.size
@@ -62,6 +60,11 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
 
       // Add a flag to tell if the optimisation was worthwhile
       const compressionWasSignificant = percentChange < -1
+
+      // Only write the new file, if there was a worthfile optimisation
+      if (compressionWasSignificant) {
+        await writeFile(imgPath, data)
+      }
 
       const processedImage: ProcessedImage = {
         name,
