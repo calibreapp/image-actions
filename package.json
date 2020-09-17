@@ -20,7 +20,9 @@
     "arrowParens": "avoid"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/.jest.env.js"]
+    "setupFiles": [
+      "<rootDir>/.jest.env.js"
+    ]
   },
   "dependencies": {
     "@octokit/rest": "^16.17.0",

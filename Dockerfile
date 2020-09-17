@@ -87,7 +87,7 @@ COPY package.json package-lock.json /usr/local/src/image-actions/
 RUN npm install
 
 # copy in src
-COPY LICENSE README.md entrypoint.js tsconfig.json /usr/local/src/image-actions/
+COPY LICENSE README.md entrypoint.js tsconfig.json .jest.env.js /usr/local/src/image-actions/
 COPY src/ /usr/local/src/image-actions/src/
 RUN npm run build && rm -rf /usr/local/src/image-actions/src/
 COPY __tests__/ /usr/local/src/image-actions/__tests__/
