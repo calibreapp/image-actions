@@ -7,6 +7,13 @@ interface ProcessedImage {
   compressionWasSignificant: boolean
 }
 
+interface ProcessedImageView extends ProcessedImage {
+  formattedBeforeStats: string
+  formattedAfterStats: string
+  formattedPercentChange: string
+  diffUrl?: string
+}
+
 interface ProcessedImageMetrics {
   bytesSaved: number
   percentChange: number
@@ -14,5 +21,6 @@ interface ProcessedImageMetrics {
 
 interface ProcessedImagesResult {
   metrics: ProcessedImageMetrics
-  images: ProcessedImage[]
+  optimisedImages: ProcessedImage[]
+  unoptimisedImages: ProcessedImage[]
 }

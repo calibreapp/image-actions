@@ -15,10 +15,13 @@ import {
 import getConfig from './config'
 
 const processImages = async (): Promise<ProcessedImagesResult> => {
-  console.log('=== Sharp library info ===')
-  console.log(sharp.versions)
-  console.log(sharp.format)
-  console.log('=== Sharp library info ===')
+  console.log(
+    'To turn on DEBUG level logging for image-actions, see this reference: https://docs.github.com/en/actions/managing-workflow-runs/enabling-debug-logging'
+  )
+  console.log('::debug:: === Sharp library info ===')
+  console.log('::debug::', sharp.versions)
+  console.log('::debug::', sharp.format)
+  console.log('::debug:: === Sharp library info ===')
 
   const config = await getConfig()
   const globPaths = `${REPO_DIRECTORY}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
@@ -33,7 +36,8 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
     follow: false
   })
 
-  const images: ProcessedImage[] = []
+  const optimisedImages: ProcessedImage[] = []
+  const unoptimisedImages: ProcessedImage[] = []
 
   for await (const imgPath of imagePaths) {
     const extension = path.extname(imgPath)
@@ -53,8 +57,6 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
         `output=${JSON.stringify(info)}`
       )
 
-      await writeFile(imgPath, data)
-
       // Remove the /github/home/ path (including the slash)
       const name = imgPath.replace(REPO_DIRECTORY, '').replace(/\//, '')
       const afterStats = info.size
@@ -71,17 +73,28 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
         percentChange,
         compressionWasSignificant
       }
-      images.push(processedImage)
+
+      if (compressionWasSignificant) {
+        // Only write if there was a worthwhile optimisation
+        await writeFile(imgPath, data)
+
+        // Add to optimisedImages array for reporting
+        optimisedImages.push(processedImage)
+      } else {
+        // Add to unoptimisedImages array for reporting
+        unoptimisedImages.push(processedImage)
+      }
     } catch (e) {
       console.error('::error:: ', e, imgPath)
       continue
     }
   }
 
-  const metrics = await calculateOverallMetrics(images)
+  const metrics = await calculateOverallMetrics(optimisedImages)
 
   return {
-    images,
+    optimisedImages,
+    unoptimisedImages,
     metrics
   }
 }

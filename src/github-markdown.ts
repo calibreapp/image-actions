@@ -1,54 +1,77 @@
 import { filesize } from 'humanize'
+import crypto from 'crypto'
+import { GITHUB_REPOSITORY } from './constants'
+import githubEvent from './github-event'
+import template from './template'
+import getConfig from './config'
 
-const optimisedImages = (processedImages: ProcessedImage[]): string => {
-  return processedImages
-    .filter(image => image.compressionWasSignificant)
-    .map(image => {
-      const beforeSize = filesize(image.beforeStats)
-      const afterSize = filesize(image.afterStats)
-      const formattedPercentage = `${image.percentChange.toFixed(1)}%`
+const generateImageView = (
+  images: ProcessedImage[],
+  prNumber?: number,
+  commitSha?: string
+): ProcessedImageView[] => {
+  const imageViews = images.map(image => {
+    return {
+      ...image,
+      formattedBeforeStats: filesize(image.beforeStats),
+      formattedAfterStats: filesize(image.afterStats),
+      formattedPercentChange: `${image.percentChange.toFixed(1)}%`,
+      diffUrl:
+        commitSha && prNumber
+          ? generateDiffUrl(image, prNumber, commitSha)
+          : null
+    }
+  })
 
-      return `| \`${image.name}\` | ${beforeSize} | ${afterSize} | ${formattedPercentage} |`
-    })
-    .join('\n')
+  return imageViews
 }
 
-const unoptimisedImages = (processedImages: ProcessedImage[]): string => {
-  const nonOptimisable = processedImages.filter(
-    image => !image.compressionWasSignificant
-  )
+/*
+  Return a URL that'll link to an image diff view
+  /<org>/<repo>/pull/<pr id>/commits/<sha>?short_path=<first 7 of md5>#diff-<md5 of filepath>
+*/
+const generateDiffUrl = (
+  image: ProcessedImage,
+  prNumber: number,
+  commitSha: string
+): string => {
+  const fileId = crypto.createHash('md5').update(image.path).digest('hex')
+  const shortFileId = fileId.slice(0, 7)
 
-  if (nonOptimisable.length > 0) {
-    const items = nonOptimisable
-      .map(image => {
-        return `* \`${image.name}\``
-      })
-      .join('\n')
+  const url = `/${GITHUB_REPOSITORY}/pull/${prNumber}/${commitSha}?short_path=${shortFileId}#diff-${fileId}`
 
-    return `
-
-<details>
-<summary>Some images were already optimised</summary>
-
-${items}
-</details>`
-  } else {
-    return ''
-  }
+  return url
 }
 
-const generateMarkdownReport = (payload: ProcessedImagesResult): string => {
-  return `
-Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
+const generateMarkdownReport = async ({
+  processingResults,
+  commitSha
+}: ActionSummaryReport): Promise<string> => {
+  const { number } = await githubEvent()
+  const { compressOnly } = await getConfig()
+  const { optimisedImages, unoptimisedImages, metrics } = processingResults
 
-Compression reduced images by ${-payload.metrics.percentChange.toFixed(
-    1
-  )}%, saving ${filesize(payload.metrics.bytesSaved)}
+  const templateName: string =
+    commitSha && !compressOnly
+      ? 'inline-pr-comment-with-diff.md'
+      : 'pr-comment.md'
 
-| Filename | Before | After | Improvement |
-| --- | --- | --- | --- |
-${optimisedImages(payload.images)}
-${unoptimisedImages(payload.images)}`
+  const markdown = await template(templateName, {
+    overallPercentageSaved: -metrics.percentChange.toFixed(1),
+    overallBytesSaved: filesize(metrics.bytesSaved),
+    optimisedImages: generateImageView(optimisedImages, number, commitSha),
+    unoptimisedImages: generateImageView(unoptimisedImages, number)
+  })
+
+  // Log markdown, so that it can be used for Action output
+  // https://github.community/t/set-output-truncates-multiline-strings/16852
+  const escapedMarkdown = markdown
+    .replace(/\%/g, '%25')
+    .replace(/\n/g, '%0A')
+    .replace(/\r/g, '%0D')
+  console.log('::set-output name=markdown::' + escapedMarkdown)
+
+  return markdown
 }
 
 export default generateMarkdownReport

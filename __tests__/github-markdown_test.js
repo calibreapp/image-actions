@@ -1,5 +1,5 @@
 const results = {
-  images: [
+  optimisedImages: [
     {
       name: 'icon.png',
       path: '__tests__/test-images/icon.png',
@@ -9,6 +9,16 @@ const results = {
       compressionWasSignificant: true
     },
     {
+      name: 'roo.jpg',
+      path: '__tests__/test-images/roo.jpg',
+      beforeStats: 485742,
+      afterStats: 468895,
+      percentChange: -3.592915258213452,
+      compressionWasSignificant: true
+    }
+  ],
+  unoptimisedImages: [
+    {
       name: 'optimised-image.png',
       path: '__tests__/test-images/optimised-image.png',
       beforeStats: 3361,
@@ -17,11 +27,11 @@ const results = {
       compressionWasSignificant: false
     },
     {
-      name: 'roo.jpg',
-      path: '__tests__/test-images/roo.jpg',
-      beforeStats: 468895,
-      afterStats: 485742,
-      percentChange: 3.592915258213452,
+      name: 'another-optimised-image.png',
+      path: '__tests__/test-images/another-optimised-image.png',
+      beforeStats: 3361,
+      afterStats: 3361,
+      percentChange: 0,
       compressionWasSignificant: false
     }
   ],
@@ -33,24 +43,19 @@ const results = {
 
 const markdown = require('../dist/github-markdown').default
 
-const referenceMarkdown = `
-Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
+test('writes the markdown with diff report', async () => {
+  const markdownResult = await markdown({
+    processingResults: results,
+    commitSha: 'a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3'
+  })
 
-Compression reduced images by 62.3%, saving 5.42 KB
+  expect(markdownResult).toMatchSnapshot()
+})
 
-| Filename | Before | After | Improvement |
-| --- | --- | --- | --- |
-| \`icon.png\` | 8.71 KB | 3.28 KB | -62.3% |
+test('writes the markdown without diff report', async () => {
+  const markdownResult = await markdown({
+    processingResults: results
+  })
 
-
-<details>
-<summary>Some images were already optimised</summary>
-
-* \`optimised-image.png\`
-* \`roo.jpg\`
-</details>`
-
-test('writes the markdown', async () => {
-  const markdownResult = await markdown(results)
-  expect(markdownResult).toEqual(referenceMarkdown)
+  expect(markdownResult).toMatchSnapshot()
 })
