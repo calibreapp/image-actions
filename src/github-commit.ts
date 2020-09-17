@@ -1,4 +1,5 @@
 import Octokit from '@octokit/rest'
+import { GitCreateCommitResponseData } from '@octokit/types'
 import { promises as fsPromises } from 'fs'
 const { readFile } = fsPromises
 
@@ -46,7 +47,9 @@ const convertToTreeBlobs = async ({
   return imageBlobs
 }
 
-const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
+const commitOptimisedImages = async (
+  optimisedImages: ProcessedImage[]
+): Promise<GitCreateCommitResponseData> => {
   const event = await githubEvent()
   const owner = event.repository.owner.login
   const repo = event.repository.name
