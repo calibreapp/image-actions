@@ -1,12 +1,11 @@
-import { resolve } from 'path'
+import { join } from 'path'
 
 import ejs from 'ejs'
 
-const TEMPLATE_DIR = 'src/markdown-templates'
 const EJS_OPTIONS = { async: true }
 
 const template = (basename: string, variables: any): Promise<string> => {
-  const filePath = resolve(TEMPLATE_DIR, basename)
+  const filePath = join(__dirname, 'markdown-templates', basename)
   return ejs.renderFile(filePath, variables, EJS_OPTIONS)
 }
 

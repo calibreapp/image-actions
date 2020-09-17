@@ -90,6 +90,7 @@ RUN npm install
 COPY LICENSE README.md entrypoint.js tsconfig.json .jest.env.js /usr/local/src/image-actions/
 COPY src/ /usr/local/src/image-actions/src/
 RUN npm run build
+COPY src/markdown-templates/ /usr/local/src/image-actions/dist/markdown-templates
 COPY __tests__/ /usr/local/src/image-actions/__tests__/
 
 ENTRYPOINT ["/usr/local/src/image-actions/entrypoint.js"]
