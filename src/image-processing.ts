@@ -15,6 +15,9 @@ import {
 import getConfig from './config'
 
 const processImages = async (): Promise<ProcessedImagesResult> => {
+  console.log(
+    'To turn on DEBUG level logging for image-actions, see this reference: https://docs.github.com/en/actions/managing-workflow-runs/enabling-debug-logging'
+  )
   console.log('::debug:: === Sharp library info ===')
   console.log('::debug::', sharp.versions)
   console.log('::debug::', sharp.format)
