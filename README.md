@@ -155,11 +155,11 @@ jobs:
 It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans), a new Pull Request will be raised if there are optimised images in a repository.
 
 ```yml
-# Compress images on demand (workflow), and at 11pm every Sunday (schedule).
+# Compress images on demand (workflow_dispatch), and at 11pm every Sunday (schedule).
 # Open a pull request if any images can be compressed
 name: Compress images
 on:
-  workflow:
+  workflow_dispatch:
   schedule:
     - cron: '00 23 * * 0'
 jobs:
@@ -187,11 +187,11 @@ jobs:
 
 ## Combined workflow
 
-You can combine all of the above into one all-encompassing workflow
+You can combine all of the above into one all-encompassing workflow to avoid having to set up separate workflows with a lot of duplication of configuration. This does require some GitHub Actions syntax workflow to ensure the right workflow runs at the right time, so this is shown below. The only piece that requires changing is the `example/example_repo` line which should be changed to your own repository.
 
 ```yml
-# Compress images:
-# - on pull requests from this report containing images
+# image-actions will run in the following scenarios:
+# - on pull requests containing images (not including forks)
 # - on pushing of images to master (for forks)
 # - on demand
 # - at 11pm every Sunday just in case anything gets missed with any of the above
@@ -233,6 +233,7 @@ jobs:
         uses: calibreapp/image-actions@master
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          # For non-pull requests, run in compressOnly mode and we'll PR after
           compressOnly: ${{ github.event_name != 'pull_request' }}
       - name: Create Pull Request
         # If it's not a pull request then commit any changes as a new PR
