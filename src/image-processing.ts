@@ -15,10 +15,10 @@ import {
 import getConfig from './config'
 
 const processImages = async (): Promise<ProcessedImagesResult> => {
-  console.log('=== Sharp library info ===')
-  console.log(sharp.versions)
-  console.log(sharp.format)
-  console.log('=== Sharp library info ===')
+  console.log('::debug:: === Sharp library info ===')
+  console.log('::debug::', sharp.versions)
+  console.log('::debug::', sharp.format)
+  console.log('::debug:: === Sharp library info ===')
 
   const config = await getConfig()
   const globPaths = `${REPO_DIRECTORY}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
