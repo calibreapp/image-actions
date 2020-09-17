@@ -52,8 +52,7 @@ const generateMarkdownReport = async ({
     overallPercentageSaved: -metrics.percentChange.toFixed(1),
     overallBytesSaved: filesize(metrics.bytesSaved),
     optimisedImages: await generateImageView(optimisedImages, commitSha),
-    unoptimisedImages: await generateImageView(unoptimisedImages),
-    commitSha
+    unoptimisedImages: await generateImageView(unoptimisedImages)
   })
 
   // Log markdown, so that it can be used for Action output
