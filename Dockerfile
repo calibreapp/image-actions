@@ -89,7 +89,7 @@ RUN npm install
 # copy in src
 COPY LICENSE README.md entrypoint.js tsconfig.json .jest.env.js /usr/local/src/image-actions/
 COPY src/ /usr/local/src/image-actions/src/
-RUN npm run build && rm -rf /usr/local/src/image-actions/src/
+RUN npm run build
 COPY __tests__/ /usr/local/src/image-actions/__tests__/
 
 ENTRYPOINT ["/usr/local/src/image-actions/entrypoint.js"]
