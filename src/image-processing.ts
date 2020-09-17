@@ -65,11 +65,6 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
       // Add a flag to tell if the optimisation was worthwhile
       const compressionWasSignificant = percentChange < -1
 
-      // Only write the new file, if there was a worthwhile optimisation
-      if (compressionWasSignificant) {
-        await writeFile(imgPath, data)
-      }
-
       const processedImage: ProcessedImage = {
         name,
         path: imgPath,
@@ -80,8 +75,13 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
       }
 
       if (compressionWasSignificant) {
+        // Only write the new file, if there was a worthwhile optimisation
+        await writeFile(imgPath, data)
+
+        // Add to optimisedImages array for reporting
         optimisedImages.push(processedImage)
       } else {
+        // Add to unoptimisedImages array for reporting
         unoptimisedImages.push(processedImage)
       }
     } catch (e) {
