@@ -33,7 +33,8 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
     follow: false
   })
 
-  const images: ProcessedImage[] = []
+  const optimisedImages: ProcessedImage[] = []
+  const unoptimisedImages: ProcessedImage[] = []
 
   for await (const imgPath of imagePaths) {
     const extension = path.extname(imgPath)
@@ -71,17 +72,23 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
         percentChange,
         compressionWasSignificant
       }
-      images.push(processedImage)
+
+      if (compressionWasSignificant) {
+        optimisedImages.push(processedImage)
+      } else {
+        unoptimisedImages.push(processedImage)
+      }
     } catch (e) {
       console.error('::error:: ', e, imgPath)
       continue
     }
   }
 
-  const metrics = await calculateOverallMetrics(images)
+  const metrics = await calculateOverallMetrics(optimisedImages)
 
   return {
-    images,
+    optimisedImages,
+    unoptimisedImages,
     metrics
   }
 }

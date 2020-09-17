@@ -45,41 +45,22 @@ test('returns metrics for images', async () => {
   })
 })
 
+test('returns the correct number of optimised/untouched images', async () => {
+  const results = await imageProcessing()
+
+  expect(results.optimisedImages).toHaveLength(2)
+  expect(results.unoptimisedImages).toHaveLength(2)
+})
+
 test('returns images with stats', async () => {
   const results = await imageProcessing()
 
-  expect(results.images).toEqual([
-    {
-      afterStats: expect.any(Number),
-      beforeStats: expect.any(Number),
-      compressionWasSignificant: true,
-      name: 'icon.png',
-      path: '__tests__/test-images/icon.png',
-      percentChange: expect.any(Number)
-    },
-    {
-      afterStats: expect.any(Number),
-      beforeStats: expect.any(Number),
-      compressionWasSignificant: false,
-      name: 'optimised-image.png',
-      path: '__tests__/test-images/optimised-image.png',
-      percentChange: expect.any(Number)
-    },
-    {
-      afterStats: expect.any(Number),
-      beforeStats: expect.any(Number),
-      compressionWasSignificant: false,
-      name: 'roo.jpg',
-      path: '__tests__/test-images/roo.jpg',
-      percentChange: expect.any(Number)
-    },
-    {
-      afterStats: expect.any(Number),
-      beforeStats: expect.any(Number),
-      compressionWasSignificant: true,
-      name: 'roo.webp',
-      path: '__tests__/test-images/roo.webp',
-      percentChange: expect.any(Number)
-    }
-  ])
+  expect(results.optimisedImages[0]).toEqual({
+    afterStats: expect.any(Number),
+    beforeStats: expect.any(Number),
+    compressionWasSignificant: true,
+    name: 'icon.png',
+    path: '__tests__/test-images/icon.png',
+    percentChange: expect.any(Number)
+  })
 })
