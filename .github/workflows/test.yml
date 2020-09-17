@@ -6,11 +6,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: npm ci
+      - name: npm install
         uses: ./
         with:
           entrypoint: npm
-          args: ci
+          args: install
+      - name: npm run build
+        uses: ./
+        with:
+          entrypoint: npm
+          args: run build
       - name: npm test
         uses: ./
         with:
