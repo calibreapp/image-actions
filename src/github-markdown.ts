@@ -35,7 +35,7 @@ const generateDiffUrl = (
   prNumber: number,
   commitSha: string
 ): string => {
-  const fileId = crypto.createHash('md5').update(image.path).digest('hex')
+  const fileId = crypto.createHash('md5').update(image.name).digest('hex')
   const shortFileId = fileId.slice(0, 7)
 
   const url = `/${GITHUB_REPOSITORY}/pull/${prNumber}/commits/${commitSha}?short_path=${shortFileId}#diff-${fileId}`
