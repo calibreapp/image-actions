@@ -155,7 +155,7 @@ jobs:
 It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans), a new Pull Request will be raised if there are optimised images in a repository.
 
 ```yml
-# Compress images on demand (workflow_dispatch), and at 11pm every Sunday (schedule).
+# Compress images on demand ([workflow_dispatch](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/)), and at 11pm every Sunday ([schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule)).
 # Open a pull request if any images can be compressed
 name: Compress images
 on:
@@ -193,7 +193,7 @@ You can combine all of the above into one all-encompassing workflow to avoid hav
 # image-actions will run in the following scenarios:
 # - on pull requests containing images (not including forks)
 # - on pushing of images to master (for forks)
-# - on demand
+# - on demand (https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/)
 # - at 11pm every Sunday just in case anything gets missed with any of the above
 # For pull requests, the images are added to the PR
 # For the rest a new PR is opened if any images are compressed.
