@@ -17,30 +17,24 @@ const run = async (): Promise<void> => {
     return
   }
 
-  console.log('->> Generating markdown…')
-  const markdown = await generateMarkdownReport(results)
-
-  // Expose the markdown to an Action output
-  // https://github.community/t/set-output-truncates-multiline-strings/16852
-  const escapedMarkdown = markdown
-    .replace(/\%/g, '%25')
-    .replace(/\n/g, '%0A')
-    .replace(/\r/g, '%0D')
-  console.log('::set-output name=markdown::' + escapedMarkdown)
-
-  // If compress only mode, then we're done
   if (config.compressOnly) {
-    console.log('->> compressOnly was set. Stopping.')
-    return
+    // Generate markdown report, so that it's exported to Action output
+    console.log('->> Generating markdown…')
+    await generateMarkdownReport({ processingResults: processingResults })
+  } else {
+    // Commit and comment on PR
+    console.log('->> Committing files…')
+    const commit = await createCommit(processingResults.optimisedImages)
+
+    console.log('->> Generating markdown…')
+    const markdown = await generateMarkdownReport({
+      processingResults: processingResults,
+      commitSha: commit.sha
+    })
+
+    console.log('->> Leaving comment on PR…')
+    await createComment(markdown)
   }
-
-  console.log('->> Committing files…')
-  await createCommit(optimisedImages)
-
-  console.log('->> Leaving comment on PR…')
-  await createComment(markdown)
-
-  return
 }
 
 export default run

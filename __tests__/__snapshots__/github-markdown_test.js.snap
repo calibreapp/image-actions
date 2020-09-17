@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`writes the markdown with diff report 1`] = `
+"Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
+
+Compression reduced images by <strong>62.3%</strong>, saving <strong>5.42 KB</strong>.
+
+| Filename | Before | After | Improvement | Visual comparison |
+| -------- | ------ | ----- | ----------- | ----------------- |
+| <code>icon.png</code> | 8.71 KB | 3.28 KB | -62.3% | [View diff](/calibreapp/image-actions-test-repo/pull/3/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=edafe76#diff-edafe76b3f31282efe3ceb54732aa48d) |
+| <code>roo.jpg</code> | 474.36 KB | 457.91 KB | -3.6% | [View diff](/calibreapp/image-actions-test-repo/pull/3/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=97c8680#diff-97c8680195910991ce4298e040619cae) |
+
+
+2 images did not require optimisation.
+"
+`;
+
+exports[`writes the markdown without diff report 1`] = `
+"Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
+
+Compression reduced images by <strong>62.3%</strong>, saving <strong>5.42 KB</strong>.
+
+| Filename | Before | After | Improvement |
+| -------- | ------ | ----- | ----------- |
+| <code>icon.png</code> | 8.71 KB | 3.28 KB | -62.3% |
+| <code>roo.jpg</code> | 474.36 KB | 457.91 KB | -3.6% |
+
+
+2 images did not require optimisation.
+"
+`;
