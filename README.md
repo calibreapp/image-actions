@@ -150,7 +150,7 @@ jobs:
           body: ${{ steps.calibre.outputs.markdown }}
 ```
 
-## Compressing images on demand or a schedule
+## Compressing images on demand or on a schedule
 
 It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans), a new Pull Request will be raised if there are optimised images in a repository.
 
