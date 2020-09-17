@@ -19,7 +19,8 @@ Image Actions automatically compresses JPEG, PNG and WebP images in GitHub Pull 
   - [Image quality settings](#image-quality-settings)
   - [Running just the compression](#running-just-the-compression)
   - [Handling pull requests from forked repos](#handling-pull-requests-from-forked-repos)
-  - [Compressing images on a schedule](#compressing-images-on-a-schedule)
+  - [Compressing images on demand of on a schedule](#compressing-images-on-demand-or=on-a-schedule)
+  - [Combined workflow](#combined-workflow)
   - [Migrate legacy configuration](#migrate-legacy-configuration)
   - [Local development](#local-development)
   - [Links and Resources](#links-and-resources)
@@ -121,6 +122,11 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
 jobs:
   build:
     name: calibreapp/image-actions
@@ -135,6 +141,7 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
       - name: Create New Pull Request If Needed
+        if: steps.calibre.outputs.markdown != ''
         uses: peter-evans/create-pull-request@master
         with:
           title: Compressed Images
@@ -143,16 +150,18 @@ jobs:
           body: ${{ steps.calibre.outputs.markdown }}
 ```
 
-## Compressing images on a schedule
+## Compressing images on demand or a schedule
 
 It is also possible to run image-actions on a recurring schedule. By using the `compressOnly` option, in conjunction with [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans), a new Pull Request will be raised if there are optimised images in a repository.
 
 ```yml
-name: Compress images at 11pm and open a pull request
+# Compress images on demand (workflow), and at 11pm every Sunday (schedule).
+# Open a pull request if any images can be compressed
+name: Compress images
 on:
+  workflow:
   schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron: '* 23 * * *'
+    - cron: '00 23 * * 0'
 jobs:
   build:
     name: calibreapp/image-actions
@@ -167,11 +176,74 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
       - name: Create New Pull Request If Needed
+        if: steps.calibre.outputs.markdown != ''
         uses: peter-evans/create-pull-request@master
         with:
           title: Compressed Images Nightly
           branch-suffix: timestamp
           commit-message: Compressed Images
+          body: ${{ steps.calibre.outputs.markdown }}
+```
+
+## Combined workflow
+
+You can combine all of the above into one workflow
+
+```yml
+# Compress images:
+# - on demand
+# - at 11pm every Sunday
+# - on pull requests from this report containing images
+# - on pushing of images to master (for forks)
+# For pull requests, the images are added to the PR
+# For the rest a new PR is opened if any images are compressed.
+name: Compress images
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '00 23 * * 0'
+  pull_request:
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
+  push:
+    branches:
+      - master
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.webp'
+jobs:
+  build:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    # Only run on main repo on and PRs that match the main repo
+    if: |
+      github.repository == 'example/example_repo' &&
+      (github.event_name != 'pull_request' ||
+       github.event.pull_request.head.repo.full_name == github.repository)
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@master
+      - name: Compress Images
+        id: calibre
+        uses: calibreapp/image-actions@master
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: ${{ github.event_name != 'pull_request' }}
+      - name: Create Pull Request
+        # If it's not a pull request then commit any changes as a new PR
+        if: |
+          github.event_name != 'pull_request' &&
+          steps.calibre.outputs.markdown != ''
+        uses: peter-evans/create-pull-request@master
+        with:
+          title: Auto Compress Images
+          branch-suffix: timestamp
+          commit-message: Compress Images
           body: ${{ steps.calibre.outputs.markdown }}
 ```
 
