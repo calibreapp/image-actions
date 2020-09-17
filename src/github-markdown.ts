@@ -5,33 +5,40 @@ import githubEvent from './github-event'
 import template from './template'
 import getConfig from './config'
 
-const generateImageView = async (
+const generateImageView = (
   images: ProcessedImage[],
+  prNumber?: number,
   commitSha?: string
-): Promise<ProcessedImageView[]> => {
-  const promises = images.map(async image => {
+): ProcessedImageView[] => {
+  const imageViews = images.map(image => {
     return {
       ...image,
       formattedBeforeStats: filesize(image.beforeStats),
       formattedAfterStats: filesize(image.afterStats),
       formattedPercentChange: `${image.percentChange.toFixed(1)}%`,
-      diffUrl: commitSha ? await generateDiffUrl(image, commitSha) : null
+      diffUrl:
+        commitSha && prNumber
+          ? generateDiffUrl(image, prNumber, commitSha)
+          : null
     }
   })
 
-  return Promise.all(promises)
+  return imageViews
 }
 
 /*
   Return a URL that'll link to an image diff view
   /<org>/<repo>/pull/<pr id>/commits/<sha>?short_path=<first 7 of md5>#diff-<md5 of filepath>
 */
-const generateDiffUrl = async (image: ProcessedImage, commitSha: string) => {
-  const { number } = await githubEvent()
+const generateDiffUrl = (
+  image: ProcessedImage,
+  prNumber: number,
+  commitSha: string
+): string => {
   const fileId = crypto.createHash('md5').update(image.path).digest('hex')
   const shortFileId = fileId.slice(0, 7)
 
-  const url = `/${GITHUB_REPOSITORY}/pull/${number}/${commitSha}?short_path=${shortFileId}#diff-${fileId}`
+  const url = `/${GITHUB_REPOSITORY}/pull/${prNumber}/${commitSha}?short_path=${shortFileId}#diff-${fileId}`
 
   return url
 }
@@ -40,6 +47,7 @@ const generateMarkdownReport = async ({
   processingResults,
   commitSha
 }: ActionSummaryReport): Promise<string> => {
+  const { number } = await githubEvent()
   const { compressOnly } = await getConfig()
   const { optimisedImages, unoptimisedImages, metrics } = processingResults
 
@@ -51,8 +59,8 @@ const generateMarkdownReport = async ({
   const markdown = await template(templateName, {
     overallPercentageSaved: -metrics.percentChange.toFixed(1),
     overallBytesSaved: filesize(metrics.bytesSaved),
-    optimisedImages: await generateImageView(optimisedImages, commitSha),
-    unoptimisedImages: await generateImageView(unoptimisedImages)
+    optimisedImages: generateImageView(optimisedImages, number, commitSha),
+    unoptimisedImages: generateImageView(unoptimisedImages, number)
   })
 
   // Log markdown, so that it can be used for Action output
