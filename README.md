@@ -106,7 +106,7 @@ By default image-actions will add updated images to the current pull request. It
 
 GitHub actions, by default, do not have permission to alter forked repositories. This means this action, by default, only works for pull requests from branches in the same repository as the destination branch.
 
-You can replace the default `GITHUB_TOKEN` with a [personal access token (PAT)](https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token#permissions-for-the-github_token) which does have permission for forked repositaries, but this introduces other security considerations (which is why it not available by default).
+You can replace the default `GITHUB_TOKEN` with a [personal access token (PAT)](https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token#permissions-for-the-github_token) which does have permission for forked repositories, but this introduces other security considerations (which is why it not available by default).
 
 Alternatively you can run this action only for Pull Requests for the current repo, which is advised when not using PATs to avoid wasting time and compute for compressions that will not be committed using the following syntax (as shown in the example yml files in this README):
 
@@ -187,21 +187,18 @@ jobs:
 
 ## Combined workflow
 
-You can combine all of the above into one workflow
+You can combine all of the above into one all-encompassing workflow
 
 ```yml
 # Compress images:
-# - on demand
-# - at 11pm every Sunday
 # - on pull requests from this report containing images
 # - on pushing of images to master (for forks)
+# - on demand
+# - at 11pm every Sunday just in case anything gets missed with any of the above
 # For pull requests, the images are added to the PR
 # For the rest a new PR is opened if any images are compressed.
 name: Compress images
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '00 23 * * 0'
   pull_request:
     paths:
       - '**.jpg'
@@ -216,6 +213,9 @@ on:
       - '**.jpeg'
       - '**.png'
       - '**.webp'
+  workflow_dispatch:
+  schedule:
+    - cron: '00 23 * * 0'
 jobs:
   build:
     name: calibreapp/image-actions
