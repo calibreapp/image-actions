@@ -7,8 +7,8 @@ Compression reduced images by <strong>62.3%</strong>, saving <strong>5.42 KB</st
 
 | Filename | Before | After | Improvement | Visual comparison |
 | -------- | ------ | ----- | ----------- | ----------------- |
-| <code>icon.png</code> | 8.71 KB | 3.28 KB | -62.3% | [View diff](/calibreapp/image-actions-test-repo/pull/3/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=edafe76#diff-edafe76b3f31282efe3ceb54732aa48d) |
-| <code>roo.jpg</code> | 474.36 KB | 457.91 KB | -3.6% | [View diff](/calibreapp/image-actions-test-repo/pull/3/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=97c8680#diff-97c8680195910991ce4298e040619cae) |
+| <code>icon.png</code> | 8.71 KB | 3.28 KB | -62.3% | [View diff](/calibreapp/image-actions-test-repo/pull/3/commits/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=cc35d4b#diff-cc35d4b8e796c869289176c383aa3da3) |
+| <code>roo.jpg</code> | 474.36 KB | 457.91 KB | -3.6% | [View diff](/calibreapp/image-actions-test-repo/pull/3/commits/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=2263610#diff-2263610ef44cc9ef377c71fce4d01b98) |
 
 
 2 images did not require optimisation.
