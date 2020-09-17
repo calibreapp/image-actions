@@ -152,7 +152,7 @@ jobs:
 
 ## Compressing images on demand or on a schedule
 
-It is also possible to run image-actions [on demand](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/) on a [recurring schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule). By using the `compressOnly` option, in conjunction with [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans), a new Pull Request will be raised if there are optimised images in a repository.
+It is also possible to run image-actions [on demand](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/) or on a [recurring schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule). By using the `compressOnly` option, in conjunction with [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans), a new Pull Request will be raised if there are optimised images in a repository.
 
 ```yml
 # Compress images on demand (workflow_dispatch), and at 11pm every Sunday (schedule).
