@@ -107,6 +107,8 @@ const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
     ref: `heads/${event.pull_request.head.ref}`,
     sha: commit.data.sha
   })
+
+  return commit.data
 }
 
 export default commitOptimisedImages
