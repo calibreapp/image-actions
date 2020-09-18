@@ -142,7 +142,7 @@ jobs:
           compressOnly: true
       - name: Create New Pull Request If Needed
         if: steps.calibre.outputs.markdown != ''
-        uses: peter-evans/create-pull-request@master
+        uses: peter-evans/create-pull-request@v3
         with:
           title: Compressed Images
           branch-suffix: timestamp
@@ -177,7 +177,7 @@ jobs:
           compressOnly: true
       - name: Create New Pull Request If Needed
         if: steps.calibre.outputs.markdown != ''
-        uses: peter-evans/create-pull-request@master
+        uses: peter-evans/create-pull-request@v3
         with:
           title: Compressed Images Nightly
           branch-suffix: timestamp
@@ -240,7 +240,7 @@ jobs:
         if: |
           github.event_name != 'pull_request' &&
           steps.calibre.outputs.markdown != ''
-        uses: peter-evans/create-pull-request@master
+        uses: peter-evans/create-pull-request@v3
         with:
           title: Auto Compress Images
           branch-suffix: timestamp
