@@ -114,10 +114,10 @@ Alternatively you can run this action only for Pull Requests for the current rep
     if: github.event.pull_request.head.repo.full_name == github.repository
 ```
 
-It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to master, and then raise a new pull request for any images committed without being compressed (e.g. from a forked repository pull request). This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans) to open the new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
+It is also possible to run an additional instance of this action in `compressOnly` mode on pushes to your default branch, and then raise a new pull request for any images committed without being compressed (e.g. from a forked repository pull request). This is shown in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans) to open the new Pull Request (note this only raises a Pull Request if any files are actually changed in previous steps).
 
 ```yml
-name: Compress Images on Push to Master
+name: Compress Images on Push to the Default Branch
 on:
   push:
     branches:
@@ -192,7 +192,7 @@ You can combine all of the above into one all-encompassing workflow to avoid hav
 ```yml
 # image-actions will run in the following scenarios:
 # - on pull requests containing images (not including forks)
-# - on pushing of images to master (for forks)
+# - on pushing of images to the default branch (for forks)
 # - on demand (https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/)
 # - at 11pm every Sunday just in case anything gets missed with any of the above
 # For pull requests, the images are added to the PR
