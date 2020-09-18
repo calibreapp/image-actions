@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Compress Images
-        uses: calibreapp/image-actions@master
+        uses: calibreapp/image-actions@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -70,7 +70,7 @@ Set custom configuration by adding arguments to the action workflow definition:
 
 ```yml
 - name: Compress Images
-  uses: calibreapp/image-actions@master
+  uses: calibreapp/image-actions@v1
   with:
     githubToken: ${{ secrets.GITHUB_TOKEN }}
     jpegQuality: '80'
@@ -96,7 +96,7 @@ By default image-actions will add updated images to the current pull request. It
 
 ```yml
 - name: Compress Images
-  uses: calibreapp/image-actions@master
+  uses: calibreapp/image-actions@v1
   with:
     githubToken: ${{ secrets.GITHUB_TOKEN }}
     compressOnly: true
@@ -136,7 +136,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Compress Images
         id: calibre
-        uses: calibreapp/image-actions@master
+        uses: calibreapp/image-actions@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
@@ -171,7 +171,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Compress Images
         id: calibre
-        uses: calibreapp/image-actions@master
+        uses: calibreapp/image-actions@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
@@ -230,7 +230,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Compress Images
         id: calibre
-        uses: calibreapp/image-actions@master
+        uses: calibreapp/image-actions@v1
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           # For non-pull requests, run in compressOnly mode and we'll PR after
@@ -265,7 +265,7 @@ jobs:
 
   ```yml
   - name: Compress Images
-    uses: calibreapp/image-actions@master
+    uses: calibreapp/image-actions@v1
     with:
       githubToken: ${{ secrets.GITHUB_TOKEN }}
   ```
