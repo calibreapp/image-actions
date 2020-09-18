@@ -121,7 +121,7 @@ name: Compress Images on Push to the Default Branch
 on:
   push:
     branches:
-      - master
+      - $default-branch
     paths:
       - '**.jpg'
       - '**.jpeg'
@@ -207,7 +207,7 @@ on:
       - '**.webp'
   push:
     branches:
-      - master
+      - $default-branch
     paths:
       - '**.jpg'
       - '**.jpeg'
