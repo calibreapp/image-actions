@@ -316,7 +316,7 @@ We value and appreciate all contributions.
 ## Used By
 Image Actions is helping developers, designers and organisations across the world to make their sites and applications faster. Here’s some of them:
 
-[![Calibre logo](images/used-by/calibre.jpg)](https://calibreapp.com)
+<a href="https://calibreapp.com" title="Calibre Web Performance Analytics"><img src="images/used-by/calibre.jpg" width="250" loading="lazy" /></a>
 
 ## Authors
 * [Ben Schwarz](https://github.com/benschwarz) (Founder and CEO at [Calibre](https://calibreapp.com/))
