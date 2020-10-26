@@ -33,7 +33,8 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
       path.resolve(REPO_DIRECTORY, p)
     ),
     nodir: true,
-    follow: false
+    follow: false,
+    dot: true
   })
 
   const optimisedImages: ProcessedImage[] = []
