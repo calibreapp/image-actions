@@ -11,3 +11,5 @@ Compression reduced images by <strong><%- overallPercentageSaved %>%</strong>, s
 <% if(unoptimisedImages.length) { -%>
 <%- unoptimisedImages.length %> <%- unoptimisedImages.length > 1 ? 'images' : 'image' %> did not require optimisation.
 <% } %>
+
+**Update required:** Update image-actions configuration to the latest version **before 1/1/21.** See [README for instructions.](https://github.com/calibreapp/image-actions)
