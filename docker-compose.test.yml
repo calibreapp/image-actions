@@ -1,0 +1,5 @@
+version: "3"
+services:
+  test:
+    build: .
+    entrypoint: npm run test
