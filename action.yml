@@ -43,7 +43,7 @@ outputs:
 
 runs:
   using: "docker"
-  image: "docker://calibreapp/github-image-actions" 
+  image: "docker://docker.pkg.github.com/calibreapp/image-actions/image-actions:main" 
 
 branding:
   icon: "image"
