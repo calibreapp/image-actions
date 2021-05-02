@@ -24,18 +24,56 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
   console.log('::debug:: === Sharp library info ===')
 
   const config = await getConfig()
+
+  const getMatchedPathsByGlobs = async (pattern: string) => {
+    const imagePaths = await glob(pattern, {
+      ignore: config.ignorePaths.map((p: string) =>
+        path.resolve(REPO_DIRECTORY, p)
+      ),
+      nodir: true,
+      follow: false,
+      dot: true
+    })
+
+    return imagePaths;
+  }
+
   const globPaths = `${REPO_DIRECTORY}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
     ','
   )}}`
 
-  const imagePaths = await glob(globPaths, {
-    ignore: config.ignorePaths.map((p: string) =>
-      path.resolve(REPO_DIRECTORY, p)
-    ),
-    nodir: true,
-    follow: false,
-    dot: true
-  })
+  const imagePaths = await getMatchedPathsByGlobs(globPaths)
+
+  /**
+   * Get all files which requires resizing
+   *  
+   * Output: 
+   * 
+   * {
+   *   "/tests/test-images/icon.png": {  width: 100, height: 200 } // Sizes can be defined in config file
+   * }
+  */ 
+  const imagesToBeResized = await Object.keys(config.size).reduce(async (agg: any, pathProvided: string) => {
+    const globPath = FILE_EXTENSIONS_TO_PROCESS.find(extension => pathProvided.includes(`.${extension}`)) ? pathProvided : `${pathProvided}/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
+      ','
+    )}}`;
+
+    const paths = await getMatchedPathsByGlobs(globPath);
+
+    if (paths.length === 0) {
+      return agg;
+    }
+
+    const imagePathWithSize = paths.reduce((agg: any, matchedPath: string) => ({
+      ...agg,
+      [matchedPath]: config.size[globPath]
+    }), {})
+
+    return {
+      ...agg,
+      ...imagePathWithSize
+    }
+  }, {})
 
   const optimisedImages: ProcessedImage[] = []
   const unoptimisedImages: ProcessedImage[] = []
@@ -46,8 +84,11 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
     const options = config[sharpFormat]
     const beforeStats = (await stat(imgPath)).size
 
+    const customSize = imagesToBeResized[imgPath];
+
     try {
       const { data, info } = await sharp(imgPath)
+        .resize(customSize || {})
         .toFormat(sharpFormat, options)
         .toBuffer({ resolveWithObject: true })
 
