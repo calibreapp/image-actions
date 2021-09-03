@@ -24,7 +24,7 @@ Image Actions offers:
   - [Process Pull Requests from forked repositories](#process-pull-requests-from-forked-repositories)
   - [Combined workflow](#combined-workflow)
 - [Migrate legacy configuration](#migrate-legacy-configuration)
-  - [Uses and `GITHUB_TOKEN` definition](#uses-and--github-token--definition)
+  - [Uses and `GITHUB_TOKEN` definition](#uses-and-github_token-definition)
   - [Location and name of the configuration file](#location-and-name-of-the-configuration-file)
   - [Listing `ignorePaths`](#listing--ignorepaths-)
 - [Contributing](#contributing)
