@@ -2,11 +2,15 @@ Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-ac
 
 Compression reduced images by <strong><%- overallPercentageSaved %>%</strong>, saving <strong><%- overallBytesSaved %></strong>.
 
+<% if(optimisedImages.length < 50) { -%>
 | Filename | Before | After | Improvement | Visual comparison |
 | -------- | ------ | ----- | ----------- | ----------------- |
 <% optimisedImages.forEach((image) => { -%>
 | <code><%- image.name %></code> | <%- image.formattedBeforeStats %> | <%- image.formattedAfterStats %> | <%- image.formattedPercentChange %> | [View diff](<%- image.diffUrl %>) |
 <% }); %>
+<% } else { %>
+<%- optimisedImages.length %> images were optimised, but the list is too long to display.
+<% } %>
 
 <% if(unoptimisedImages.length) { -%>
 <%- unoptimisedImages.length %> <%- unoptimisedImages.length > 1 ? 'images' : 'image' %> did not require optimisation.
