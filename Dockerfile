@@ -1,4 +1,4 @@
-FROM ubuntu:eoan
+FROM ubuntu:focal
 
 ARG MOZJPEG_VERSION=3.3.1
 ARG VIPS_VERSION=8.10.1
@@ -35,7 +35,7 @@ RUN apt-get update \
 
 RUN cd /usr/local/src \
   && wget ${MOZJPEG_URL}/v${MOZJPEG_VERSION}.tar.gz \
-  && tar xzf v${MOZJPEG_VERSION}.tar.gz 
+  && tar xzf v${MOZJPEG_VERSION}.tar.gz
 
 RUN cd /usr/local/src/mozjpeg-${MOZJPEG_VERSION} \
   && aclocal \
@@ -48,7 +48,7 @@ RUN cd /usr/local/src/mozjpeg-${MOZJPEG_VERSION} \
   && make install
 
 # we must not use any packages which depend directly or indirectly on libjpeg,
-# since we want to use our own mozjpeg build 
+# since we want to use our own mozjpeg build
 RUN apt-get install -y \
   libxml2-dev \
   libfftw3-dev \
