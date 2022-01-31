@@ -1,4 +1,8 @@
-FROM ubuntu:eoan
+FROM ubuntu:focal
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ARG MOZJPEG_VERSION=3.3.1
 ARG VIPS_VERSION=8.10.1
@@ -21,21 +25,21 @@ ENV MANPATH=$MANPATH:/usr/local/man
 # basic build tools
 RUN apt-get update \
   && apt-get install -y \
-    build-essential \
-    autoconf \
-    automake \
-    libtool \
-    nasm \
-    wget \
-    pkg-config \
-    curl \
-    gtk-doc-tools \
-    swig \
-    gobject-introspection
+  build-essential \
+  autoconf \
+  automake \
+  libtool \
+  nasm \
+  wget \
+  pkg-config \
+  curl \
+  gtk-doc-tools \
+  swig \
+  gobject-introspection
 
 RUN cd /usr/local/src \
   && wget ${MOZJPEG_URL}/v${MOZJPEG_VERSION}.tar.gz \
-  && tar xzf v${MOZJPEG_VERSION}.tar.gz 
+  && tar xzf v${MOZJPEG_VERSION}.tar.gz
 
 RUN cd /usr/local/src/mozjpeg-${MOZJPEG_VERSION} \
   && aclocal \
@@ -48,7 +52,7 @@ RUN cd /usr/local/src/mozjpeg-${MOZJPEG_VERSION} \
   && make install
 
 # we must not use any packages which depend directly or indirectly on libjpeg,
-# since we want to use our own mozjpeg build 
+# since we want to use our own mozjpeg build
 RUN apt-get install -y \
   libxml2-dev \
   libfftw3-dev \
