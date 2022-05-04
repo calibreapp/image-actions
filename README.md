@@ -1,6 +1,9 @@
-![Calibre Image Actions](images/image-actions-card.png)
+# Calibre Image Actions
 
-## Introduction
+[![NPM package](https://img.shields.io/npm/v/react-live-chat-loader?color=informational)](https://www.npmjs.com/package/react-live-chat-loader)
+[![License](https://img.shields.io/github/license/calibreapp/image-actions?color=informational)](https://github.com/calibreapp/react-live-chat-loader/blob/main/LICENSE)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-1.4-success)](CODE_OF_CONDUCT.md)
+[![Contribution guidelines](https://img.shields.io/badge/PRs-welcome-success)](CONTRIBUTING.md)
 
 Image Actions is a Github Action built by performance experts at [Calibre](https://calibreapp.com/) that automatically compresses JPEGs, PNGs and WebPs in Pull Requests.
 
@@ -11,29 +14,18 @@ Image Actions offers:
 - [Ease of customisation](#Configuration): use default settings or adapt to your needs
 - Running on demand or schedule
 
-...and more!
+...and more! 
 
-## Table of Contents
+## 🖇 Table of Contents
 
-- [Usage](#usage)
-- [Configuration](#configuration)
-  - [Control image quality settings](#control-image-quality-settings)
-  - [Ignore paths](#ignore-paths)
-  - [Run compression only](#run-compression-only)
-  - [Compress on demand or on schedule](#compress-on-demand-or-on-schedule)
-  - [Process Pull Requests from forked repositories](#process-pull-requests-from-forked-repositories)
-  - [Combined workflow](#combined-workflow)
-- [Migrate legacy configuration](#migrate-legacy-configuration)
-  - [Uses and `GITHUB_TOKEN` definition](#uses-and-github_token-definition)
-  - [Location and name of the configuration file](#location-and-name-of-the-configuration-file)
-  - [Listing `ignorePaths`](#listing--ignorepaths-)
-- [Contributing](#contributing)
-- [Used By](#used-by)
-- [Authors](#authors)
-- [Resources](#resources)
-- [License](#license)
+1. [Usage](#-usage)
+2. [Configuration](#-configuration)
+3. [Migrating legacy configuration](#-migrating-legacy-configuration)
+4. [Contributing](#-contributing)
+5. [Resources](#-resources)
+6. [License](#-license)
 
-## Usage
+## 🛠 Usage
 
 1. Create a `.github/workflows/calibreapp-image-actions.yml` file in your repository with the following configuration:
 
@@ -72,7 +64,7 @@ jobs:
 
 3. Merge your Pull Request and enjoy lighter images or explore what’s possible further with [configuration options](#configuration). 👇🏻
 
-## Configuration
+## ⚙️ Configuration
 
 By default, Image Actions will compress images so that they’re smaller and will leave your assets looking clear and crisp. If you want to change or expand those defaults, read on for available options.
 
@@ -271,7 +263,7 @@ jobs:
           body: ${{ steps.calibre.outputs.markdown }}
 ```
 
-## Migrate legacy configuration
+## ♻️ Migrating legacy configuration
 
 If you are using an older version of Image Actions, we recommend checking that your settings are up-to-date.
 
@@ -303,45 +295,25 @@ If your repository uses `.github/calibre/image-actions.yml` for configuration, i
 
 `ignorePaths` is no longer an array and is now a comma separated list. E.g. `ignorePaths: "node_modules/**,bin"`.
 
-## Contributing
+## 🙌🏻 Contributing
 
-To submit a feature, bug fix, or enhancement to Image Actions, follow these steps:
+Happy to hear you’re interested in contributing to Image Actions! Please find our contribution guidelines [here](CONTRIBUTING.md).
 
-1. Fork this repository.
-2. Install dependencies with `npm install`.
-3. Run `npm run build` or `npm run watch` (for continuous rebuild-on-save) to build the project.
-4. Make desired changes.
-5. Run `npm run test` to run the test suite.
-6. Confirm a successful Docker build with `docker build -t calibreapp/image-actions:dev .`.
-7. [Open a Pull Request and follow the prompts](https://github.com/calibreapp/image-actions/compare).
+## 📚 Resources
 
-We value and appreciate all contributions.
-
-## Used By
-
-Image Actions is helping developers, designers and organisations across the world to make their sites and applications faster. Here’s some of them:
-
-<a href="https://calibreapp.com" title="Calibre Web Performance Analytics"><img src="images/used-by/calibre.jpg" width="250" loading="lazy" /></a>
-
-## Authors
-
-- [Ben Schwarz](https://github.com/benschwarz) (Founder and CEO at [Calibre](https://calibreapp.com/))
-
-## Resources
-
-**Related reading:**
+#### Related reading:
 
 - [Automatically compress images on Pull Requests](https://calibreapp.com/blog/compress-images-in-prs/)
 - [Optimize Images with a GitHub Action](https://css-tricks.com/optimize-images-with-a-github-action/)
 - [Image Actions on GitHub Marketplace](https://github.com/marketplace/actions/image-actions)
 - [Start monitoring and improving your performance](https://calibreapp.com/)
 
-**Image compression tools:**
+#### Image compression tools:
 
 - [sharp](https://github.com/lovell/sharp)
 - [mozjpeg](https://github.com/mozilla/mozjpeg)
 - [libvips](https://github.com/libvips/libvips)
 
-## License
+## 💼 License
 
-Image Actions is licensed under a [GNU General Public License](LICENSE).
+This project is licensed under a [GNU General Public License](LICENSE).

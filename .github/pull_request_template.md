@@ -26,5 +26,5 @@ If this work introduces any visual changes, add screenshots to portray them.
 ## Reviewers
 Mention one or more project owners here or request review directly in the right sidebar in the Reviewers section:
 
-- @benschwarz or @mikedijkstra for engineering review
+- @benschwarz for engineering review
 - @thefoxis for content and copy review
