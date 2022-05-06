@@ -19,8 +19,8 @@ Image Actions offers:
 ## 🖇 Table of Contents
 
 1. [Usage](#-usage)
-2. [Configuration](#-configuration)
-3. [Migrating legacy configuration](#-migrating-legacy-configuration)
+2. [Configuration](#%EF%B8%8F-configuration)
+3. [Migrating legacy configuration](#%EF%B8%8F-migrating-legacy-configuration)
 4. [Contributing](#-contributing)
 5. [Resources](#-resources)
 6. [License](#-license)
