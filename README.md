@@ -2,7 +2,7 @@
 
 [![NPM package](https://img.shields.io/npm/v/react-live-chat-loader?color=informational)](https://www.npmjs.com/package/react-live-chat-loader)
 [![License](https://img.shields.io/github/license/calibreapp/image-actions?color=informational)](https://github.com/calibreapp/react-live-chat-loader/blob/main/LICENSE)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-1.4-success)](CODE_OF_CONDUCT.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-success)](CODE_OF_CONDUCT.md)
 [![Contribution guidelines](https://img.shields.io/badge/PRs-welcome-success)](CONTRIBUTING.md)
 
 Image Actions is a Github Action built by performance experts at [Calibre](https://calibreapp.com/) that automatically compresses JPEGs, PNGs and WebPs in Pull Requests.

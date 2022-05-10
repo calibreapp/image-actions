@@ -1,0 +1,7 @@
+# Code owners are automatically requested for review when someone opens a pull request that modifies code that they own. This helps speed up the review process and ensures we adhere the standards we set up for ourselves.
+
+# @benschwarz owns the entire project:
+* @benschwarz
+
+# @thefoxis owns any content changes to the documentation of this project:
+*.md @thefoxis
