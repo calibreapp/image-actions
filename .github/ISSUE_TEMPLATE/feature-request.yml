@@ -1,0 +1,55 @@
+name: "\U0001F4A1 Feature Request"
+description: "Have an idea how to make this project better? We’re all ears!"
+title: "[Feature Request] Feature description"
+labels: enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        👋🏻 Hi there! This template will help you file a complete feature request, so one of the project maintainers can triage and respond to it promptly. 
+  - type: markdown
+    attributes:
+      value: | 
+        Please fill relevant sections below. Thank you for helping us improve this project! ⚡️
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this feature solve?
+      description: A clear and concise description of what the problem is.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you’d like to see
+      description: A clear and concise description of what you would like to happen.
+    validations:
+      required: true
+  - type: dropdown
+    id: solution-work
+    attributes:
+      label: Are you willing to work on implementing this solution?
+      description: 
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: alternative-solution
+    attributes:
+      label: Describe alternatives you’ve considered
+      description: A clear and concise description of any alternative solutions or features you’ve considered.
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the feature request here.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/calibreapp/.github/blob/main/CODE_OF_CONDUCT.md).
+      options:
+        - label: I agree to follow this project’s Code of Conduct
+          required: true
