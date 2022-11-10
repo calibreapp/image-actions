@@ -30,7 +30,7 @@ const main = async () => {
         event.action,
         '. Wants: synchronize or opened'
       )
-      process.exit(78)
+      process.exit(0)
     }
   }
 
