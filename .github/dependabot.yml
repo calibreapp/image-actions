@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: monthly
+      time: '22:00'
+    open-pull-requests-limit: 15
+  - package-ecosystem: docker
+    directory: '/'
+    schedule:
+    interval: monthly
+    time: '22:00'
+    open-pull-requests-limit: 15
