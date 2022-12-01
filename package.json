@@ -25,7 +25,7 @@
     ]
   },
   "dependencies": {
-    "@octokit/rest": "^16.17.0",
+    "@octokit/rest": "^19.0.5",
     "ejs": "^3.1.8",
     "glob": "^8.0.3",
     "humanize": "0.0.9",
