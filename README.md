@@ -13,6 +13,7 @@ Image Actions offers:
 - Best image compression algorithms available ([mozjpeg](https://github.com/mozilla/mozjpeg) and [libvips](https://github.com/libvips/libvips))
 - [Ease of customisation](#Configuration): use default settings or adapt to your needs
 - Running on demand or schedule
+- Supports GitHub Enterprise
 
 ...and more! 
 
