@@ -9,6 +9,7 @@ const GITHUB_EVENT_PATH = process.env['GITHUB_EVENT_PATH']
 const GITHUB_SHA = process.env['GITHUB_SHA']
 const GITHUB_REF = process.env['GITHUB_REF']
 const GITHUB_REPOSITORY = process.env['GITHUB_REPOSITORY']
+const GITHUB_API_URL = process.env['GITHUB_API_URL']
 
 const REPO_DIRECTORY = process.env['GITHUB_WORKSPACE']
 
@@ -56,6 +57,7 @@ export {
   GITHUB_SHA,
   GITHUB_REF,
   GITHUB_REPOSITORY,
+  GITHUB_API_URL,
   REPO_DIRECTORY,
   CONFIG_PATH,
   FILE_EXTENSIONS_TO_PROCESS,
