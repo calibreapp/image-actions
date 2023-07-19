@@ -30,7 +30,7 @@
     "glob": "^8.1.0",
     "humanize": "0.0.9",
     "js-yaml": "^3.13.1",
-    "sharp": "^0.24.0"
+    "sharp": "^0.32.1"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.2",
@@ -42,7 +42,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.8.0",
-    "jest": "^24.8.0",
+    "jest": "^29.5.0",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   }
