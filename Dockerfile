@@ -28,6 +28,7 @@ RUN apt-get update \
   build-essential \
   autoconf \
   automake \
+  autotools \
   libtool \
   nasm \
   wget \
