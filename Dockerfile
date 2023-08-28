@@ -4,8 +4,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ARG MOZJPEG_VERSION=3.3.1
-ARG VIPS_VERSION=8.10.1
+ARG MOZJPEG_VERSION=4.1.4
+ARG VIPS_VERSION=8.14.4
 
 ARG MOZJPEG_URL=https://github.com/mozilla/mozjpeg/archive
 ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
@@ -81,7 +81,7 @@ RUN cd /usr/local/src/vips-${VIPS_VERSION} \
   && make install
 
 # nodejs
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 
 RUN mkdir -p /usr/local/src/image-actions
