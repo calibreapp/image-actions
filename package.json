@@ -33,7 +33,7 @@
     "sharp": "^0.24.0"
   },
   "devDependencies": {
-    "@types/ejs": "^3.1.2",
+    "@types/ejs": "^3.1.3",
     "@types/js-yaml": "^3.12.5",
     "@octokit/types": "^5.5.0",
     "@types/node": "^20.4.5",
