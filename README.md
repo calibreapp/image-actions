@@ -46,10 +46,11 @@ jobs:
     # Only run on Pull Requests within the same repository, and not from forks.
     if: github.event.pull_request.head.repo.full_name == github.repository
     name: calibreapp/image-actions
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Compress Images
         uses: calibreapp/image-actions@main
