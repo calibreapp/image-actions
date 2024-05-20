@@ -239,9 +239,8 @@ jobs:
     runs-on: ubuntu-latest
     # Only run on main repo on and PRs that match the main repo.
     if: |
-      github.repository == 'example/example_repo' &&
-      (github.event_name != 'pull_request' ||
-       github.event.pull_request.head.repo.full_name == github.repository)
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
