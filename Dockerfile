@@ -31,16 +31,6 @@ RUN apt-get update \
   swig \
   gobject-introspection
 
-RUN cd /usr/local/src \
-  && aclocal \
-  && autoconf \
-  && autoheader \
-  && libtoolize \
-  && automake --add-missing \
-  && ./configure \
-  && make \
-  && make install
-
 # we must not use any packages which depend directly or indirectly on libjpeg,
 # since we want to use our own mozjpeg build
 RUN apt-get install -y \
