@@ -10,7 +10,7 @@ Image Actions is a Github Action built by performance experts at [Calibre](https
 Image Actions offers:
 
 - **Fast, efficient and near-lossless compression**
-- Best image compression algorithms available ([mozjpeg](https://github.com/mozilla/mozjpeg) and [libvips](https://github.com/libvips/libvips))
+- Best image compression algorithms available ([libvips](https://github.com/libvips/libvips))
 - [Ease of customisation](#Configuration): use default settings or adapt to your needs
 - Running on demand or schedule
 - Supports GitHub Enterprise
@@ -313,7 +313,6 @@ Happy to hear you’re interested in contributing to Image Actions! Please find 
 #### Image compression tools:
 
 - [sharp](https://github.com/lovell/sharp)
-- [mozjpeg](https://github.com/mozilla/mozjpeg)
 - [libvips](https://github.com/libvips/libvips)
 
 ## 💼 License
