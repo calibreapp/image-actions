@@ -16,9 +16,22 @@ env:
   IMAGE_NAME: image-actions
 
 jobs:
+  # Make sure we have docker-compose
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install docker-compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test:
+    # Ensure docker-compose exists before we run tests that depend on it.
+    needs: prepare
     runs-on: ubuntu-latest
 
     steps:
