@@ -4,15 +4,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ARG MOZJPEG_VERSION=3.3.1
 ARG VIPS_VERSION=8.10.1
 
-ARG MOZJPEG_URL=https://github.com/mozilla/mozjpeg/archive
 ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
-
-# mozjpeg installs to /opt/mozjpeg ... we need that on PKG_CONFIG_PATH so
-# that libvips configure can find it
-ENV PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/mozjpeg/lib64/pkgconfig
 
 # libvips installs to /usr/local by default .. /usr/local/bin is on the
 # default path in ubuntu, but /usr/local/lib is not
@@ -36,20 +30,6 @@ RUN apt-get update \
   gtk-doc-tools \
   swig \
   gobject-introspection
-
-RUN cd /usr/local/src \
-  && wget ${MOZJPEG_URL}/v${MOZJPEG_VERSION}.tar.gz \
-  && tar xzf v${MOZJPEG_VERSION}.tar.gz
-
-RUN cd /usr/local/src/mozjpeg-${MOZJPEG_VERSION} \
-  && aclocal \
-  && autoconf \
-  && autoheader \
-  && libtoolize \
-  && automake --add-missing \
-  && ./configure \
-  && make \
-  && make install
 
 # we must not use any packages which depend directly or indirectly on libjpeg,
 # since we want to use our own mozjpeg build
