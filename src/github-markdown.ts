@@ -69,7 +69,7 @@ const generateMarkdownReport = async ({
     .replace(/\%/g, '%25')
     .replace(/\n/g, '%0A')
     .replace(/\r/g, '%0D')
-  console.log('::set-output name=markdown::' + escapedMarkdown)
+  console.log('markdown=' + escapedMarkdown + ' >> $GITHUB_OUTPUT')
 
   return markdown
 }
