@@ -10,6 +10,7 @@ const GITHUB_SHA = process.env['GITHUB_SHA']
 const GITHUB_REF = process.env['GITHUB_REF']
 const GITHUB_REPOSITORY = process.env['GITHUB_REPOSITORY']
 const GITHUB_API_URL = process.env['GITHUB_API_URL']
+const GITHUB_OUTPUT = process.env['GITHUB_OUTPUT']
 
 const REPO_DIRECTORY = process.env['GITHUB_WORKSPACE']
 
@@ -21,6 +22,7 @@ const IGNORE_PATHS = process.env['INPUT_IGNOREPATHS']
   : ['node_modules/**']
 const COMPRESS_ONLY = process.env['INPUT_COMPRESSONLY'] === 'true'
 const JPEG_PROGRESSIVE = process.env['INPUT_JPEGPROGRESSIVE'] === 'true'
+const MIN_PCT_CHANGE = parseFloat(process.env['INPUT_MINPCTCHANGE']) || 1
 
 const COMMITTER = {
   name: 'Calibre',
@@ -58,6 +60,7 @@ export {
   GITHUB_REF,
   GITHUB_REPOSITORY,
   GITHUB_API_URL,
+  GITHUB_OUTPUT,
   REPO_DIRECTORY,
   CONFIG_PATH,
   FILE_EXTENSIONS_TO_PROCESS,
@@ -68,5 +71,6 @@ export {
   PNG_QUALITY,
   WEBP_QUALITY,
   IGNORE_PATHS,
-  COMPRESS_ONLY
+  COMPRESS_ONLY,
+  MIN_PCT_CHANGE
 }

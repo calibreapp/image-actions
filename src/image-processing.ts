@@ -9,7 +9,8 @@ const glob = util.promisify(require('glob'))
 import {
   REPO_DIRECTORY,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
-  FILE_EXTENSIONS_TO_PROCESS
+  FILE_EXTENSIONS_TO_PROCESS,
+  MIN_PCT_CHANGE
 } from './constants'
 
 import getConfig from './config'
@@ -61,10 +62,10 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
       // Remove the /github/home/ path (including the slash)
       const name = imgPath.replace(REPO_DIRECTORY, '').replace(/\//, '')
       const afterStats = info.size
-      const percentChange = (afterStats / beforeStats) * 100 - 100
+      const percentChange = ((beforeStats - afterStats) / beforeStats) * 100
 
       // Add a flag to tell if the optimisation was worthwhile
-      const compressionWasSignificant = percentChange < -1
+      const compressionWasSignificant = percentChange >= MIN_PCT_CHANGE
 
       const processedImage: ProcessedImage = {
         name,

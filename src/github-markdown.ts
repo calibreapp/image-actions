@@ -1,9 +1,11 @@
 import { filesize } from 'humanize'
 import crypto from 'crypto'
-import { GITHUB_REPOSITORY } from './constants'
+import { GITHUB_OUTPUT, GITHUB_REPOSITORY } from './constants'
 import githubEvent from './github-event'
 import template from './template'
 import getConfig from './config'
+import { promises as fsPromises } from 'fs'
+const { writeFile } = fsPromises
 
 const generateImageView = (
   images: ProcessedImage[],
@@ -69,7 +71,7 @@ const generateMarkdownReport = async ({
     .replace(/\%/g, '%25')
     .replace(/\n/g, '%0A')
     .replace(/\r/g, '%0D')
-  console.log('::set-output name=markdown::' + escapedMarkdown)
+  await writeFile(GITHUB_OUTPUT, 'markdown=' + escapedMarkdown, 'utf8')
 
   return markdown
 }

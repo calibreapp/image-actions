@@ -115,6 +115,20 @@ with:
 
 `compressOnly` accepts a Boolean value (true or false) and defaults to false.
 
+### Minimum percentage change
+
+By default, Image Actions commits optimised images if the new size is at least 1% smaller than the original one.
+
+Use the `minPctChange` option to change the percentage. You might want to increase it to avoid consecutive
+compressions of the same webp images.
+
+```yml
+with:
+  minPctChange: '2.5'
+```
+
+`minPctChange` accepts a numerical value and defaults to '1'.
+
 ### Compress on demand or on schedule
 
 It is also possible to run Image Actions [on demand](https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/) or on a [recurring schedule](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule). By using the `compressOnly` option, in conjunction with [`create-pull-request`](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans), a new Pull Request will be raised if there are optimised images in a repository.

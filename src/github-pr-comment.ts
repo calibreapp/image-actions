@@ -1,4 +1,4 @@
-import Octokit from '@octokit/rest'
+import { Octokit } from '@octokit/rest'
 import api from './github-api'
 import githubEvent from './github-event'
 
@@ -8,9 +8,9 @@ const createComment = async (
   const event = await githubEvent()
   const owner = event.repository.owner.login
   const repo = event.repository.name
-  const number = event.number
+  const issue_number = event.number
 
-  return api.issues.createComment({ owner, repo, number, body })
+  return api.issues.createComment({ owner, repo, issue_number, body })
 }
 
 export default createComment
