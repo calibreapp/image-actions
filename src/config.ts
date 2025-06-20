@@ -1,17 +1,17 @@
 import { promises as fsPromises } from 'fs'
 const { readFile } = fsPromises
 import yaml from 'js-yaml'
-import { OutputOptions, PngOptions, JpegOptions, WebpOptions } from 'sharp'
+import { PngOptions, JpegOptions, WebpOptions } from 'sharp'
 
 const {
-  ImageKind,
   CONFIG_PATH,
   JPEG_QUALITY,
   JPEG_PROGRESSIVE,
   PNG_QUALITY,
   WEBP_QUALITY,
   IGNORE_PATHS,
-  COMPRESS_ONLY
+  COMPRESS_ONLY,
+  MIN_PCT_CHANGE
 } = require('./constants')
 
 interface Config {
@@ -20,6 +20,7 @@ interface Config {
   png: PngOptions
   webp: WebpOptions
   ignorePaths: string[]
+  minPctChange: number
 }
 
 // Deprecated configuration method
@@ -38,7 +39,8 @@ const getConfig = async () => {
     png: { quality: PNG_QUALITY },
     webp: { quality: WEBP_QUALITY },
     ignorePaths: IGNORE_PATHS,
-    compressOnly: COMPRESS_ONLY
+    compressOnly: COMPRESS_ONLY,
+    minPctChange: MIN_PCT_CHANGE
   }
 
   const ymlConfig = await getYamlConfig()

@@ -1,4 +1,4 @@
-import Octokit from '@octokit/rest'
+import { Octokit } from '@octokit/rest'
 import { GitCreateCommitResponseData } from '@octokit/types'
 import { promises as fsPromises } from 'fs'
 const { readFile } = fsPromises

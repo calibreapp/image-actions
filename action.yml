@@ -37,6 +37,11 @@ inputs:
     required: false
     default: "false"
 
+  minPctChange:
+    description: "Minimun percentage reduction to be committed"
+    required: false
+    default: "1"
+
 outputs:
   markdown:
     description: "Output param used to store the Markdown summary for subsequent actions to use"
