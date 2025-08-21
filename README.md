@@ -117,7 +117,8 @@ with:
 
 ### Minimum percentage change
 
-By default, Image Actions commits optimised images if the new size is at least 1% smaller than the original one.
+By default, Image Actions commits optimised images if the new size is at least 5% smaller than the original one.
+
 
 Use the `minPctChange` option to change the percentage. You might want to increase it to avoid consecutive
 compressions of the same webp images.
