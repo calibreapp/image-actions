@@ -40,7 +40,7 @@ inputs:
   minPctChange:
     description: "Minimun percentage reduction to be committed"
     required: false
-    default: "1"
+    default: "5"
 
 outputs:
   markdown:
