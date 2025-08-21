@@ -22,7 +22,7 @@ const IGNORE_PATHS = process.env['INPUT_IGNOREPATHS']
   : ['node_modules/**']
 const COMPRESS_ONLY = process.env['INPUT_COMPRESSONLY'] === 'true'
 const JPEG_PROGRESSIVE = process.env['INPUT_JPEGPROGRESSIVE'] === 'true'
-const MIN_PCT_CHANGE = parseFloat(process.env['INPUT_MINPCTCHANGE']) || 1
+const MIN_PCT_CHANGE = parseFloat(process.env['INPUT_MINPCTCHANGE']) || 5
 
 const COMMITTER = {
   name: 'Calibre',
