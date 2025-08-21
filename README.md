@@ -127,7 +127,8 @@ with:
   minPctChange: '2.5'
 ```
 
-`minPctChange` accepts a numerical value and defaults to '1'.
+`minPctChange` accepts a numerical value represented as a string. `Default = '5'`.
+
 
 ### Compress on demand or on schedule
 
