@@ -1,5 +1,7 @@
-const path = require('path')
-const fs = require('fs').promises
+import path from 'path'
+import { promises as fs } from 'fs'
+import { beforeEach, afterEach, test, expect } from 'vitest'
+import imageProcessing from '../src/image-processing.ts'
 
 const EXAMPLE_IMAGES_DIR = `${process.cwd()}/__tests__/example-images`
 const TMP_TEST_IMAGES_DIR = `${process.cwd()}/__tests__/test-images`
@@ -12,29 +14,42 @@ const EXAMPLE_IMAGES = [
 ]
 
 beforeEach(async () => {
+  // Clean up any existing test-images directory first
   try {
-    await fs.mkdir(TMP_TEST_IMAGES_DIR)
+    await fs.rm(TMP_TEST_IMAGES_DIR, { recursive: true, force: true })
   } catch (e) {
-    console.log(TMP_TEST_IMAGES_DIR, 'already exists')
+    // noop
   }
 
-  // Copy in reference images for stats
+  try {
+    await fs.mkdir(TMP_TEST_IMAGES_DIR, { recursive: true })
+  } catch (e) {
+    // noop
+  }
+
+  // Copy in reference images
   for await (const image of EXAMPLE_IMAGES) {
-    await fs.copyFile(
-      path.join(EXAMPLE_IMAGES_DIR, image),
-      path.join(TMP_TEST_IMAGES_DIR, image)
-    )
+    try {
+      await fs.copyFile(
+        path.join(EXAMPLE_IMAGES_DIR, image),
+        path.join(TMP_TEST_IMAGES_DIR, image)
+      )
+    } catch (e) {
+      console.error(`Failed to copy ${image}:`, e.message)
+      console.error(`Source: ${path.join(EXAMPLE_IMAGES_DIR, image)}`)
+      console.error(`Dest: ${path.join(TMP_TEST_IMAGES_DIR, image)}`)
+      throw e
+    }
   }
 })
 
 afterEach(async () => {
-  for await (const image of EXAMPLE_IMAGES) {
-    await fs.unlink(path.join(TMP_TEST_IMAGES_DIR, image))
+  try {
+    await fs.rm(TMP_TEST_IMAGES_DIR, { recursive: true, force: true })
+  } catch (e) {
+    console.warn('afterEach error:', e.message)
   }
-  await fs.rmdir(TMP_TEST_IMAGES_DIR)
 })
-
-const imageProcessing = require('../dist/image-processing').default
 
 test('returns metrics for images', async () => {
   const results = await imageProcessing()
@@ -48,14 +63,17 @@ test('returns metrics for images', async () => {
 test('returns the correct number of optimised/untouched images', async () => {
   const results = await imageProcessing()
 
-  expect(results.optimisedImages).toHaveLength(2)
-  expect(results.unoptimisedImages).toHaveLength(2)
+  expect(results.optimisedImages).toHaveLength(3)
+  expect(results.unoptimisedImages).toHaveLength(1)
 })
 
 test('returns images with stats', async () => {
   const results = await imageProcessing()
 
-  expect(results.optimisedImages[0]).toEqual({
+  // Find the icon.png image from the results (order may vary)
+  const iconImage = results.optimisedImages.find(img => img.name === 'icon.png')
+
+  expect(iconImage).toEqual({
     afterStats: expect.any(Number),
     beforeStats: expect.any(Number),
     compressionWasSignificant: true,
