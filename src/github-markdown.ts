@@ -101,7 +101,10 @@ const generateMarkdownReport = async ({
     overallPercentageSaved: -metrics.percentChange.toFixed(1),
     overallBytesSaved: formatFileSize(metrics.bytesSaved),
     optimisedImages: displayedOptimisedImages,
-    unoptimisedImages: generateImageView({ images: unoptimisedImages, prNumber: number }),
+    unoptimisedImages: generateImageView({
+      images: unoptimisedImages,
+      prNumber: number
+    }),
     showSummary,
     totalOptimisedCount
   })

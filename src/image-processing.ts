@@ -107,7 +107,10 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
   })
 
   // Limit to MAX_IMAGES_TO_COMMIT for processing/committing
-  const limitedOptimisedImages = sortedOptimisedImages.slice(0, MAX_IMAGES_TO_COMMIT)
+  const limitedOptimisedImages = sortedOptimisedImages.slice(
+    0,
+    MAX_IMAGES_TO_COMMIT
+  )
 
   const metrics = await calculateOverallMetrics(limitedOptimisedImages)
 
