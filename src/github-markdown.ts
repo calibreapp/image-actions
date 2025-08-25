@@ -10,6 +10,8 @@ import type {
 } from './types/ProcessedImage.d.ts'
 import type { ActionSummaryReport } from './types/ActionReport.d.ts'
 
+const MAX_IMAGES_DISPLAYED = 25
+
 // Format file size using native Intl API
 const formatFileSize = (bytes: number): string => {
   const units = ['B', 'KB', 'MB', 'GB', 'TB']
@@ -31,7 +33,8 @@ const formatFileSize = (bytes: number): string => {
 const generateImageView = (
   images: ProcessedImage[],
   prNumber?: number,
-  commitSha?: string
+  commitSha?: string,
+  limitImages = false
 ): ProcessedImageView[] => {
   const imageViews = images.map(image => {
     return {
@@ -46,7 +49,7 @@ const generateImageView = (
     }
   })
 
-  return imageViews
+  return limitImages ? imageViews.slice(0, MAX_IMAGES_DISPLAYED) : imageViews
 }
 
 /*
@@ -79,11 +82,18 @@ const generateMarkdownReport = async ({
       ? 'inline-pr-comment-with-diff.md'
       : 'pr-comment.md'
 
+  const isPrComment = commitSha && !compressOnly
+  const totalOptimisedCount = optimisedImages.length
+  const displayedOptimisedImages = generateImageView(optimisedImages, number, commitSha, isPrComment)
+  const showSummary = isPrComment && totalOptimisedCount > MAX_IMAGES_DISPLAYED
+
   const markdown = await template(templateName, {
     overallPercentageSaved: -metrics.percentChange.toFixed(1),
     overallBytesSaved: formatFileSize(metrics.bytesSaved),
-    optimisedImages: generateImageView(optimisedImages, number, commitSha),
-    unoptimisedImages: generateImageView(unoptimisedImages, number)
+    optimisedImages: displayedOptimisedImages,
+    unoptimisedImages: generateImageView(unoptimisedImages, number),
+    showSummary,
+    totalOptimisedCount
   })
 
   // Log markdown, so that it can be used for Action output

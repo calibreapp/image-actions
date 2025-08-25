@@ -2,6 +2,10 @@ Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-ac
 
 Compression reduced images by <strong><%- overallPercentageSaved %>%</strong>, saving <strong><%- overallBytesSaved %></strong>.
 
+<% if(showSummary) { -%>
+**Displaying first 25 images: <%- totalOptimisedCount %> images processed.**
+
+<% } -%>
 | Filename | Before | After | Improvement | Visual comparison |
 | -------- | ------ | ----- | ----------- | ----------------- |
 <% optimisedImages.forEach((image) => { -%>
