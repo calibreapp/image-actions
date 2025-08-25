@@ -30,12 +30,17 @@ const formatFileSize = (bytes: number): string => {
   return `${formatter.format(size)} ${units[unitIndex]}`
 }
 
-const generateImageView = (
-  images: ProcessedImage[],
-  prNumber?: number,
-  commitSha?: string,
+const generateImageView = ({
+  images,
+  prNumber,
+  commitSha,
   limitImages = false
-): ProcessedImageView[] => {
+}: {
+  images: ProcessedImage[]
+  prNumber?: number
+  commitSha?: string
+  limitImages?: boolean
+}): ProcessedImageView[] => {
   const imageViews = images.map(image => {
     return {
       ...image,
@@ -82,16 +87,21 @@ const generateMarkdownReport = async ({
       ? 'inline-pr-comment-with-diff.md'
       : 'pr-comment.md'
 
-  const isPrComment = commitSha && !compressOnly
+  const isPrComment = Boolean(commitSha && !compressOnly)
   const totalOptimisedCount = optimisedImages.length
-  const displayedOptimisedImages = generateImageView(optimisedImages, number, commitSha, isPrComment)
+  const displayedOptimisedImages = generateImageView({
+    images: optimisedImages,
+    prNumber: number,
+    commitSha,
+    limitImages: isPrComment
+  })
   const showSummary = isPrComment && totalOptimisedCount > MAX_IMAGES_DISPLAYED
 
   const markdown = await template(templateName, {
     overallPercentageSaved: -metrics.percentChange.toFixed(1),
     overallBytesSaved: formatFileSize(metrics.bytesSaved),
     optimisedImages: displayedOptimisedImages,
-    unoptimisedImages: generateImageView(unoptimisedImages, number),
+    unoptimisedImages: generateImageView({ images: unoptimisedImages, prNumber: number }),
     showSummary,
     totalOptimisedCount
   })
