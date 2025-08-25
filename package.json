@@ -35,12 +35,11 @@
     "@octokit/types": "^5.5.0",
     "@types/node": "^22.10.3",
     "@types/sharp": "^0.31.0",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.4.2",
     "typescript": "^5.0.4"
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-n": "^17.21.3",
     "vitest": "^3.2.4"
   }
 }
