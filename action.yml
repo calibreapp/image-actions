@@ -10,7 +10,7 @@ inputs:
   jpegQuality:
     description: "JPEG quality level"
     required: false
-    default: "80"
+    default: "85"
 
   jpegProgressive:
     description: "Use progressive (interlaced) scan for JPEG"
@@ -20,12 +20,12 @@ inputs:
   pngQuality:
     description: "PNG quality level"
     required: false
-    default: "80"
+    default: "90"
 
   webpQuality:
     description: "WEBP quality level"
     required: false
-    default: "80"
+    default: "85"
 
   ignorePaths:
     description: "Paths to ignore during search"
@@ -37,13 +37,18 @@ inputs:
     required: false
     default: "false"
 
+  minPctChange:
+    description: "Minimun percentage reduction to be committed"
+    required: false
+    default: "5"
+
 outputs:
   markdown:
     description: "Output param used to store the Markdown summary for subsequent actions to use"
 
 runs:
   using: "docker"
-  image: "docker://ghcr.io/calibreapp/image-actions/image-actions:main" 
+  image: "Dockerfile" 
 
 branding:
   icon: "image"

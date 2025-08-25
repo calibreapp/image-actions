@@ -1,4 +1,4 @@
-interface ProcessedImage {
+export interface ProcessedImage {
   name: string
   path: string
   beforeStats: number
@@ -7,19 +7,19 @@ interface ProcessedImage {
   compressionWasSignificant: boolean
 }
 
-interface ProcessedImageView extends ProcessedImage {
+export interface ProcessedImageView extends ProcessedImage {
   formattedBeforeStats: string
   formattedAfterStats: string
   formattedPercentChange: string
   diffUrl?: string
 }
 
-interface ProcessedImageMetrics {
+export interface ProcessedImageMetrics {
   bytesSaved: number
   percentChange: number
 }
 
-interface ProcessedImagesResult {
+export interface ProcessedImagesResult {
   metrics: ProcessedImageMetrics
   optimisedImages: ProcessedImage[]
   unoptimisedImages: ProcessedImage[]

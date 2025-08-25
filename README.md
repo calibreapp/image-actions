@@ -78,18 +78,18 @@ Add the following arguments to the workflow definition to control compression se
 
 ```yml
 with:
-  jpegQuality: '80'
+  jpegQuality: '85'
   jpegProgressive: false
-  pngQuality: '80'
-  webpQuality: '80'
+  pngQuality: '90'
+  webpQuality: '85'
 ```
 
 **Options:**
 
-- [jpegQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Number, integer 1-100, default 80 stored in a string.
+- [jpegQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Number, integer 1-100, default 85 stored in a string.
 - [jpegProgressive](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Boolean, true or false, default false.
-- [pngQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#png): Number, integer 1-100, default 80 stored in a string.
-- [webpQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#webp): Number, integer 1-100, default 80 stored in a string.
+- [pngQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#png): Number, integer 1-100, default 90 stored in a string.
+- [webpQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#webp): Number, integer 1-100, default 85 stored in a string.
 
 ### Ignore paths
 
@@ -114,6 +114,22 @@ with:
 ```
 
 `compressOnly` accepts a Boolean value (true or false) and defaults to false.
+
+### Minimum percentage change
+
+By default, Image Actions commits optimised images if the new size is at least 5% smaller than the original one.
+
+
+Use the `minPctChange` option to change the percentage. You might want to increase it to avoid consecutive
+compressions of the same webp images.
+
+```yml
+with:
+  minPctChange: '2.5'
+```
+
+`minPctChange` accepts a numerical value represented as a string. `Default = '5'`.
+
 
 ### Compress on demand or on schedule
 

@@ -1,3 +1,6 @@
+import { test, expect } from 'vitest'
+import markdown from '../src/github-markdown.ts'
+
 const results = {
   optimisedImages: [
     {
@@ -40,8 +43,6 @@ const results = {
     percentChange: -62.29526587390622
   }
 }
-
-const markdown = require('../dist/github-markdown').default
 
 test('writes the markdown with diff report', async () => {
   const markdownResult = await markdown({

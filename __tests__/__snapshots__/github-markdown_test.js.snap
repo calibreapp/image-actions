@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`writes the markdown with diff report 1`] = `
 "Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
 
-Compression reduced images by <strong>62.3%</strong>, saving <strong>5.42 KB</strong>.
+Compression reduced images by <strong>62.3%</strong>, saving <strong>5.4 KB</strong>.
 
 | Filename | Before | After | Improvement | Visual comparison |
 | -------- | ------ | ----- | ----------- | ----------------- |
-| <code>icon.png</code> | 8.71 KB | 3.28 KB | -62.3% | [View diff](/calibreapp/image-actions-test-repo/pull/3/commits/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=cc35d4b#diff-cc35d4b8e796c869289176c383aa3da3) |
-| <code>roo.jpg</code> | 474.36 KB | 457.91 KB | -3.6% | [View diff](/calibreapp/image-actions-test-repo/pull/3/commits/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=2263610#diff-2263610ef44cc9ef377c71fce4d01b98) |
+| <code>icon.png</code> | 8.7 KB | 3.3 KB | -62.3% | [View diff](/calibreapp/image-actions-test-repo/pull/3/commits/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=cc35d4b#diff-cc35d4b8e796c869289176c383aa3da3) |
+| <code>roo.jpg</code> | 474.4 KB | 457.9 KB | -3.6% | [View diff](/calibreapp/image-actions-test-repo/pull/3/commits/a033d6f26da7f7856c150e7f1bf217f0f0cfd7e3?short_path=2263610#diff-2263610ef44cc9ef377c71fce4d01b98) |
 
 
 2 images did not require optimisation.
@@ -18,12 +18,12 @@ Compression reduced images by <strong>62.3%</strong>, saving <strong>5.42 KB</st
 exports[`writes the markdown without diff report 1`] = `
 "Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-actions](https://github.com/marketplace/actions/image-actions) ✨
 
-Compression reduced images by <strong>62.3%</strong>, saving <strong>5.42 KB</strong>.
+Compression reduced images by <strong>62.3%</strong>, saving <strong>5.4 KB</strong>.
 
 | Filename | Before | After | Improvement |
 | -------- | ------ | ----- | ----------- |
-| <code>icon.png</code> | 8.71 KB | 3.28 KB | -62.3% |
-| <code>roo.jpg</code> | 474.36 KB | 457.91 KB | -3.6% |
+| <code>icon.png</code> | 8.7 KB | 3.3 KB | -62.3% |
+| <code>roo.jpg</code> | 474.4 KB | 457.9 KB | -3.6% |
 
 
 2 images did not require optimisation.
