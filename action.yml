@@ -3,10 +3,6 @@ author: "Calibre"
 description: "Compresses Images for the Web"
 
 inputs:
-  githubToken:
-    description: "GitHub Token"
-    required: true
-
   jpegQuality:
     description: "JPEG quality level"
     required: false
