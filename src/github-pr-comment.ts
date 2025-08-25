@@ -1,14 +1,16 @@
-import { Octokit } from '@octokit/rest'
-import api from './github-api'
-import githubEvent from './github-event'
+import { Octokit } from '@octokit/action'
+import { context } from '@actions/github'
 
-const createComment = async (
-  body: string
-): Promise<Octokit.Response<Octokit.IssuesCreateCommentResponse>> => {
-  const event = await githubEvent()
-  const owner = event.repository.owner.login
-  const repo = event.repository.name
-  const issue_number = event.number
+const api = new Octokit()
+
+const createComment = async (body: string) => {
+  const owner = context.repo.owner
+  const repo = context.repo.repo
+  const issue_number = context.payload.pull_request?.number
+
+  if (!issue_number) {
+    throw new Error('Pull request number not found in context')
+  }
 
   return api.issues.createComment({ owner, repo, issue_number, body })
 }

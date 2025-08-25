@@ -1,8 +1,9 @@
-import generateMarkdownReport from './github-markdown'
-import processImages from './image-processing'
-import createComment from './github-pr-comment'
-import createCommit from './github-commit'
-import getConfig from './config'
+import generateMarkdownReport from './github-markdown.ts'
+import processImages from './image-processing.ts'
+import createComment from './github-pr-comment.ts'
+import createCommit from './github-commit.ts'
+import getConfig from './config.ts'
+import type { ProcessedImagesResult } from './types/ProcessedImage.d.ts'
 
 const run = async (): Promise<void> => {
   const config = await getConfig()

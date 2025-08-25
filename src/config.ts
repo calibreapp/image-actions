@@ -1,9 +1,11 @@
-import { promises as fsPromises } from 'fs'
-const { readFile } = fsPromises
-import yaml from 'js-yaml'
-import { PngOptions, JpegOptions, WebpOptions } from 'sharp'
+import { readFile } from 'fs/promises'
 
-const {
+import * as core from '@actions/core'
+import yaml from 'js-yaml'
+
+import type { PngOptions, JpegOptions, WebpOptions } from 'sharp'
+
+import {
   CONFIG_PATH,
   JPEG_QUALITY,
   JPEG_PROGRESSIVE,
@@ -12,7 +14,7 @@ const {
   IGNORE_PATHS,
   COMPRESS_ONLY,
   MIN_PCT_CHANGE
-} = require('./constants')
+} from './constants.ts'
 
 interface Config {
   compressOnly: boolean
@@ -27,7 +29,7 @@ interface Config {
 const getYamlConfig = async () => {
   try {
     const buffer = await readFile(CONFIG_PATH)
-    return yaml.safeLoad(buffer.toString())
+    return yaml.load(buffer.toString())
   } catch (err) {
     return undefined
   }
@@ -35,9 +37,19 @@ const getYamlConfig = async () => {
 
 const getConfig = async () => {
   const defaultConfig: Config = {
-    jpeg: { quality: JPEG_QUALITY, progressive: JPEG_PROGRESSIVE },
-    png: { quality: PNG_QUALITY },
-    webp: { quality: WEBP_QUALITY },
+    jpeg: {
+      quality: JPEG_QUALITY,
+      progressive: JPEG_PROGRESSIVE,
+      chromaSubsampling: '4:4:4'
+    },
+    png: {
+      quality: PNG_QUALITY,
+      compressionLevel: 9
+    },
+    webp: {
+      quality: WEBP_QUALITY,
+      smartSubsample: true
+    },
     ignorePaths: IGNORE_PATHS,
     compressOnly: COMPRESS_ONLY,
     minPctChange: MIN_PCT_CHANGE
@@ -49,12 +61,12 @@ const getConfig = async () => {
     : defaultConfig
 
   if (ymlConfig) {
-    console.error(
-      '::warning:: Using image-actions.yml for configuration is deprecated. See https://github.com/calibreapp/image-actions for the latest configuration options.'
+    core.warning(
+      'Using image-actions.yml for configuration is deprecated. See https://github.com/calibreapp/image-actions for the latest configuration options.'
     )
   }
 
-  console.log('->> Using config:', JSON.stringify(config))
+  core.info(`Using config: ${JSON.stringify(config)}`)
 
   return config
 }

@@ -1,10 +1,10 @@
-import { Octokit } from '@octokit/rest'
-import { GitCreateCommitResponseData } from '@octokit/types'
-import { promises as fsPromises } from 'fs'
-const { readFile } = fsPromises
+import { readFile } from 'fs/promises'
+import { Octokit } from '@octokit/action'
+import { context } from '@actions/github'
 
-import api from './github-api'
-import githubEvent from './github-event'
+import type { ProcessedImage } from './types/ProcessedImage.d.ts'
+
+const api = new Octokit()
 
 interface ImageBlobsParams {
   owner: string
@@ -12,8 +12,12 @@ interface ImageBlobsParams {
   images: ProcessedImage[]
 }
 
-interface ImageBlobResponse
-  extends Omit<Octokit.GitCreateBlobResponse, 'url'> {}
+interface ImageBlobResponse {
+  path: string
+  type: 'blob'
+  mode: '100644'
+  sha: string
+}
 
 // GitCreateBlobResponse
 const convertToTreeBlobs = async ({
@@ -21,7 +25,7 @@ const convertToTreeBlobs = async ({
   repo,
   images
 }: ImageBlobsParams): Promise<ImageBlobResponse[]> => {
-  console.log('\t * ', 'Converting images to blobs…')
+  api.log.info('Converting images to blobs…')
   const imageBlobs = []
 
   for await (const image of images) {
@@ -38,8 +42,8 @@ const convertToTreeBlobs = async ({
     // rather than the path on disk (which is static/images/image.jpg rather than /github/workpace/static/images/image.jpg)
     imageBlobs.push({
       path: image.name,
-      type: 'blob',
-      mode: '100644',
+      type: 'blob' as const,
+      mode: '100644' as const,
       sha: blob.data.sha
     })
   }
@@ -47,15 +51,16 @@ const convertToTreeBlobs = async ({
   return imageBlobs
 }
 
-const commitOptimisedImages = async (
-  optimisedImages: ProcessedImage[]
-): Promise<GitCreateCommitResponseData> => {
-  const event = await githubEvent()
-  const owner = event.repository.owner.login
-  const repo = event.repository.name
-  const mostRecentCommitSHA = event.pull_request.head.sha
+const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
+  const owner = context.repo.owner
+  const repo = context.repo.repo
+  const mostRecentCommitSHA = context.payload.pull_request?.head?.sha
 
-  console.log('\t * ', 'Head SHA:', mostRecentCommitSHA)
+  if (!mostRecentCommitSHA) {
+    throw new Error('Pull request head SHA not found in context')
+  }
+
+  api.log.info(`Head SHA: ${mostRecentCommitSHA}`)
 
   // Get the latest commit so we can then get the tree SHA
   const latestCommit = await api.git.getCommit({
@@ -66,7 +71,7 @@ const commitOptimisedImages = async (
 
   const baseTree = latestCommit.data.tree.sha
 
-  console.log('\t * ', 'Tree', baseTree)
+  api.log.info(`Tree: ${baseTree}`)
 
   // Convert image paths to blob ready objects
   const treeBlobs = await convertToTreeBlobs({
@@ -75,7 +80,7 @@ const commitOptimisedImages = async (
     images: optimisedImages
   })
 
-  console.log('\t * ', 'Creating tree…', owner, repo, baseTree)
+  api.log.info(`Creating tree for ${owner}/${repo} with base ${baseTree}`)
 
   // Create tree
   const newTree = await api.git.createTree({
@@ -85,7 +90,7 @@ const commitOptimisedImages = async (
     tree: treeBlobs
   })
 
-  console.log('\t * ', 'New tree:', newTree.data.sha)
+  api.log.info(`New tree: ${newTree.data.sha}`)
 
   const commit = await api.git.createCommit({
     owner,
@@ -95,19 +100,18 @@ const commitOptimisedImages = async (
     parents: [mostRecentCommitSHA]
   })
 
-  console.log(
-    'Committed',
-    commit.data.sha,
-    'updating ref',
-    event.pull_request.head.ref,
-    '…'
-  )
+  const headRef = context.payload.pull_request?.head?.ref
+  if (!headRef) {
+    throw new Error('Pull request head ref not found in context')
+  }
+
+  api.log.info(`Committed ${commit.data.sha}, updating ref ${headRef}…`)
 
   // Update the pull request branch to point at the new commit
   await api.git.updateRef({
     owner,
     repo,
-    ref: `heads/${event.pull_request.head.ref}`,
+    ref: `heads/${headRef}`,
     sha: commit.data.sha
   })
 

@@ -1,37 +1,46 @@
-import util from 'util'
-import { promises as fsPromises } from 'fs'
-const { stat, writeFile } = fsPromises
+import { stat, writeFile } from 'fs/promises'
 import path from 'path'
-import sharp from 'sharp'
 
-const glob = util.promisify(require('glob'))
+import * as core from '@actions/core'
+import sharp from 'sharp'
+import { glob } from 'glob'
+
+import getConfig from './config.ts'
 
 import {
   REPO_DIRECTORY,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
   FILE_EXTENSIONS_TO_PROCESS,
   MIN_PCT_CHANGE
-} from './constants'
+} from './constants.ts'
 
-import getConfig from './config'
+import type {
+  ProcessedImage,
+  ProcessedImageMetrics,
+  ProcessedImagesResult
+} from './types/ProcessedImage.d.ts'
 
 const processImages = async (): Promise<ProcessedImagesResult> => {
-  console.log(
+  core.info(
     'To turn on DEBUG level logging for image-actions, see this reference: https://docs.github.com/en/actions/managing-workflow-runs/enabling-debug-logging'
   )
-  console.log('::debug:: === Sharp library info ===')
-  console.log('::debug::', sharp.versions)
-  console.log('::debug::', sharp.format)
-  console.log('::debug:: === Sharp library info ===')
+  core.debug('=== Sharp library info ===')
+  core.debug(JSON.stringify(sharp.versions))
+  core.debug(JSON.stringify(sharp.format))
+  core.debug('=== Sharp library info ===')
 
   const config = await getConfig()
-  const globPaths = `${REPO_DIRECTORY}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
+  if (!REPO_DIRECTORY) {
+    throw new Error('REPO_DIRECTORY is not set')
+  }
+  const absoluteRepoDir = path.resolve(REPO_DIRECTORY)
+  const globPaths = `${absoluteRepoDir}/**/*.{${FILE_EXTENSIONS_TO_PROCESS.join(
     ','
   )}}`
 
   const imagePaths = await glob(globPaths, {
     ignore: config.ignorePaths.map((p: string) =>
-      path.resolve(REPO_DIRECTORY, p)
+      path.resolve(REPO_DIRECTORY!, p)
     ),
     nodir: true,
     follow: false,
@@ -41,35 +50,31 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
   const optimisedImages: ProcessedImage[] = []
   const unoptimisedImages: ProcessedImage[] = []
 
-  for await (const imgPath of imagePaths) {
+  for (const imgPath of imagePaths) {
     const extension = path.extname(imgPath)
     const sharpFormat = EXTENSION_TO_SHARP_FORMAT_MAPPING[extension]
-    const options = config[sharpFormat]
+    const options = config[sharpFormat as keyof typeof config]
     const beforeStats = (await stat(imgPath)).size
 
     try {
       const { data, info } = await sharp(imgPath)
-        .toFormat(sharpFormat, options)
+        .toFormat(sharpFormat as keyof sharp.FormatEnum, options as any)
         .toBuffer({ resolveWithObject: true })
 
-      console.log(
-        '    - Processing:',
-        imgPath,
-        `config=${JSON.stringify(options)}`,
-        `output=${JSON.stringify(info)}`
+      core.info(
+        `Processing: ${imgPath} config=${JSON.stringify(options)} output=${JSON.stringify(info)}`
       )
 
-      // Remove the /github/home/ path (including the slash)
-      const name = imgPath.replace(REPO_DIRECTORY, '').replace(/\//, '')
+      // Remove the repository directory path to get relative name
+      const name = path.relative(absoluteRepoDir, imgPath)
+      const relativeImagePath = path.relative(process.cwd(), imgPath)
       const afterStats = info.size
       const percentChange = ((beforeStats - afterStats) / beforeStats) * 100
-
-      // Add a flag to tell if the optimisation was worthwhile
       const compressionWasSignificant = percentChange >= MIN_PCT_CHANGE
 
       const processedImage: ProcessedImage = {
         name,
-        path: imgPath,
+        path: relativeImagePath,
         beforeStats,
         afterStats,
         percentChange,
@@ -87,7 +92,7 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
         unoptimisedImages.push(processedImage)
       }
     } catch (e) {
-      console.error('::error:: ', e, imgPath)
+      core.error(`Error processing ${imgPath}: ${e}`)
       continue
     }
   }

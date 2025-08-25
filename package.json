@@ -2,18 +2,20 @@
   "name": "image-actions",
   "version": "1.0.0",
   "description": "",
-  "main": "entrypoint.js",
+  "type": "module",
+  "main": "entrypoint.ts",
   "author": "Calibre <hello@calibreapp.com>",
   "license": "ISC",
   "scripts": {
-    "test": "GITHUB_WORKSPACE=__tests__/test-images jest",
-    "build": "tsc",
-    "watch": "tsc -w",
     "test": "GITHUB_WORKSPACE=__tests__/test-images vitest run",
     "test:watch": "GITHUB_WORKSPACE=__tests__/test-images vitest",
+    "test:docker": "docker compose -f docker-compose.test.yml build && docker compose -f docker-compose.test.yml run test",
+    "docker:build": "docker build . --tag image-actions:latest",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run test:docker"
   },
   "prettier": {
     "semi": false,
@@ -22,24 +24,27 @@
     "arrowParens": "avoid"
   },
   "dependencies": {
-    "@octokit/rest": "^16.17.0",
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
+    "@octokit/action": "^8.0.2",
     "ejs": "^3.1.10",
-    "glob": "^8.1.0",
-    "humanize": "0.0.9",
-    "js-yaml": "^3.13.1",
-    "sharp": "^0.34.2"
+    "glob": "^11.0.3",
+    "js-yaml": "^4.1.0",
+    "sharp": "^0.34.3"
   },
   "devDependencies": {
+    "@octokit/types": "^14.1.0",
     "@types/ejs": "^3.1.5",
-    "@types/js-yaml": "^3.12.5",
-    "@octokit/types": "^5.5.0",
-    "@types/node": "^22.10.3",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.3.0",
     "@types/sharp": "^0.31.0",
-    "prettier": "^3.4.2",
-    "typescript": "^5.0.4"
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
     "eslint": "^9.34.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^17.21.3",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
 }

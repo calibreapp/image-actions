@@ -1,11 +1,32 @@
-import { filesize } from 'humanize'
 import crypto from 'crypto'
-import { GITHUB_OUTPUT, GITHUB_REPOSITORY } from './constants'
-import githubEvent from './github-event'
-import template from './template'
-import getConfig from './config'
-import { promises as fsPromises } from 'fs'
-const { writeFile } = fsPromises
+import * as core from '@actions/core'
+import { context } from '@actions/github'
+import { GITHUB_REPOSITORY } from './constants.ts'
+import template from './template.ts'
+import getConfig from './config.ts'
+import type {
+  ProcessedImage,
+  ProcessedImageView
+} from './types/ProcessedImage.d.ts'
+import type { ActionSummaryReport } from './types/ActionReport.d.ts'
+
+// Format file size using native Intl API
+const formatFileSize = (bytes: number): string => {
+  const units = ['B', 'KB', 'MB', 'GB', 'TB']
+
+  if (bytes === 0) return '0 B'
+
+  const unitIndex = Math.floor(Math.log(bytes) / Math.log(1024))
+  const size = bytes / Math.pow(1024, unitIndex)
+
+  // Use Intl.NumberFormat for proper number formatting with locale support
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: unitIndex === 0 ? 0 : 1,
+    maximumFractionDigits: unitIndex === 0 ? 0 : 1
+  })
+
+  return `${formatter.format(size)} ${units[unitIndex]}`
+}
 
 const generateImageView = (
   images: ProcessedImage[],
@@ -15,13 +36,13 @@ const generateImageView = (
   const imageViews = images.map(image => {
     return {
       ...image,
-      formattedBeforeStats: filesize(image.beforeStats),
-      formattedAfterStats: filesize(image.afterStats),
+      formattedBeforeStats: formatFileSize(image.beforeStats),
+      formattedAfterStats: formatFileSize(image.afterStats),
       formattedPercentChange: `${image.percentChange.toFixed(1)}%`,
       diffUrl:
         commitSha && prNumber
           ? generateDiffUrl(image, prNumber, commitSha)
-          : null
+          : undefined
     }
   })
 
@@ -49,7 +70,7 @@ const generateMarkdownReport = async ({
   processingResults,
   commitSha
 }: ActionSummaryReport): Promise<string> => {
-  const { number } = await githubEvent()
+  const number = context.payload.pull_request?.number
   const { compressOnly } = await getConfig()
   const { optimisedImages, unoptimisedImages, metrics } = processingResults
 
@@ -60,18 +81,13 @@ const generateMarkdownReport = async ({
 
   const markdown = await template(templateName, {
     overallPercentageSaved: -metrics.percentChange.toFixed(1),
-    overallBytesSaved: filesize(metrics.bytesSaved),
+    overallBytesSaved: formatFileSize(metrics.bytesSaved),
     optimisedImages: generateImageView(optimisedImages, number, commitSha),
     unoptimisedImages: generateImageView(unoptimisedImages, number)
   })
 
   // Log markdown, so that it can be used for Action output
-  // https://github.community/t/set-output-truncates-multiline-strings/16852
-  const escapedMarkdown = markdown
-    .replace(/\%/g, '%25')
-    .replace(/\n/g, '%0A')
-    .replace(/\r/g, '%0D')
-  await writeFile(GITHUB_OUTPUT, 'markdown=' + escapedMarkdown, 'utf8')
+  core.setOutput('markdown', markdown)
 
   return markdown
 }
