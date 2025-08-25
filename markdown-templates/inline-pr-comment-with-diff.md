@@ -3,7 +3,7 @@ Images automagically compressed by [Calibre](https://calibreapp.com)'s [image-ac
 Compression reduced images by <strong><%- overallPercentageSaved %>%</strong>, saving <strong><%- overallBytesSaved %></strong>.
 
 <% if(showSummary) { -%>
-**Displaying first 25 images: <%- totalOptimisedCount %> images processed.**
+**Displaying top 25 most improved images. <%- totalOptimisedCount %> images processed.**
 
 <% } -%>
 | Filename | Before | After | Improvement | Visual comparison |
@@ -14,4 +14,4 @@ Compression reduced images by <strong><%- overallPercentageSaved %>%</strong>, s
 
 <% if(unoptimisedImages.length) { -%>
 <%- unoptimisedImages.length %> <%- unoptimisedImages.length > 1 ? 'images' : 'image' %> did not require optimisation.
-<% } %>
+<% } -%>

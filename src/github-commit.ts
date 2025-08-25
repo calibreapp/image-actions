@@ -8,6 +8,7 @@ import type { ProcessedImage } from './types/ProcessedImage.d.ts'
 const api = new Octokit()
 
 // Limit to 10 requests/10 seconds
+// See https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#about-secondary-rate-limits
 const throttle = pThrottle({
   limit: 10,
   interval: 10000
