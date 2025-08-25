@@ -1,10 +1,17 @@
 import { readFile } from 'fs/promises'
 import { Octokit } from '@octokit/action'
 import { context } from '@actions/github'
+import pThrottle from 'p-throttle'
 
 import type { ProcessedImage } from './types/ProcessedImage.d.ts'
 
 const api = new Octokit()
+
+// Limit to 10 requests/10 seconds
+const throttle = pThrottle({
+  limit: 10,
+  interval: 10000
+})
 
 interface ImageBlobsParams {
   owner: string
@@ -19,6 +26,17 @@ interface ImageBlobResponse {
   sha: string
 }
 
+const createBlobThrottled = throttle(
+  async (owner: string, repo: string, content: string) => {
+    return api.git.createBlob({
+      owner,
+      repo,
+      content,
+      encoding: 'base64'
+    })
+  }
+)
+
 // GitCreateBlobResponse
 const convertToTreeBlobs = async ({
   owner,
@@ -28,15 +46,10 @@ const convertToTreeBlobs = async ({
   api.log.info('Converting images to blobs…')
   const imageBlobs = []
 
-  for await (const image of images) {
+  for await (const [index, image] of images.entries()) {
     const encodedImage = await readFile(image.path, { encoding: 'base64' })
 
-    const blob = await api.git.createBlob({
-      owner,
-      repo,
-      content: encodedImage,
-      encoding: 'base64'
-    })
+    const blob = await createBlobThrottled(owner, repo, encodedImage)
 
     // We use image.name rather than image.path because it is the path inside the repo
     // rather than the path on disk (which is static/images/image.jpg rather than /github/workpace/static/images/image.jpg)
@@ -46,6 +59,10 @@ const convertToTreeBlobs = async ({
       mode: '100644' as const,
       sha: blob.data.sha
     })
+
+    api.log.info(
+      `Created blob for ${image.name} (${index + 1}/${images.length})`
+    )
   }
 
   return imageBlobs
