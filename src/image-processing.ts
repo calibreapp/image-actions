@@ -14,6 +14,8 @@ import {
   MIN_PCT_CHANGE
 } from './constants.ts'
 
+const MAX_IMAGES_TO_COMMIT = 500
+
 import type {
   ProcessedImage,
   ProcessedImageMetrics,
@@ -97,10 +99,20 @@ const processImages = async (): Promise<ProcessedImagesResult> => {
     }
   }
 
-  const metrics = await calculateOverallMetrics(optimisedImages)
+  // Sort optimised images by most significant improvements (highest byte savings first)
+  const sortedOptimisedImages = optimisedImages.sort((a, b) => {
+    const aSavings = a.beforeStats - a.afterStats
+    const bSavings = b.beforeStats - b.afterStats
+    return bSavings - aSavings
+  })
+
+  // Limit to MAX_IMAGES_TO_COMMIT for processing/committing
+  const limitedOptimisedImages = sortedOptimisedImages.slice(0, MAX_IMAGES_TO_COMMIT)
+
+  const metrics = await calculateOverallMetrics(limitedOptimisedImages)
 
   return {
-    optimisedImages,
+    optimisedImages: limitedOptimisedImages,
     unoptimisedImages,
     metrics
   }
