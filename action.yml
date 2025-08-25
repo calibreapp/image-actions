@@ -48,7 +48,7 @@ outputs:
 
 runs:
   using: "docker"
-  image: "docker://ghcr.io/calibreapp/image-actions/image-actions:main" 
+  image: "Dockerfile" 
 
 branding:
   icon: "image"
