@@ -3,6 +3,10 @@ author: "Calibre"
 description: "Compresses Images for the Web"
 
 inputs:
+  GITHUB_TOKEN:
+    description: "The token that the action will use to create and update the pull request."
+    default: ${{ github.token }}
+
   jpegQuality:
     description: "JPEG quality level"
     required: false
