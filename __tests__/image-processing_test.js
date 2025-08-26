@@ -1,7 +1,18 @@
 import path from 'path'
 import { promises as fs } from 'fs'
-import { beforeEach, afterEach, test, expect } from 'vitest'
+import { beforeEach, afterEach, test, expect, vi } from 'vitest'
 import imageProcessing from '../src/image-processing.ts'
+import getRepositoryImages from '../src/get-repository-images.ts'
+
+// Mock the getRepositoryImages function
+vi.mock('../src/get-repository-images.ts', () => ({
+  default: vi.fn()
+}))
+
+// Mock getChangedImages to return null (fallback to repository scan)
+vi.mock('../src/get-changed-images.ts', () => ({
+  default: vi.fn(() => null)
+}))
 
 const EXAMPLE_IMAGES_DIR = `${process.cwd()}/__tests__/example-images`
 const TMP_TEST_IMAGES_DIR = `${process.cwd()}/__tests__/test-images`
@@ -41,6 +52,11 @@ beforeEach(async () => {
       throw e
     }
   }
+
+  const testImagePaths = EXAMPLE_IMAGES.map(image =>
+    path.join(TMP_TEST_IMAGES_DIR, image)
+  )
+  vi.mocked(getRepositoryImages).mockResolvedValue(testImagePaths)
 })
 
 afterEach(async () => {
@@ -49,6 +65,8 @@ afterEach(async () => {
   } catch (e) {
     console.warn('afterEach error:', e.message)
   }
+
+  vi.clearAllMocks()
 })
 
 test('returns metrics for images', async () => {
@@ -81,4 +99,10 @@ test('returns images with stats', async () => {
     path: '__tests__/test-images/icon.png',
     percentChange: expect.any(Number)
   })
+})
+
+test('calls getRepositoryImages when no changed images found', async () => {
+  await imageProcessing()
+
+  expect(getRepositoryImages).toHaveBeenCalledOnce()
 })

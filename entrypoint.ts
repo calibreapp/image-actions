@@ -2,10 +2,7 @@
 
 import * as core from '@actions/core'
 import { context } from '@actions/github'
-import {
-  GITHUB_EVENT_NAME,
-  COMPRESS_ONLY
-} from './src/constants.ts'
+import { GITHUB_EVENT_NAME, COMPRESS_ONLY } from './src/constants.ts'
 
 import run from './src/index.ts'
 
@@ -18,7 +15,10 @@ const main = async () => {
     }
 
     // Bail out if the pull_request event wasn't synchronize or opened
-    if (context.payload.action !== 'synchronize' && context.payload.action !== 'opened') {
+    if (
+      context.payload.action !== 'synchronize' &&
+      context.payload.action !== 'opened'
+    ) {
       core.error(
         `Check run has action ${context.payload.action}. Wants: synchronize or opened`
       )

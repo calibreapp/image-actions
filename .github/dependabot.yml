@@ -11,6 +11,11 @@ updates:
       interval: monthly
       time: '22:00'
     open-pull-requests-limit: 15
+    groups:
+      actions:
+        patterns:
+          - '@actions/*'
+          - '@github/*'
   - package-ecosystem: docker
     directory: '/'
     schedule:

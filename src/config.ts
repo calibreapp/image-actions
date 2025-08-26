@@ -1,12 +1,8 @@
-import { readFile } from 'fs/promises'
-
 import * as core from '@actions/core'
-import yaml from 'js-yaml'
 
 import type { PngOptions, JpegOptions, WebpOptions } from 'sharp'
 
 import {
-  CONFIG_PATH,
   JPEG_QUALITY,
   JPEG_PROGRESSIVE,
   PNG_QUALITY,
@@ -25,18 +21,8 @@ interface Config {
   minPctChange: number
 }
 
-// Deprecated configuration method
-const getYamlConfig = async () => {
-  try {
-    const buffer = await readFile(CONFIG_PATH)
-    return yaml.load(buffer.toString())
-  } catch (err) {
-    return undefined
-  }
-}
-
 const getConfig = async () => {
-  const defaultConfig: Config = {
+  const config: Config = {
     jpeg: {
       quality: JPEG_QUALITY,
       progressive: JPEG_PROGRESSIVE,
@@ -53,17 +39,6 @@ const getConfig = async () => {
     ignorePaths: IGNORE_PATHS,
     compressOnly: COMPRESS_ONLY,
     minPctChange: MIN_PCT_CHANGE
-  }
-
-  const ymlConfig = await getYamlConfig()
-  const config = ymlConfig
-    ? Object.assign(defaultConfig, ymlConfig)
-    : defaultConfig
-
-  if (ymlConfig) {
-    core.warning(
-      'Using image-actions.yml for configuration is deprecated. See https://github.com/calibreapp/image-actions for the latest configuration options.'
-    )
   }
 
   core.info(`Using config: ${JSON.stringify(config)}`)
