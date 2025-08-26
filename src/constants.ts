@@ -29,11 +29,6 @@ if (!REPO_DIRECTORY) {
   process.exit(1)
 }
 
-const CONFIG_PATH = path.join(
-  REPO_DIRECTORY,
-  '.github/calibre/image-actions.yml'
-)
-
 const FILE_EXTENSIONS_TO_PROCESS = ['jpeg', 'jpg', 'png', 'webp']
 
 const EXTENSION_TO_SHARP_FORMAT_MAPPING: Record<string, string> = {
@@ -49,7 +44,6 @@ export {
   GITHUB_REF,
   GITHUB_REPOSITORY,
   REPO_DIRECTORY,
-  CONFIG_PATH,
   FILE_EXTENSIONS_TO_PROCESS,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
   COMMITTER,
