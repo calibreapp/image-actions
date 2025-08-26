@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:24-alpine
 
 RUN mkdir -p /usr/local/src/image-actions
 WORKDIR /usr/local/src/image-actions
