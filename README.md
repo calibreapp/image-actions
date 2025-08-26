@@ -1,7 +1,6 @@
 # Calibre Image Actions
 
-[![NPM package](https://img.shields.io/npm/v/react-live-chat-loader?color=informational)](https://www.npmjs.com/package/react-live-chat-loader)
-[![License](https://img.shields.io/github/license/calibreapp/image-actions?color=informational)](https://github.com/calibreapp/react-live-chat-loader/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/calibreapp/image-actions?color=informational)](https://github.com/calibreapp/image-actions/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-success)](CODE_OF_CONDUCT.md)
 [![Contribution guidelines](https://img.shields.io/badge/PRs-welcome-success)](CONTRIBUTING.md)
 
@@ -297,3 +296,4 @@ Happy to hear you’re interested in contributing to Image Actions! Please find 
 ## 💼 License
 
 This project is licensed under a [GNU General Public License](LICENSE).
+
