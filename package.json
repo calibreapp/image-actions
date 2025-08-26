@@ -11,8 +11,8 @@
     "test:watch": "GITHUB_WORKSPACE=__tests__/test-images vitest",
     "test:docker": "docker compose -f docker-compose.test.yml build && docker compose -f docker-compose.test.yml run test",
     "docker:build": "docker build . --tag image-actions:latest",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
+    "format": "prettier --write **/*.{js,ts}",
+    "format-check": "prettier --check **/*.{js,ts}",
     "lint": "eslint src/**/*.ts",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run lint && npm run test && npm run test:docker"
