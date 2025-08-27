@@ -1,4 +1,3 @@
-import path from 'path'
 import * as core from '@actions/core'
 
 const GITHUB_EVENT_NAME = process.env['GITHUB_EVENT_NAME']
@@ -12,6 +11,7 @@ const JPEG_QUALITY = parseInt(core.getInput('jpegQuality')) || 85
 const JPEG_PROGRESSIVE = core.getInput('jpegProgressive') === 'true'
 const PNG_QUALITY = parseInt(core.getInput('pngQuality')) || 90
 const WEBP_QUALITY = parseInt(core.getInput('webpQuality')) || 85
+const AVIF_QUALITY = parseInt(core.getInput('avifQuality')) || 75
 
 const IGNORE_PATHS = core.getInput('ignorePaths')
   ? core.getInput('ignorePaths').split(',')
@@ -29,13 +29,14 @@ if (!REPO_DIRECTORY) {
   process.exit(1)
 }
 
-const FILE_EXTENSIONS_TO_PROCESS = ['jpeg', 'jpg', 'png', 'webp']
+const FILE_EXTENSIONS_TO_PROCESS = ['jpeg', 'jpg', 'png', 'webp', 'avif']
 
 const EXTENSION_TO_SHARP_FORMAT_MAPPING: Record<string, string> = {
   '.png': 'png',
   '.jpeg': 'jpeg',
   '.jpg': 'jpeg',
-  '.webp': 'webp'
+  '.webp': 'webp',
+  '.avif': 'avif'
 }
 
 export {
@@ -51,6 +52,7 @@ export {
   JPEG_PROGRESSIVE,
   PNG_QUALITY,
   WEBP_QUALITY,
+  AVIF_QUALITY,
   IGNORE_PATHS,
   COMPRESS_ONLY,
   MIN_PCT_CHANGE

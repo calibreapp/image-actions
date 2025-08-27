@@ -1,12 +1,13 @@
 import * as core from '@actions/core'
 
-import type { PngOptions, JpegOptions, WebpOptions } from 'sharp'
+import type { PngOptions, JpegOptions, WebpOptions, AvifOptions } from 'sharp'
 
 import {
   JPEG_QUALITY,
   JPEG_PROGRESSIVE,
   PNG_QUALITY,
   WEBP_QUALITY,
+  AVIF_QUALITY,
   IGNORE_PATHS,
   COMPRESS_ONLY,
   MIN_PCT_CHANGE
@@ -17,6 +18,7 @@ interface Config {
   jpeg: JpegOptions
   png: PngOptions
   webp: WebpOptions
+  avif: AvifOptions
   ignorePaths: string[]
   minPctChange: number
 }
@@ -35,6 +37,9 @@ const getConfig = async () => {
     webp: {
       quality: WEBP_QUALITY,
       smartSubsample: true
+    },
+    avif: {
+      quality: AVIF_QUALITY
     },
     ignorePaths: IGNORE_PATHS,
     compressOnly: COMPRESS_ONLY,
