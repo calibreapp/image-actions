@@ -86,11 +86,11 @@ with:
 
 **Options:**
 
-- [jpegQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Number, integer 1-100, default 85 stored in a string.
-- [jpegProgressive](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Boolean, true or false, default false.
-- [pngQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#png): Number, integer 1-100, default 90 stored in a string.
-- [webpQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#webp): Number, integer 1-100, default 85 stored in a string.
-- [avifQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#avif): Number, integer 1-100, default 75 stored in a string.
+- [jpegQuality](https://sharp.pixelplumbing.com/api-output/#jpeg): Number, integer 1-100, default 85 stored in a string.
+- [jpegProgressive](http://sharp.pixelplumbing.com/api-output/#jpeg): Boolean, true or false, default false.
+- [pngQuality](http://sharp.pixelplumbing.com/api-output/#png): Number, integer 1-100, default 90 stored in a string.
+- [webpQuality](http://sharp.pixelplumbing.com/api-output/#webp): Number, integer 1-100, default 85 stored in a string.
+- [avifQuality](http://sharp.pixelplumbing.com/api-output/#avif): Number, integer 1-100, default 75 stored in a string.
 
 ### Ignore paths
 
