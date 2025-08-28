@@ -4,7 +4,7 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-success)](CODE_OF_CONDUCT.md)
 [![Contribution guidelines](https://img.shields.io/badge/PRs-welcome-success)](CONTRIBUTING.md)
 
-Image Actions is a Github Action built by your #webperf monitoring friends at [Calibre](https://calibreapp.com/). It automatically compresses JPEGs, PNGs and WebPs for each Pull Request.
+Image Actions is a Github Action built by your #webperf monitoring friends at [Calibre](https://calibreapp.com/). It automatically compresses JPEGs, PNGs, WebPs and AVIFs for each Pull Request.
 
 Image Actions offers:
 
@@ -33,13 +33,14 @@ Image Actions offers:
 name: Compress Images
 on:
   pull_request:
-    # Run Image Actions when JPG, JPEG, PNG or WebP files are added or changed.
+    # Run Image Actions when JPG, JPEG, PNG, WebP or AVIF files are added or changed.
     # See https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths for reference.
     paths:
       - '**.jpg'
       - '**.jpeg'
       - '**.png'
       - '**.webp'
+      - '**.avif'
   workflow_dispatch:
 jobs:
   build:
@@ -80,6 +81,7 @@ with:
   jpegProgressive: false
   pngQuality: '90'
   webpQuality: '85'
+  avifQuality: '75'
 ```
 
 **Options:**
@@ -88,6 +90,7 @@ with:
 - [jpegProgressive](http://sharp.pixelplumbing.com/en/stable/api-output/#jpeg): Boolean, true or false, default false.
 - [pngQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#png): Number, integer 1-100, default 90 stored in a string.
 - [webpQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#webp): Number, integer 1-100, default 85 stored in a string.
+- [avifQuality](http://sharp.pixelplumbing.com/en/stable/api-output/#avif): Number, integer 1-100, default 75 stored in a string.
 
 ### Ignore paths
 
@@ -187,6 +190,7 @@ on:
       - '**.jpeg'
       - '**.png'
       - '**.webp'
+      - '**.avif'
 jobs:
   build:
     name: calibreapp/image-actions
@@ -232,6 +236,7 @@ on:
       - '**.jpeg'
       - '**.png'
       - '**.webp'
+      - '**.avif'
   push:
     branches:
       - main
@@ -240,6 +245,7 @@ on:
       - '**.jpeg'
       - '**.png'
       - '**.webp'
+      - '**.avif'
   workflow_dispatch:
   schedule:
     - cron: '00 23 * * 0'

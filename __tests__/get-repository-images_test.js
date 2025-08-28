@@ -43,7 +43,7 @@ test('returns all image paths from repository', async () => {
   const result = await getRepositoryImages()
 
   expect(mockGlob).toHaveBeenCalledWith(
-    `${workspace}/**/*.{jpeg,jpg,png,webp}`,
+    `${workspace}/**/*.{jpeg,jpg,png,webp,avif}`,
     {
       ignore: [`${workspace}/node_modules/**`],
       nodir: true,
@@ -70,7 +70,7 @@ test('respects ignore paths configuration', async () => {
   const result = await getRepositoryImages()
 
   expect(mockGlob).toHaveBeenCalledWith(
-    `${workspace}/**/*.{jpeg,jpg,png,webp}`,
+    `${workspace}/**/*.{jpeg,jpg,png,webp,avif}`,
     {
       ignore: [
         `${workspace}/node_modules/**`,
@@ -106,7 +106,7 @@ test('handles empty ignore paths', async () => {
   const result = await getRepositoryImages()
 
   expect(mockGlob).toHaveBeenCalledWith(
-    `${workspace}/**/*.{jpeg,jpg,png,webp}`,
+    `${workspace}/**/*.{jpeg,jpg,png,webp,avif}`,
     {
       ignore: [],
       nodir: true,

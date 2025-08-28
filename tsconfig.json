@@ -23,7 +23,6 @@
     "__tests__/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "dist"
+    "node_modules"
   ]
 }

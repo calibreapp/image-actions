@@ -27,6 +27,11 @@ inputs:
     required: false
     default: "85"
 
+  avifQuality:
+    description: "AVIF quality level"
+    required: false
+    default: "75"
+
   ignorePaths:
     description: "Paths to ignore during search"
     required: false
