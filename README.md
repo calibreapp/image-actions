@@ -87,10 +87,10 @@ with:
 **Options:**
 
 - [jpegQuality](https://sharp.pixelplumbing.com/api-output/#jpeg): Number, integer 1-100, default 85 stored in a string.
-- [jpegProgressive](http://sharp.pixelplumbing.com/api-output/#jpeg): Boolean, true or false, default false.
-- [pngQuality](http://sharp.pixelplumbing.com/api-output/#png): Number, integer 1-100, default 90 stored in a string.
-- [webpQuality](http://sharp.pixelplumbing.com/api-output/#webp): Number, integer 1-100, default 85 stored in a string.
-- [avifQuality](http://sharp.pixelplumbing.com/api-output/#avif): Number, integer 1-100, default 75 stored in a string.
+- [jpegProgressive](https://sharp.pixelplumbing.com/api-output/#jpeg): Boolean, true or false, default false.
+- [pngQuality](https://sharp.pixelplumbing.com/api-output/#png): Number, integer 1-100, default 90 stored in a string.
+- [webpQuality](https://sharp.pixelplumbing.com/api-output/#webp): Number, integer 1-100, default 85 stored in a string.
+- [avifQuality](https://sharp.pixelplumbing.com/api-output/#avif): Number, integer 1-100, default 75 stored in a string.
 
 ### Ignore paths
 
@@ -302,4 +302,5 @@ Happy to hear you’re interested in contributing to Image Actions! Please find 
 ## 💼 License
 
 This project is licensed under a [GNU General Public License](LICENSE).
+
 
