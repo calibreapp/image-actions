@@ -79,7 +79,7 @@ Add the following arguments to the workflow definition to control compression se
 with:
   jpegQuality: '85'
   jpegProgressive: false
-  pngQuality: '90'
+  pngQuality: '80'
   webpQuality: '85'
   avifQuality: '75'
 ```
@@ -88,7 +88,7 @@ with:
 
 - [jpegQuality](https://sharp.pixelplumbing.com/api-output/#jpeg): Number, integer 1-100, default 85 stored in a string.
 - [jpegProgressive](https://sharp.pixelplumbing.com/api-output/#jpeg): Boolean, true or false, default false.
-- [pngQuality](https://sharp.pixelplumbing.com/api-output/#png): Number, integer 1-100, default 90 stored in a string.
+- [pngQuality](https://sharp.pixelplumbing.com/api-output/#png): Number, integer 1-100, default 80 stored in a string.
 - [webpQuality](https://sharp.pixelplumbing.com/api-output/#webp): Number, integer 1-100, default 85 stored in a string.
 - [avifQuality](https://sharp.pixelplumbing.com/api-output/#avif): Number, integer 1-100, default 75 stored in a string.
 
@@ -302,5 +302,3 @@ Happy to hear you’re interested in contributing to Image Actions! Please find 
 ## 💼 License
 
 This project is licensed under a [GNU General Public License](LICENSE).
-
-

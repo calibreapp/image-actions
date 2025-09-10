@@ -20,7 +20,7 @@ inputs:
   pngQuality:
     description: "PNG quality level"
     required: false
-    default: "90"
+    default: "80"
 
   webpQuality:
     description: "WEBP quality level"
