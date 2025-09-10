@@ -1,6 +1,9 @@
 name: Docker
 permissions:
   contents: read
+  packages: write
+  attestations: write
+  id-token: write
 
 on:
   push:
