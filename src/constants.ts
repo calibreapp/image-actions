@@ -9,7 +9,7 @@ const REPO_DIRECTORY = process.env['GITHUB_WORKSPACE']
 
 const JPEG_QUALITY = parseInt(core.getInput('jpegQuality')) || 85
 const JPEG_PROGRESSIVE = core.getInput('jpegProgressive') === 'true'
-const PNG_QUALITY = parseInt(core.getInput('pngQuality')) || 90
+const PNG_QUALITY = parseInt(core.getInput('pngQuality')) || 80
 const WEBP_QUALITY = parseInt(core.getInput('webpQuality')) || 85
 const AVIF_QUALITY = parseInt(core.getInput('avifQuality')) || 75
 
