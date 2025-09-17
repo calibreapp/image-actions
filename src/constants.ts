@@ -18,6 +18,7 @@ const IGNORE_PATHS = core.getInput('ignorePaths')
   : ['node_modules/**']
 const COMPRESS_ONLY = core.getInput('compressOnly') === 'true'
 const MIN_PCT_CHANGE = parseFloat(core.getInput('minPctChange')) || 5
+const BASE_IMAGE = core.getInput('baseImage') || 'node:lts-alpine'
 
 const COMMITTER = {
   name: 'Calibre',
@@ -55,5 +56,6 @@ export {
   AVIF_QUALITY,
   IGNORE_PATHS,
   COMPRESS_ONLY,
-  MIN_PCT_CHANGE
+  MIN_PCT_CHANGE,
+  BASE_IMAGE
 }

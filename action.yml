@@ -47,13 +47,51 @@ inputs:
     required: false
     default: "5"
 
+  baseImage:
+    description: "Base Docker image to use for the action"
+    required: false
+    default: "node:lts-alpine"
+
 outputs:
   markdown:
     description: "Output param used to store the Markdown summary for subsequent actions to use"
 
 runs:
-  using: "docker"
-  image: "Dockerfile" 
+  using: "composite"
+  steps:
+    - name: Build and run Docker image
+      shell: bash
+      env:
+        INPUT_JPEGQUALITY: ${{ inputs.jpegQuality }}
+        INPUT_JPEGPROGRESSIVE: ${{ inputs.jpegProgressive }}
+        INPUT_PNGQUALITY: ${{ inputs.pngQuality }}
+        INPUT_WEBPQUALITY: ${{ inputs.webpQuality }}
+        INPUT_AVIFQUALITY: ${{ inputs.avifQuality }}
+        INPUT_IGNOREPATHS: ${{ inputs.ignorePaths }}
+        INPUT_COMPRESSONLY: ${{ inputs.compressOnly }}
+        INPUT_MINPCTCHANGE: ${{ inputs.minPctChange }}
+        INPUT_BASEIMAGE: ${{ inputs.baseImage }}
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+      run: |
+        docker build --build-arg BASE_IMAGE="${{ inputs.baseImage }}" -t image-actions .
+        docker run --rm \
+          -v "${{ github.workspace }}:/github/workspace" \
+          -e GITHUB_TOKEN \
+          -e GITHUB_EVENT_NAME \
+          -e GITHUB_SHA \
+          -e GITHUB_REF \
+          -e GITHUB_REPOSITORY \
+          -e GITHUB_WORKSPACE="/github/workspace" \
+          -e INPUT_JPEGQUALITY \
+          -e INPUT_JPEGPROGRESSIVE \
+          -e INPUT_PNGQUALITY \
+          -e INPUT_WEBPQUALITY \
+          -e INPUT_AVIFQUALITY \
+          -e INPUT_IGNOREPATHS \
+          -e INPUT_COMPRESSONLY \
+          -e INPUT_MINPCTCHANGE \
+          -e INPUT_BASEIMAGE \
+          image-actions
 
 branding:
   icon: "image"

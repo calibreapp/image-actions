@@ -1,4 +1,5 @@
-FROM node:lts-alpine
+ARG BASE_IMAGE=node:lts-alpine
+FROM $BASE_IMAGE
 
 RUN mkdir -p /usr/local/src/image-actions
 WORKDIR /usr/local/src/image-actions

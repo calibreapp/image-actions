@@ -10,7 +10,8 @@ import {
   AVIF_QUALITY,
   IGNORE_PATHS,
   COMPRESS_ONLY,
-  MIN_PCT_CHANGE
+  MIN_PCT_CHANGE,
+  BASE_IMAGE
 } from './constants.ts'
 
 interface Config {
@@ -21,6 +22,7 @@ interface Config {
   avif: AvifOptions
   ignorePaths: string[]
   minPctChange: number
+  baseImage: string
 }
 
 const getConfig = async () => {
@@ -43,7 +45,8 @@ const getConfig = async () => {
     },
     ignorePaths: IGNORE_PATHS,
     compressOnly: COMPRESS_ONLY,
-    minPctChange: MIN_PCT_CHANGE
+    minPctChange: MIN_PCT_CHANGE,
+    baseImage: BASE_IMAGE
   }
 
   core.info(`Using config: ${JSON.stringify(config)}`)
