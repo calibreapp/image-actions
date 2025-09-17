@@ -73,7 +73,7 @@ runs:
         INPUT_BASEIMAGE: ${{ inputs.baseImage }}
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
       run: |
-        docker build --build-arg BASE_IMAGE="${{ inputs.baseImage }}" -t image-actions .
+        docker build --build-arg BASE_IMAGE="${{ inputs.baseImage }}" -t image-actions ${{ github.action_path }}
         docker run --rm \
           -v "${{ github.workspace }}:/github/workspace" \
           -e GITHUB_TOKEN \
