@@ -76,6 +76,7 @@ runs:
         docker build --build-arg BASE_IMAGE="${{ inputs.baseImage }}" -t image-actions ${{ github.action_path }}
         docker run --rm \
           -v "${{ github.workspace }}:/github/workspace" \
+          -v "$GITHUB_EVENT_PATH:$GITHUB_EVENT_PATH" \
           -e GITHUB_TOKEN \
           -e GITHUB_ACTION \
           -e GITHUB_ACTION_PATH \
