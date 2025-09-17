@@ -77,6 +77,10 @@ runs:
         docker run --rm \
           -v "${{ github.workspace }}:/github/workspace" \
           -e GITHUB_TOKEN \
+          -e GITHUB_ACTION \
+          -e GITHUB_ACTION_PATH \
+          -e GITHUB_ACTION_REPOSITORY \
+          -e GITHUB_ACTIONS \
           -e GITHUB_EVENT_NAME \
           -e GITHUB_SHA \
           -e GITHUB_REF \
