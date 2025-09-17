@@ -82,6 +82,7 @@ runs:
           -e GITHUB_ACTION_REPOSITORY \
           -e GITHUB_ACTIONS \
           -e GITHUB_EVENT_NAME \
+          -e GITHUB_EVENT_PATH \
           -e GITHUB_SHA \
           -e GITHUB_REF \
           -e GITHUB_REPOSITORY \
