@@ -45,7 +45,7 @@ on:
 jobs:
   build:
     # Only run on Pull Requests within the same repository, and not from forks.
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     name: calibreapp/image-actions
     permissions: write-all
     runs-on: ubuntu-latest
@@ -175,10 +175,10 @@ By default, GitHub Actions do not have permission to alter forked repositories. 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-2. **Run Image Actions only for Pull Requests in the current repository.** This approach is advised when not using Personal Access Tokens (PATs) to avoid wasting time and compute for compressions that will not be committed. Use the following configuration to check if a Pull Request belongs to the repository:
+2. **Run Image Actions only for Pull Requests in the current repository.** This approach is advised when not using Personal Access Tokens (PATs) to avoid wasting time and compute for compressions that will not be committed. Use the following configuration to check if a Pull Request belongs to the repository (or allow manual triggers):
 
 ```yml
-if: github.event.pull_request.head.repo.full_name == github.repository
+if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
 ```
 
 3. **Run an additional instance of Image Actions in `compressOnly` mode on pushes to `main`, and then raise a new Pull Request for any images committed without being compressed (e.g. from a forked repository PR).** See the configuration in the below example which uses the [create-pull-request](https://github.com/peter-evans/create-pull-request) action by [@peter-evans](https://github.com/peter-evans) to open the new Pull Request (this only raises a Pull Request if any files are changed in previous steps).
