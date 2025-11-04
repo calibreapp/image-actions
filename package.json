@@ -36,7 +36,7 @@
     "@octokit/types": "^16.0.0",
     "@types/ejs": "^3.1.5",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^24.6.1",
+    "@types/node": "^24.9.2",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.41.0",
     "eslint": "^9.39.0",
