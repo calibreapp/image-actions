@@ -3,6 +3,7 @@ import processImages from './image-processing.ts'
 import createComment from './github-pr-comment.ts'
 import createCommit from './github-commit.ts'
 import getConfig from './config.ts'
+import { context } from '@actions/github'
 import type { ProcessedImagesResult } from './types/ProcessedImage.d.ts'
 
 const run = async (): Promise<void> => {
@@ -33,8 +34,14 @@ const run = async (): Promise<void> => {
       commitSha: commit.sha
     })
 
-    console.log('->> Leaving comment on PR…')
-    await createComment(markdown)
+    // Only create PR comment if we're in a pull_request context
+    const isPullRequest = context.payload.pull_request?.number
+    if (isPullRequest) {
+      console.log('->> Leaving comment on PR…')
+      await createComment(markdown)
+    } else {
+      console.log('->> Skipping PR comment (not in pull request context)…')
+    }
   }
 }
 
