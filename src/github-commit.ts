@@ -72,10 +72,13 @@ const convertToTreeBlobs = async ({
 const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
   const owner = context.repo.owner
   const repo = context.repo.repo
-  const mostRecentCommitSHA = context.payload.pull_request?.head?.sha
+
+  // For pull requests, use the PR head SHA and ref
+  // For workflow_dispatch and other events, use the current context
+  const mostRecentCommitSHA = context.payload.pull_request?.head?.sha || context.sha
 
   if (!mostRecentCommitSHA) {
-    throw new Error('Pull request head SHA not found in context')
+    throw new Error('Commit SHA not found in context')
   }
 
   api.log.info(`Head SHA: ${mostRecentCommitSHA}`)
@@ -118,14 +121,20 @@ const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
     parents: [mostRecentCommitSHA]
   })
 
-  const headRef = context.payload.pull_request?.head?.ref
+  // For pull requests, use the PR head ref
+  // For workflow_dispatch and other events, extract the branch name from context.ref
+  let headRef = context.payload.pull_request?.head?.ref
   if (!headRef) {
-    throw new Error('Pull request head ref not found in context')
+    // context.ref is in format "refs/heads/branch-name", extract just "branch-name"
+    headRef = context.ref?.replace('refs/heads/', '')
+    if (!headRef) {
+      throw new Error('Branch ref not found in context')
+    }
   }
 
   api.log.info(`Committed ${commit.data.sha}, updating ref ${headRef}…`)
 
-  // Update the pull request branch to point at the new commit
+  // Update the branch to point at the new commit
   await api.git.updateRef({
     owner,
     repo,
