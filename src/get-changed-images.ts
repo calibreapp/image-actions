@@ -22,7 +22,7 @@ const getChangedImages = async (): Promise<string[] | null> => {
 
     core.info(`Fetching changed files for PR #${pullNumber}…`)
 
-    const { data: files } = await api.rest.pulls.listFiles({
+    const files = await api.paginate(api.rest.pulls.listFiles, {
       owner,
       repo,
       pull_number: pullNumber
