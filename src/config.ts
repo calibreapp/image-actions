@@ -10,6 +10,7 @@ import {
   AVIF_QUALITY,
   IGNORE_PATHS,
   COMPRESS_ONLY,
+  MIN_ABS_CHANGE,
   MIN_PCT_CHANGE
 } from './constants.ts'
 
@@ -20,6 +21,7 @@ interface Config {
   webp: WebpOptions
   avif: AvifOptions
   ignorePaths: string[]
+  minAbsChange: number
   minPctChange: number
 }
 
@@ -43,6 +45,7 @@ const getConfig = async () => {
     },
     ignorePaths: IGNORE_PATHS,
     compressOnly: COMPRESS_ONLY,
+    minAbsChange: MIN_ABS_CHANGE,
     minPctChange: MIN_PCT_CHANGE
   }
 

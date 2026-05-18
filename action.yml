@@ -42,6 +42,11 @@ inputs:
     required: false
     default: "false"
 
+  minAbsChange:
+    description: "Minimun bytes reduction to be committed"
+    required: false
+    default: "1024"
+
   minPctChange:
     description: "Minimun percentage reduction to be committed"
     required: false

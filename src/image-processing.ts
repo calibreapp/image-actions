@@ -11,6 +11,7 @@ import getRepositoryImages from './get-repository-images.ts'
 import {
   REPO_DIRECTORY,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
+  MIN_ABS_CHANGE,
   MIN_PCT_CHANGE
 } from './constants.ts'
 
@@ -83,8 +84,10 @@ const processImage = async (
     const name = path.relative(repoDir, imgPath)
     const relativeImagePath = path.relative(process.cwd(), imgPath)
     const afterStats = info.size
-    const percentChange = ((beforeStats - afterStats) / beforeStats) * 100
-    const compressionWasSignificant = percentChange >= MIN_PCT_CHANGE
+    const absoluteChange = beforeStats - afterStats
+    const percentChange = (absoluteChange / beforeStats) * 100
+    const compressionWasSignificant =
+      absoluteChange >= MIN_ABS_CHANGE && percentChange >= MIN_PCT_CHANGE
 
     const processedImage: ProcessedImage = {
       name,

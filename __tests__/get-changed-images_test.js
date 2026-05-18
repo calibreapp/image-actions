@@ -20,6 +20,7 @@ vi.mock('@actions/github', () => ({
 }))
 vi.mock('../src/config.ts')
 
+const mockPaginate = vi.fn()
 const mockListFiles = vi.fn()
 const mockGetConfig = vi.fn()
 const mockOctokit = {
@@ -27,7 +28,8 @@ const mockOctokit = {
     pulls: {
       listFiles: mockListFiles
     }
-  }
+  },
+  paginate: mockPaginate
 }
 
 beforeEach(() => {
@@ -60,11 +62,11 @@ test('returns changed image files from PR', async () => {
     { filename: 'styles.css', status: 'added' } // Non-image file
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
 
   const result = await getChangedImages()
 
-  expect(mockListFiles).toHaveBeenCalledWith({
+  expect(mockPaginate).toHaveBeenCalledWith(mockListFiles, {
     owner: 'testowner',
     repo: 'testrepo',
     pull_number: 123
@@ -84,7 +86,7 @@ test('returns empty array when no image files changed', async () => {
     { filename: 'styles.css', status: 'added' }
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
 
   const result = await getChangedImages()
 
@@ -98,7 +100,7 @@ test('filters out removed image files', async () => {
     { filename: 'add-this.webp', status: 'added' }
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
 
   const result = await getChangedImages()
 
@@ -117,7 +119,7 @@ test('handles supported image file extensions', async () => {
     { filename: 'avatar.svg', status: 'modified' } // Unsupported format
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
 
   const result = await getChangedImages()
 
@@ -148,7 +150,7 @@ test('returns null when no PR context (for fallback)', async () => {
 })
 
 test('handles GitHub API errors gracefully', async () => {
-  mockListFiles.mockRejectedValue(new Error('GitHub API error'))
+  mockPaginate.mockRejectedValue(new Error('GitHub API error'))
 
   const result = await getChangedImages()
 
@@ -156,7 +158,7 @@ test('handles GitHub API errors gracefully', async () => {
 })
 
 test('handles empty file list from API', async () => {
-  mockListFiles.mockResolvedValue({ data: [] })
+  mockPaginate.mockResolvedValue([])
 
   const result = await getChangedImages()
 
@@ -171,7 +173,7 @@ test('filters out images in ignored paths', async () => {
     { filename: 'node_modules/lib/logo.png', status: 'modified' }
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
   mockGetConfig.mockResolvedValue({
     ignorePaths: ['node_modules/**']
   })
@@ -190,7 +192,7 @@ test('handles multiple ignore paths', async () => {
     { filename: 'build/optimized.png', status: 'added' }
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
   mockGetConfig.mockResolvedValue({
     ignorePaths: ['node_modules/**', 'temp/**', 'build/**']
   })
@@ -207,7 +209,7 @@ test('handles empty ignore paths', async () => {
     { filename: 'assets/image3.webp', status: 'modified' }
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
   mockGetConfig.mockResolvedValue({
     ignorePaths: []
   })
@@ -229,7 +231,7 @@ test('ignores specific subdirectories correctly', async () => {
     { filename: 'public/favicon.png', status: 'added' }
   ]
 
-  mockListFiles.mockResolvedValue({ data: mockFiles })
+  mockPaginate.mockResolvedValue(mockFiles)
   mockGetConfig.mockResolvedValue({
     ignorePaths: ['docs/assets/**']
   })

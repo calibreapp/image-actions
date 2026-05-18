@@ -17,6 +17,7 @@ const IGNORE_PATHS = core.getInput('ignorePaths')
   ? core.getInput('ignorePaths').split(',')
   : ['node_modules/**']
 const COMPRESS_ONLY = core.getInput('compressOnly') === 'true'
+const MIN_ABS_CHANGE = parseInt(core.getInput('minAbsChange')) || 1024
 const MIN_PCT_CHANGE = parseFloat(core.getInput('minPctChange')) || 5
 
 const COMMITTER = {
@@ -55,5 +56,6 @@ export {
   AVIF_QUALITY,
   IGNORE_PATHS,
   COMPRESS_ONLY,
+  MIN_ABS_CHANGE,
   MIN_PCT_CHANGE
 }

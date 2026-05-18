@@ -110,19 +110,26 @@ with:
 
 `compressOnly` accepts a Boolean value (true or false) and defaults to false.
 
-### Minimum percentage change
+### Minimum change
 
-By default, Image Actions commits optimised images if the new size is at least 5% smaller than the original one.
+By default, Image Actions commits optimised images if the new size satisfies the following conditions:
+- it's at least 5% smaller than the original
+- the reduction is at least 1 KB
 
 Use the `minPctChange` option to change the percentage. You might want to increase it to avoid consecutive
 compressions of the same webp images.
 
+Use the `minAbsChange` option to change the absolute amount in bytes. You might want to increase it to avoid
+consecutive compressions of small png images.
+
 ```yml
 with:
   minPctChange: '2.5'
+  minAbsChange: '10000'
 ```
 
 `minPctChange` accepts a numerical value represented as a string. `Default = '5'`.
+`minAbsChange` accepts a numerical value represented as a string. `Default = '1024'`.
 
 ### Compress on demand or on schedule
 
