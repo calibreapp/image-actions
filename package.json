@@ -30,7 +30,7 @@
     "ejs": "^6.0.1",
     "glob": "^13.0.6",
     "p-throttle": "^8.1.0",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@octokit/types": "^16.0.0",
