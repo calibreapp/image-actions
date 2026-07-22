@@ -30,19 +30,20 @@
     "ejs": "^6.0.1",
     "glob": "^13.0.6",
     "p-throttle": "^8.1.0",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@octokit/types": "^16.0.0",
     "@types/ejs": "^3.1.5",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^26.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.60.1",
-    "@typescript-eslint/parser": "^8.59.3",
+    "@types/node": "^26.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^18.2.1",
-    "prettier": "^3.8.3",
+    "prettier": "^3.9.6",
     "typescript": "^6.0.3",
     "vitest": "^3.2.6"
   }
