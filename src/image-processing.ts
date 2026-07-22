@@ -8,6 +8,8 @@ import getConfig from './config.ts'
 import getChangedImages from './get-changed-images.ts'
 import getRepositoryImages from './get-repository-images.ts'
 
+import type { FormatEnum } from 'sharp'
+
 import {
   REPO_DIRECTORY,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
@@ -70,7 +72,7 @@ const processImage = async (
 
   try {
     const { data, info } = await sharp(imgPath)
-      .toFormat(sharpFormat as keyof sharp.FormatEnum, options as any)
+      .toFormat(sharpFormat as keyof FormatEnum, options as any)
       .toBuffer({ resolveWithObject: true })
 
     core.info(
