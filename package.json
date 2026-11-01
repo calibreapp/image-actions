@@ -28,7 +28,7 @@
     "@actions/github": "^9.1.1",
     "@octokit/action": "^8.0.4",
     "ejs": "^6.0.1",
-    "glob": "^13.0.6",
+    "glob": "^14.0.3",
     "p-throttle": "^8.1.0",
     "sharp": "^0.35.5"
   },
