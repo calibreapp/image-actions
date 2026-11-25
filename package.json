@@ -16,7 +16,7 @@
     "docker:build": "docker build . --tag image-actions:latest",
     "format": "prettier --write **/*.{js,ts}",
     "format-check": "prettier --check **/*.{js,ts}",
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint 'src/**/*.ts' entrypoint.ts",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run lint && npm run test && npm run test:docker"
   },
@@ -30,24 +30,20 @@
     "@actions/core": "^3.0.1",
     "@actions/github": "^9.1.1",
     "@octokit/action": "^8.0.4",
-    "ejs": "^6.0.1",
-    "glob": "^13.0.6",
-    "p-throttle": "^8.1.0",
+    "ejs": "^7.0.2",
+    "p-throttle": "^8.1.1",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@octokit/types": "^18.0.0",
-    "@types/ejs": "^3.1.5",
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^26.4.0",
-    "@typescript-eslint/eslint-plugin": "^8.68.0",
-    "@typescript-eslint/parser": "^8.68.0",
-    "eslint": "^10.9.1",
+    "@types/node": "^26.6.7",
+    "@typescript-eslint/eslint-plugin": "^8.74.0",
+    "@typescript-eslint/parser": "^8.74.0",
+    "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-n": "^18.3.0",
-    "prettier": "^3.9.6",
+    "eslint-plugin-n": "^18.5.0",
+    "prettier": "^3.10.1",
     "typescript": "^6.0.3",
-    "vitest": "^3.2.6"
+    "vitest": "^5.1.1"
   }
 }
