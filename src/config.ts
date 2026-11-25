@@ -14,7 +14,7 @@ import {
   MIN_PCT_CHANGE
 } from './constants.ts'
 
-interface Config {
+export interface Config {
   compressOnly: boolean
   jpeg: JpegOptions
   png: PngOptions

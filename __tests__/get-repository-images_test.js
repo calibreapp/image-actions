@@ -1,119 +1,91 @@
-import { beforeEach, afterEach, test, expect, vi } from 'vitest'
+import os from 'os'
 import path from 'path'
-import { glob } from 'glob'
-import getRepositoryImages from '../src/get-repository-images.ts'
-import getConfig from '../src/config.ts'
+import { promises as fs } from 'fs'
+import { beforeEach, afterEach, test, expect } from 'vitest'
+import { findImages } from '../src/get-repository-images.ts'
 
-vi.mock('glob')
-vi.mock('../src/config.ts')
+let root
+let repoDir
 
-const mockGlob = vi.fn()
-const mockGetConfig = vi.fn()
+const touch = async relativePath => {
+  const absolutePath = path.join(repoDir, relativePath)
+  await fs.mkdir(path.dirname(absolutePath), { recursive: true })
+  await fs.writeFile(absolutePath, '')
+  return absolutePath
+}
 
-beforeEach(() => {
-  vi.clearAllMocks()
+const relativeResults = async ignorePaths =>
+  (await findImages(repoDir, ignorePaths))
+    .map(imagePath => path.relative(repoDir, imagePath))
+    .sort()
 
-  // Reset the mocks before each test
-  vi.mocked(glob).mockImplementation(mockGlob)
-  vi.mocked(getConfig).mockImplementation(mockGetConfig)
-
-  // Set up default config
-  mockGetConfig.mockResolvedValue({
-    ignorePaths: ['node_modules/**']
-  })
-
-  // Use the actual GITHUB_WORKSPACE environment variable (set by npm test)
-  // This ensures tests work in both local and Docker environments
+beforeEach(async () => {
+  root = await fs.mkdtemp(path.join(os.tmpdir(), 'image-actions-'))
+  repoDir = path.join(root, 'repo')
+  await fs.mkdir(repoDir)
 })
 
-afterEach(() => {
-  vi.restoreAllMocks()
+afterEach(async () => {
+  await fs.rm(root, { recursive: true, force: true })
 })
 
-test('returns all image paths from repository', async () => {
-  const workspace = path.resolve(process.env.GITHUB_WORKSPACE)
-  const mockImagePaths = [
-    `${workspace}/src/image1.png`,
-    `${workspace}/docs/image2.jpg`,
-    `${workspace}/assets/image3.webp`
+test('returns every supported image as an absolute path', async () => {
+  const expected = [
+    await touch('image.png'),
+    await touch('docs/photo.jpg'),
+    await touch('docs/deep/nested/picture.jpeg'),
+    await touch('assets/graphic.webp'),
+    await touch('assets/modern.avif')
   ]
+  await touch('README.md')
+  await touch('assets/logo.svg')
+  await touch('assets/animation.gif')
 
-  mockGlob.mockResolvedValue(mockImagePaths)
-
-  const result = await getRepositoryImages()
-
-  expect(mockGlob).toHaveBeenCalledWith(
-    `${workspace}/**/*.{jpeg,jpg,png,webp,avif}`,
-    {
-      ignore: [`${workspace}/node_modules/**`],
-      nodir: true,
-      follow: false,
-      dot: true
-    }
-  )
-
-  expect(result).toEqual(mockImagePaths)
+  expect((await findImages(repoDir, [])).sort()).toEqual(expected.sort())
 })
 
-test('respects ignore paths configuration', async () => {
-  const workspace = path.resolve(process.env.GITHUB_WORKSPACE)
-  const mockImagePaths = [
-    `${workspace}/src/image1.png`,
-    `${workspace}/assets/image3.webp`
-  ]
+test('includes images in dot directories but not in .git', async () => {
+  await touch('.github/images/preview.png')
+  await touch('.hidden.jpg')
+  await touch('docs/.assets/logo.png')
+  await touch('.git/objects/blob.png')
 
-  mockGlob.mockResolvedValue(mockImagePaths)
-  mockGetConfig.mockResolvedValue({
-    ignorePaths: ['node_modules/**', 'temp/**', 'build/**']
-  })
-
-  const result = await getRepositoryImages()
-
-  expect(mockGlob).toHaveBeenCalledWith(
-    `${workspace}/**/*.{jpeg,jpg,png,webp,avif}`,
-    {
-      ignore: [
-        `${workspace}/node_modules/**`,
-        `${workspace}/temp/**`,
-        `${workspace}/build/**`
-      ],
-      nodir: true,
-      follow: false,
-      dot: true
-    }
-  )
-
-  expect(result).toEqual(mockImagePaths)
+  expect(await relativeResults([])).toEqual([
+    '.github/images/preview.png',
+    '.hidden.jpg',
+    'docs/.assets/logo.png'
+  ])
 })
 
-test('handles empty results', async () => {
-  mockGlob.mockResolvedValue([])
+test('respects ignore paths, including dot files beneath them', async () => {
+  await touch('src/image1.png')
+  await touch('node_modules/package/icon.jpg')
+  await touch('node_modules/.cache/thumb.png')
+  await touch('temp/cache.webp')
+  await touch('packages/app/node_modules/dep/logo.png')
 
-  const result = await getRepositoryImages()
-
-  expect(result).toEqual([])
+  expect(await relativeResults(['node_modules/**', 'temp/**'])).toEqual([
+    'packages/app/node_modules/dep/logo.png',
+    'src/image1.png'
+  ])
 })
 
-test('handles empty ignore paths', async () => {
-  const workspace = path.resolve(process.env.GITHUB_WORKSPACE)
-  const mockImagePaths = [`${workspace}/image.png`]
-
-  mockGlob.mockResolvedValue(mockImagePaths)
-  mockGetConfig.mockResolvedValue({
-    ignorePaths: []
-  })
-
-  const result = await getRepositoryImages()
-
-  expect(mockGlob).toHaveBeenCalledWith(
-    `${workspace}/**/*.{jpeg,jpg,png,webp,avif}`,
-    {
-      ignore: [],
-      nodir: true,
-      follow: false,
-      dot: true
-    }
+test('does not follow symlinks to files or directories', async () => {
+  const outside = path.join(root, 'outside')
+  await fs.mkdir(outside)
+  await fs.writeFile(path.join(outside, 'private.png'), '')
+  await touch('real.png')
+  await fs.symlink(outside, path.join(repoDir, 'linked-directory'))
+  await fs.symlink(
+    path.join(outside, 'private.png'),
+    path.join(repoDir, 'linked.png')
   )
 
-  expect(result).toEqual(mockImagePaths)
+  expect(await relativeResults([])).toEqual(['real.png'])
+})
+
+test('returns an empty list when there are no images', async () => {
+  await touch('README.md')
+
+  expect(await findImages(repoDir, [])).toEqual([])
 })

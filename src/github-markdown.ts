@@ -4,6 +4,7 @@ import { context } from '@actions/github'
 import { GITHUB_REPOSITORY } from './constants.ts'
 import template from './template.ts'
 import getConfig from './config.ts'
+import { escapeMarkdown } from './sanitise.ts'
 import type {
   ProcessedImage,
   ProcessedImageView
@@ -44,6 +45,7 @@ const generateImageView = ({
   const imageViews = images.map(image => {
     return {
       ...image,
+      escapedName: escapeMarkdown(image.name),
       formattedBeforeStats: formatFileSize(image.beforeStats),
       formattedAfterStats: formatFileSize(image.afterStats),
       formattedPercentChange: `${image.percentChange.toFixed(1)}%`,

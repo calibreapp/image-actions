@@ -8,6 +8,7 @@ export interface ProcessedImage {
 }
 
 export interface ProcessedImageView extends ProcessedImage {
+  escapedName: string
   formattedBeforeStats: string
   formattedAfterStats: string
   formattedPercentChange: string
