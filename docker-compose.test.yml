@@ -1,4 +1,6 @@
 services:
   test:
-    build: .
+    build:
+      context: .
+      target: test
     entrypoint: npm run test
