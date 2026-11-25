@@ -1,5 +1,8 @@
-const UNSAFE_CHARACTERS = /[\p{Cc}\p{Zl}\p{Zp}]/u
-const UNSAFE_CHARACTERS_GLOBAL = /[\p{Cc}\p{Zl}\p{Zp}]/gu
+// Control characters and line breaks
+const UNSAFE_CHARACTERS =
+  /[\p{Control}\p{Line_Separator}\p{Paragraph_Separator}]/u
+const UNSAFE_CHARACTERS_GLOBAL =
+  /[\p{Control}\p{Line_Separator}\p{Paragraph_Separator}]/gu
 const PRINTABLE_ASCII = /[\x21-\x7e]/g
 const MARKDOWN_SAFE = /[A-Za-z0-9./-]/
 const REPLACEMENT_CHARACTER = String.fromCharCode(0xfffd)
