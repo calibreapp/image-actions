@@ -53,6 +53,24 @@ test('writes the markdown with diff report', async () => {
   expect(markdownResult).toMatchSnapshot()
 })
 
+test('escapes filenames so they cannot inject markdown', async () => {
+  const hostileName =
+    'a|b</code>[x](https://example.com)`*_@user #1 <img src=x>.png'
+  const markdownResult = await markdown({
+    processingResults: {
+      ...results,
+      optimisedImages: [{ ...results.optimisedImages[0], name: hostileName }]
+    }
+  })
+  const row = markdownResult
+    .split('\n')
+    .find(line => line.startsWith('| <code>'))
+
+  expect(row).toBe(
+    '| <code>a&#124;b&#60;/code&#62;&#91;x&#93;&#40;https&#58;//example.com&#41;&#96;&#42;&#95;&#64;user &#35;1 &#60;img src&#61;x&#62;.png</code> | 8.7 KB | 3.3 KB | -62.3% |'
+  )
+})
+
 test('writes the markdown without diff report', async () => {
   const markdownResult = await markdown({
     processingResults: results

@@ -5,7 +5,7 @@ Compression reduced images by <strong><%- overallPercentageSaved %>%</strong>, s
 | Filename | Before | After | Improvement |
 | -------- | ------ | ----- | ----------- |
 <% optimisedImages.forEach((image) => { -%>
-| <code><%- image.name %></code> | <%- image.formattedBeforeStats %> | <%- image.formattedAfterStats %> | <%- image.formattedPercentChange %> |
+| <code><%- image.escapedName %></code> | <%- image.formattedBeforeStats %> | <%- image.formattedAfterStats %> | <%- image.formattedPercentChange %> |
 <% }); %>
 
 <% if(unoptimisedImages.length) { -%>

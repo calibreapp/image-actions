@@ -7,7 +7,10 @@ const EJS_OPTIONS = { async: true }
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const template = (basename: string, variables: any): Promise<string> => {
+const template = (
+  basename: string,
+  variables: Record<string, unknown>
+): Promise<string> => {
   const filePath = join(__dirname, '..', 'markdown-templates', basename)
   return ejs.renderFile(filePath, variables, EJS_OPTIONS)
 }
