@@ -3,6 +3,8 @@ import { Octokit } from '@octokit/action'
 import { context } from '@actions/github'
 import pThrottle from 'p-throttle'
 
+import isForkPullRequest from './is-fork-pull-request.ts'
+
 import type { ProcessedImage } from './types/ProcessedImage.d.ts'
 
 const api = new Octokit()
@@ -70,6 +72,12 @@ const convertToTreeBlobs = async ({
 }
 
 const commitOptimisedImages = async (optimisedImages: ProcessedImage[]) => {
+  if (isForkPullRequest(context.payload)) {
+    throw new Error(
+      'Refusing to commit: the pull request comes from a forked repository'
+    )
+  }
+
   const owner = context.repo.owner
   const repo = context.repo.repo
   const mostRecentCommitSHA = context.payload.pull_request?.head?.sha
