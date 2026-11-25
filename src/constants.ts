@@ -27,12 +27,16 @@ const COMMITTER = {
 
 if (!REPO_DIRECTORY) {
   core.error('There is no GITHUB_WORKSPACE environment variable')
-  process.exit(1)
+  throw new Error('There is no GITHUB_WORKSPACE environment variable')
 }
+
+const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
 
 const FILE_EXTENSIONS_TO_PROCESS = ['jpeg', 'jpg', 'png', 'webp', 'avif']
 
-const EXTENSION_TO_SHARP_FORMAT_MAPPING: Record<string, string> = {
+type SharpFormat = 'png' | 'jpeg' | 'webp' | 'avif'
+
+const EXTENSION_TO_SHARP_FORMAT_MAPPING: Record<string, SharpFormat> = {
   '.png': 'png',
   '.jpeg': 'jpeg',
   '.jpg': 'jpeg',
@@ -49,6 +53,7 @@ export {
   FILE_EXTENSIONS_TO_PROCESS,
   EXTENSION_TO_SHARP_FORMAT_MAPPING,
   COMMITTER,
+  MAX_FILE_SIZE_BYTES,
   JPEG_QUALITY,
   JPEG_PROGRESSIVE,
   PNG_QUALITY,

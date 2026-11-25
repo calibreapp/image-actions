@@ -101,6 +101,45 @@ test('returns images with stats', async () => {
   })
 })
 
+test('skips files that are not genuine images of their extension', async () => {
+  const disguisedSvg = path.join(TMP_TEST_IMAGES_DIR, 'disguised.png')
+  const symlink = path.join(TMP_TEST_IMAGES_DIR, 'link.jpg')
+  const symlinkTarget = path.join(EXAMPLE_IMAGES_DIR, 'roo.jpg')
+  const targetBefore = await fs.readFile(symlinkTarget)
+
+  await fs.writeFile(
+    disguisedSvg,
+    '<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="2000"><rect width="100%" height="100%" fill="red"/></svg>'
+  )
+  await fs.symlink(symlinkTarget, symlink)
+
+  vi.mocked(getRepositoryImages).mockResolvedValue([
+    disguisedSvg,
+    symlink,
+    path.join(TMP_TEST_IMAGES_DIR, 'icon.png')
+  ])
+
+  const results = await imageProcessing()
+  const names = [...results.optimisedImages, ...results.unoptimisedImages].map(
+    image => image.name
+  )
+
+  expect(names).toEqual(['icon.png'])
+  expect(await fs.readFile(disguisedSvg, 'utf8')).toContain('<svg')
+  expect((await fs.readFile(symlinkTarget)).equals(targetBefore)).toBe(true)
+})
+
+test('processes images with uppercase extensions', async () => {
+  const uppercase = path.join(TMP_TEST_IMAGES_DIR, 'ICON.PNG')
+  await fs.copyFile(path.join(EXAMPLE_IMAGES_DIR, 'icon.png'), uppercase)
+
+  vi.mocked(getRepositoryImages).mockResolvedValue([uppercase])
+
+  const results = await imageProcessing()
+
+  expect(results.optimisedImages.map(image => image.name)).toEqual(['ICON.PNG'])
+})
+
 test('calls getRepositoryImages when no changed images found', async () => {
   await imageProcessing()
 

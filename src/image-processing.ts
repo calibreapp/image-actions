@@ -5,10 +5,11 @@ import * as core from '@actions/core'
 import sharp from 'sharp'
 
 import getConfig from './config.ts'
+import type { Config } from './config.ts'
 import getChangedImages from './get-changed-images.ts'
 import getRepositoryImages from './get-repository-images.ts'
-
-import type { FormatEnum } from 'sharp'
+import validateImage from './validate-image.ts'
+import { sanitiseForLog } from './sanitise.ts'
 
 import {
   REPO_DIRECTORY,
@@ -18,6 +19,16 @@ import {
 } from './constants.ts'
 
 const MAX_IMAGES_TO_COMMIT = 500
+
+sharp.block({ operation: ['VipsForeignLoad'] })
+sharp.unblock({
+  operation: [
+    'VipsForeignLoadJpegFile',
+    'VipsForeignLoadPngFile',
+    'VipsForeignLoadWebpFile',
+    'VipsForeignLoadHeifFile'
+  ]
+})
 
 import type {
   ProcessedImage,
@@ -63,26 +74,35 @@ const logSharpInfo = (): void => {
 
 const processImage = async (
   imgPath: string,
-  config: any
+  config: Config
 ): Promise<ProcessedImage | null> => {
-  const extension = path.extname(imgPath)
+  if (!REPO_DIRECTORY) {
+    throw new Error('REPO_DIRECTORY is not set.')
+  }
+  const repoDir = path.resolve(REPO_DIRECTORY)
+  const skipReason = await validateImage(imgPath)
+
+  if (skipReason) {
+    core.warning(
+      `Skipping ${sanitiseForLog(path.relative(repoDir, imgPath))}: ${skipReason}.`
+    )
+    return null
+  }
+
+  const extension = path.extname(imgPath).toLowerCase()
   const sharpFormat = EXTENSION_TO_SHARP_FORMAT_MAPPING[extension]
-  const options = config[sharpFormat as keyof typeof config]
-  const beforeStats = (await stat(imgPath)).size
+  const options = config[sharpFormat]
 
   try {
+    const beforeStats = (await stat(imgPath)).size
     const { data, info } = await sharp(imgPath)
-      .toFormat(sharpFormat as keyof FormatEnum, options as any)
+      .toFormat(sharpFormat, options)
       .toBuffer({ resolveWithObject: true })
 
     core.info(
       `Processing: ${imgPath} config=${JSON.stringify(options)} output=${JSON.stringify(info)}`
     )
 
-    if (!REPO_DIRECTORY) {
-      throw new Error('REPO_DIRECTORY is not set.')
-    }
-    const repoDir = path.resolve(REPO_DIRECTORY)
     const name = path.relative(repoDir, imgPath)
     const relativeImagePath = path.relative(process.cwd(), imgPath)
     const afterStats = info.size
