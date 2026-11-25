@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:26-alpine AS base
 
 RUN mkdir -p /usr/local/src/image-actions
 WORKDIR /usr/local/src/image-actions

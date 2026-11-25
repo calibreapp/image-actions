@@ -6,6 +6,9 @@
   "main": "entrypoint.ts",
   "author": "Calibre <hello@calibreapp.com>",
   "license": "ISC",
+  "engines": {
+    "node": ">=26"
+  },
   "scripts": {
     "test": "GITHUB_WORKSPACE=__tests__/test-images vitest run",
     "test:watch": "GITHUB_WORKSPACE=__tests__/test-images vitest",
