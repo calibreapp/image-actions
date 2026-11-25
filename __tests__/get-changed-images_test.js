@@ -36,7 +36,9 @@ beforeEach(() => {
   vi.clearAllMocks()
 
   // Reset the mocks before each test
-  vi.mocked(Octokit).mockImplementation(() => mockOctokit)
+  vi.mocked(Octokit).mockImplementation(function () {
+    return mockOctokit
+  })
   vi.mocked(getConfig).mockImplementation(mockGetConfig)
 
   // Set up default config
@@ -149,12 +151,26 @@ test('returns null when no PR context (for fallback)', async () => {
   }
 })
 
-test('handles GitHub API errors gracefully', async () => {
+test('fails when the GitHub API cannot list changed files', async () => {
   mockPaginate.mockRejectedValue(new Error('GitHub API error'))
+
+  await expect(getChangedImages()).rejects.toThrow(
+    'Could not list changed files for PR #123: GitHub API error'
+  )
+})
+
+test('skips filenames containing control characters', async () => {
+  const mockFiles = [
+    { filename: 'src/image1.png', status: 'modified' },
+    { filename: 'a\n::warning::injected.png', status: 'added' },
+    { filename: 'b\r::error::injected.jpg', status: 'added' }
+  ]
+
+  mockPaginate.mockResolvedValue(mockFiles)
 
   const result = await getChangedImages()
 
-  expect(result).toBeNull()
+  expect(result).toEqual(['src/image1.png'])
 })
 
 test('handles empty file list from API', async () => {

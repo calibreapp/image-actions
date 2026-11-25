@@ -1,60 +1,64 @@
 import path from 'path'
-import { minimatch } from 'minimatch'
 import { Octokit } from '@octokit/action'
 import { context } from '@actions/github'
 import * as core from '@actions/core'
 
 import { FILE_EXTENSIONS_TO_PROCESS } from './constants.ts'
 import getConfig from './config.ts'
+import isIgnored from './ignore.ts'
+import { hasControlCharacters, sanitiseForLog } from './sanitise.ts'
 
 const getChangedImages = async (): Promise<string[] | null> => {
-  try {
-    if (!context.payload.pull_request) {
-      core.info('No pull request context found.')
-      return null
-    }
+  const pullNumber = context.payload.pull_request?.number
 
-    const config = await getConfig()
-    const api = new Octokit()
-    const owner = context.repo.owner
-    const repo = context.repo.repo
-    const pullNumber = context.payload.pull_request.number
+  if (pullNumber === undefined) {
+    core.info('No pull request context found.')
+    return null
+  }
 
-    core.info(`Fetching changed files for PR #${pullNumber}…`)
+  const config = await getConfig()
+  const api = new Octokit()
+  const owner = context.repo.owner
+  const repo = context.repo.repo
 
-    const files = await api.paginate(api.rest.pulls.listFiles, {
+  core.info(`Fetching changed files for PR #${pullNumber}…`)
+
+  const files = await api
+    .paginate(api.rest.pulls.listFiles, {
       owner,
       repo,
       pull_number: pullNumber
     })
+    .catch(error => {
+      throw new Error(
+        `Could not list changed files for PR #${pullNumber}: ${error instanceof Error ? error.message : String(error)}`
+      )
+    })
 
-    const changedImages = files
-      .filter(file => {
-        const ext = path.extname(file.filename).toLowerCase().slice(1)
-        return (
-          FILE_EXTENSIONS_TO_PROCESS.includes(ext) && file.status !== 'removed'
+  const changedImages = files
+    .filter(file => {
+      const ext = path.extname(file.filename).toLowerCase().slice(1)
+      return (
+        FILE_EXTENSIONS_TO_PROCESS.includes(ext) && file.status !== 'removed'
+      )
+    })
+    .map(file => file.filename)
+    .filter(filename => {
+      if (hasControlCharacters(filename)) {
+        core.warning(
+          `Skipping ${sanitiseForLog(filename)}: the filename contains control characters.`
         )
-      })
-      .map(file => file.filename)
-      .filter(filename => {
-        const shouldIgnore = config.ignorePaths.some(ignorePath => {
-          return minimatch(filename, ignorePath)
-        })
+        return false
+      }
 
-        return !shouldIgnore
-      })
+      return !isIgnored(filename, config.ignorePaths)
+    })
 
-    core.info(
-      `Found ${changedImages.length} images to process: ${changedImages.join(', ')}.`
-    )
+  core.info(
+    `Found ${changedImages.length} images to process: ${changedImages.join(', ')}.`
+  )
 
-    return changedImages
-  } catch (error) {
-    core.warning(
-      `GitHub API Error: ${error instanceof Error ? error.message : String(error)}`
-    )
-    return null
-  }
+  return changedImages
 }
 
 export default getChangedImages
